@@ -1,0 +1,15 @@
+version: "3"
+services:
+  task_runner:
+    image:
+      tsertkov/php-mysql-runner
+    depends_on:
+      - mysql
+    volumes:
+      - .:/app/
+    working_dir: /app
+    environment:
+      - DB_NAME=${WORDPRESS_DB_NAME}
+      - DB_USER=${WORDPRESS_DB_USER}
+      - DB_HOST=${WORDPRESS_DB_HOST}
+      - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}

@@ -1,0 +1,14 @@
+version: "3"
+services:
+  mysql:
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: wp-headless
+        awslogs-stream: mysql
+  wordpress:
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: wp-headless
+        awslogs-stream: wordpress

@@ -1,0 +1,18 @@
+version: "3"
+services:
+  mysql:
+    ports:
+      - 3306:3306
+  wordpress:
+    build:
+      context: ./wp-headless
+      args:
+        - WORDPRESS_VERSION
+        - PHP_VERSION
+        - CUSTOM_POST_TYPE_UI
+        - ADVANCED_CUSTOM_FIELDS
+        - ACF_TO_REST_API
+        - AMAZON_S3_AND_CLOUDFRONT
+        - AMAZON_WEB_SERVICES
+        - WORDPRESS_IMPORTER
+        - ADMIN_MENU_EDITOR

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+DUMP="./backup/db.sql.gz"
+[ ! -e "$DUMP" ] && echo "No dump file exists" && exit 1
+
+gzip -dc "$DUMP" | \
+  mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASSWORD" \
+    && echo "Database restored from dump"

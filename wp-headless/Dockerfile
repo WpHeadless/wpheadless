@@ -1,0 +1,36 @@
+ARG WORDPRESS_VERSION
+ARG PHP_VERSION
+FROM wordpress:${WORDPRESS_VERSION}-php${PHP_VERSION}
+
+ARG CUSTOM_POST_TYPE_UI
+ARG ADVANCED_CUSTOM_FIELDS
+ARG ACF_TO_REST_API
+ARG AMAZON_S3_AND_CLOUDFRONT
+ARG AMAZON_WEB_SERVICES
+ARG WORDPRESS_IMPORTER
+ARG ADMIN_MENU_EDITOR
+
+RUN set -ex; \
+  apt-get update; \
+  apt-get install -y \
+    unzip \
+  ; \
+  rm -rf /var/lib/apt/lists/*; \
+  cd /usr/src/wordpress/wp-content/plugins; \
+  curl -sS -O https://downloads.wordpress.org/plugin/custom-post-type-ui.${CUSTOM_POST_TYPE_UI}.zip; \
+  curl -sS -O https://downloads.wordpress.org/plugin/advanced-custom-fields.${ADVANCED_CUSTOM_FIELDS}.zip; \
+  curl -sS -O https://downloads.wordpress.org/plugin/acf-to-rest-api.${ACF_TO_REST_API}.zip; \
+  curl -sS -O https://downloads.wordpress.org/plugin/amazon-s3-and-cloudfront.${AMAZON_S3_AND_CLOUDFRONT}.zip; \
+  curl -sS -O https://downloads.wordpress.org/plugin/amazon-web-services.${AMAZON_WEB_SERVICES}.zip; \
+  curl -sS -O https://downloads.wordpress.org/plugin/wordpress-importer.${WORDPRESS_IMPORTER}.zip; \
+  curl -sS -O https://downloads.wordpress.org/plugin/admin-menu-editor.${ADMIN_MENU_EDITOR}.zip; \
+  ls *.zip | xargs -L1 unzip && rm -f *.zip; \
+  chown -R www-data: .; \
+  curl -sS -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar; \
+  chmod +x /usr/local/bin/wp; \
+  mkdir ~www-data/.wp-cli; \
+  chown www-data: ~www-data/.wp-cli; \
+  sed -i '$idocker-wp-headless-entrypoint.sh' /usr/local/bin/docker-entrypoint.sh;
+
+COPY apache.conf /etc/apache2/conf-enabled/wordpress.conf
+COPY docker-wp-headless-entrypoint.sh /usr/local/bin/

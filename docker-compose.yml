@@ -1,0 +1,29 @@
+version: "3"
+services:
+  mysql:
+    image: mariadb:${MARIADB_VERSION}
+    restart: unless-stopped
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf:ro
+    environment:
+      - MYSQL_ROOT_PASSWORD
+  wordpress:
+    image: tsertkov/wp-headless:${WORDPRESS_VERSION}
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - mysql
+    environment:
+      - WORDPRESS_DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - WORDPRESS_DB_HOST
+      - WORDPRESS_DB_USER
+      - WORDPRESS_DB_NAME
+      - DBI_AWS_ACCESS_KEY_ID
+      - DBI_AWS_SECRET_ACCESS_KEY
+      - WORDPRESS_URL
+      - WORDPRESS_TITLE
+      - WORDPRESS_ADMIN_EMAIL
+volumes:
+  mysql:
