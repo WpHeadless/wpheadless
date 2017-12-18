@@ -26,5 +26,6 @@ services:
       - WORDPRESS_TITLE
       - WORDPRESS_ADMIN_EMAIL
       - FORCE_SSL_ADMIN
+      - JWT_AUTH_SECRET_KEY
 volumes:
   mysql:

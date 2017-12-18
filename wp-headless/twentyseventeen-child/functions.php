@@ -1,0 +1,10 @@
+<?php
+
+// enqueue the parent and child theme stylesheets
+add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles' );
+function my_theme_enqueue_styles() {
+    wp_enqueue_style( 'twentyseventeen-style', get_template_directory_uri() . '/style.css' );
+}
+
+// allow rest interface in forcelogin
+remove_filter( 'rest_authentication_errors', 'v_forcelogin_rest_access', 99 );

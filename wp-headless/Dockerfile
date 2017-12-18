@@ -9,6 +9,8 @@ ARG AMAZON_S3_AND_CLOUDFRONT
 ARG AMAZON_WEB_SERVICES
 ARG WORDPRESS_IMPORTER
 ARG ADMIN_MENU_EDITOR
+ARG WP_FORCE_LOGIN
+ARG JWT_AUTHENTICATION_FOR_WP_REST_API
 
 RUN set -ex; \
   apt-get update; \
@@ -17,6 +19,7 @@ RUN set -ex; \
   ; \
   rm -rf /var/lib/apt/lists/*; \
   cd /usr/src/wordpress/wp-content/plugins; \
+  rm -rf akismet hello.php; \
   curl -sS -O https://downloads.wordpress.org/plugin/custom-post-type-ui.${CUSTOM_POST_TYPE_UI}.zip; \
   curl -sS -O https://downloads.wordpress.org/plugin/advanced-custom-fields.${ADVANCED_CUSTOM_FIELDS}.zip; \
   curl -sS -O https://downloads.wordpress.org/plugin/acf-to-rest-api.${ACF_TO_REST_API}.zip; \
@@ -24,6 +27,8 @@ RUN set -ex; \
   curl -sS -O https://downloads.wordpress.org/plugin/amazon-web-services.${AMAZON_WEB_SERVICES}.zip; \
   curl -sS -O https://downloads.wordpress.org/plugin/wordpress-importer.${WORDPRESS_IMPORTER}.zip; \
   curl -sS -O https://downloads.wordpress.org/plugin/admin-menu-editor.${ADMIN_MENU_EDITOR}.zip; \
+  curl -sS -O https://downloads.wordpress.org/plugin/wp-force-login.${WP_FORCE_LOGIN}.zip; \
+  curl -sS -O https://downloads.wordpress.org/plugin/jwt-authentication-for-wp-rest-api.${JWT_AUTHENTICATION_FOR_WP_REST_API}.zip; \
   ls *.zip | xargs -L1 unzip && rm -f *.zip; \
   chown -R www-data: .; \
   curl -sS -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar; \
@@ -34,3 +39,4 @@ RUN set -ex; \
 
 COPY apache.conf /etc/apache2/conf-enabled/wordpress.conf
 COPY docker-wp-headless-entrypoint.sh /usr/local/bin/
+COPY twentyseventeen-child /usr/src/wordpress/wp-content/themes/twentyseventeen-child
