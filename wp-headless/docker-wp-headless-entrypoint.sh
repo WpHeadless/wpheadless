@@ -26,6 +26,7 @@ wp plugin activate admin-menu-editor --network
 wp plugin activate amazon-s3-and-cloudfront --network
 sed -i "2idefine('DBI_AWS_ACCESS_KEY_ID', '${DBI_AWS_ACCESS_KEY_ID}');" wp-config.php
 sed -i "2idefine('DBI_AWS_SECRET_ACCESS_KEY', '${DBI_AWS_SECRET_ACCESS_KEY}');" wp-config.php
+sed -i "2idefine('FORCE_SSL_ADMIN', ${FORCE_SSL_ADMIN});" wp-config.php
 EOF
 
 # disable www-data user
