@@ -26,7 +26,6 @@ wp plugin activate advanced-custom-fields --network
 wp plugin activate acf-to-rest-api --network
 wp plugin activate amazon-web-services --network
 wp plugin activate wordpress-importer --network
-wp plugin activate admin-menu-editor --network
 wp plugin activate amazon-s3-and-cloudfront --network
 wp plugin activate jwt-authentication-for-wp-rest-api --network
 wp plugin activate wp-force-login --network
