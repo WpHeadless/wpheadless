@@ -26,7 +26,6 @@ RUN set -ex; \
   curl -sS -O https://downloads.wordpress.org/plugin/amazon-s3-and-cloudfront.${AMAZON_S3_AND_CLOUDFRONT}.zip; \
   curl -sS -O https://downloads.wordpress.org/plugin/amazon-web-services.${AMAZON_WEB_SERVICES}.zip; \
   curl -sS -O https://downloads.wordpress.org/plugin/wordpress-importer.${WORDPRESS_IMPORTER}.zip; \
-  curl -sS -O https://downloads.wordpress.org/plugin/admin-menu-editor.${ADMIN_MENU_EDITOR}.zip; \
   curl -sS -O https://downloads.wordpress.org/plugin/wp-force-login.${WP_FORCE_LOGIN}.zip; \
   curl -sS -O https://downloads.wordpress.org/plugin/jwt-authentication-for-wp-rest-api.${JWT_AUTHENTICATION_FOR_WP_REST_API}.zip; \
   ls *.zip | xargs -L1 unzip && rm -f *.zip; \
