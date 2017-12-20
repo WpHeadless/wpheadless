@@ -20,6 +20,7 @@ sed -i "2idefine('DBI_AWS_ACCESS_KEY_ID', '${DBI_AWS_ACCESS_KEY_ID}');" wp-confi
 sed -i "2idefine('DBI_AWS_SECRET_ACCESS_KEY', '${DBI_AWS_SECRET_ACCESS_KEY}');" wp-config.php
 sed -i "2idefine('FORCE_SSL_ADMIN', ${FORCE_SSL_ADMIN});" wp-config.php
 sed -i "2idefine('JWT_AUTH_SECRET_KEY', '${JWT_AUTH_SECRET_KEY}');" wp-config.php
+sed -i "2idefine('WP_DEFAULT_THEME', '${WP_DEFAULT_THEME}');" wp-config.php
 
 wp plugin activate custom-post-type-ui --network
 wp plugin activate advanced-custom-fields --network
