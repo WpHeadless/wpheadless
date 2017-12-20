@@ -20,3 +20,5 @@ services:
     volumes:
       - ./wordpress:/var/www/html
       - ./wp-headless/twentyseventeen-child:/var/www/html/wp-content/themes/twentyseventeen-child
+      - ./wp-headless/apache.conf:/etc/apache2/conf-enabled/wordpress.conf
+      - ./wp-headless/docker-wp-headless-entrypoint.sh:/usr/local/bin/docker-wp-headless-entrypoint.sh
