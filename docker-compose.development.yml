@@ -17,3 +17,6 @@ services:
         - WORDPRESS_IMPORTER
         - JWT_AUTHENTICATION_FOR_WP_REST_API
         - WP_FORCE_LOGIN
+    volumes:
+      - ./wordpress:/var/www/html
+      - ./wp-headless/twentyseventeen-child:/var/www/html/wp-content/themes/twentyseventeen-child
