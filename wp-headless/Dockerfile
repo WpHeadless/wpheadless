@@ -9,7 +9,6 @@ ARG AMAZON_S3_AND_CLOUDFRONT
 ARG AMAZON_WEB_SERVICES
 ARG WORDPRESS_IMPORTER
 ARG ADMIN_MENU_EDITOR
-ARG WP_FORCE_LOGIN
 ARG JWT_AUTHENTICATION_FOR_WP_REST_API
 
 RUN set -ex; \
@@ -26,7 +25,6 @@ RUN set -ex; \
   curl -sS -O https://downloads.wordpress.org/plugin/amazon-s3-and-cloudfront.${AMAZON_S3_AND_CLOUDFRONT}.zip; \
   curl -sS -O https://downloads.wordpress.org/plugin/amazon-web-services.${AMAZON_WEB_SERVICES}.zip; \
   curl -sS -O https://downloads.wordpress.org/plugin/wordpress-importer.${WORDPRESS_IMPORTER}.zip; \
-  curl -sS -O https://downloads.wordpress.org/plugin/wp-force-login.${WP_FORCE_LOGIN}.zip; \
   curl -sS -O https://downloads.wordpress.org/plugin/jwt-authentication-for-wp-rest-api.${JWT_AUTHENTICATION_FOR_WP_REST_API}.zip; \
   ls *.zip | xargs -L1 unzip && rm -f *.zip; \
   chown -R www-data: .; \
@@ -39,3 +37,5 @@ RUN set -ex; \
 COPY apache.conf /etc/apache2/conf-enabled/wordpress.conf
 COPY docker-wp-headless-entrypoint.sh /usr/local/bin/
 COPY twentyseventeen-child /usr/src/wordpress/wp-content/themes/twentyseventeen-child
+
+ENV WP_DEFAULT_THEME twentyseventeen-child

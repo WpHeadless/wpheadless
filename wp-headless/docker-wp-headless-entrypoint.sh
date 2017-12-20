@@ -28,7 +28,6 @@ wp plugin activate amazon-web-services --network
 wp plugin activate wordpress-importer --network
 wp plugin activate amazon-s3-and-cloudfront --network
 wp plugin activate jwt-authentication-for-wp-rest-api --network
-wp plugin activate wp-force-login --network
 
 wp theme disable twentyseventeen --network
 wp theme enable twentyseventeen-child --network --activate
