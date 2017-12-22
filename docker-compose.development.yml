@@ -7,16 +7,16 @@ services:
     build:
       context: ./wp-headless
       args:
-        - WORDPRESS_VERSION
-        - PHP_VERSION
-        - CUSTOM_POST_TYPE_UI
-        - ADVANCED_CUSTOM_FIELDS
-        - ACF_TO_REST_API
-        - AMAZON_S3_AND_CLOUDFRONT
-        - AMAZON_WEB_SERVICES
-        - WORDPRESS_IMPORTER
-        - JWT_AUTHENTICATION_FOR_WP_REST_API
-        - WP_FORCE_LOGIN
+        WORDPRESS_VERSION: 4.9.1
+        PHP_VERSION: 7.2
+        WORDPRESS_PLUGINS: |-
+          custom-post-type-ui 1.5.6
+          advanced-custom-fields 4.4.12
+          acf-to-rest-api 3.1.0
+          amazon-s3-and-cloudfront 1.2.1
+          amazon-web-services 1.0.4
+          wordpress-importer 0.6.3
+          jwt-authentication-for-wp-rest-api 1.2.4
     volumes:
       - ./wordpress:/var/www/html
       - ./wp-headless/twentyseventeen-child:/var/www/html/wp-content/themes/twentyseventeen-child

@@ -1,7 +1,7 @@
 version: "3"
 services:
   mysql:
-    image: mariadb:${MARIADB_VERSION}
+    image: mariadb:10.2
     restart: unless-stopped
     volumes:
       - mysql:/var/lib/mysql
@@ -9,12 +9,10 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD
   wordpress:
-    image: tsertkov/wp-headless:${WORDPRESS_VERSION}
+    image: tsertkov/wp-headless:4.9.1
     restart: unless-stopped
     ports:
       - "80:80"
-    depends_on:
-      - mysql
     environment:
       - WORDPRESS_DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - WORDPRESS_DB_HOST
