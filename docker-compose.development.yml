@@ -17,6 +17,7 @@ services:
           amazon-web-services 1.0.4
           wordpress-importer 0.6.3
           jwt-authentication-for-wp-rest-api 1.2.4
+          multisite-admin-bar-switcher 1.2.6
     volumes:
       - ./wordpress:/var/www/html
       - ./wp-headless/twentyseventeen-child:/var/www/html/wp-content/themes/twentyseventeen-child
