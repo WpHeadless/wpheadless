@@ -5,6 +5,7 @@ add_action( 'admin_menu', function () {
     'index.php',
     'edit.php',
     'edit.php?post_type=page',
-    'edit-comments.php'
+    'edit-comments.php',
+    'themes.php'
   ] );
 } );
