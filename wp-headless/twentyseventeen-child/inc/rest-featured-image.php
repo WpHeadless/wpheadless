@@ -6,9 +6,8 @@ function rest_api_featured_image_init() {
   $post_types = get_post_types( array( 'public' => true ), 'objects' );
 
   foreach ( $post_types as $post_type ) {
-
-    $post_type_name     = $post_type->name;
-    $show_in_rest       = isset( $post_type->show_in_rest ) && $post_type->show_in_rest;
+    $post_type_name = $post_type->name;
+    $show_in_rest = isset( $post_type->show_in_rest ) && $post_type->show_in_rest;
     $supports_thumbnail = post_type_supports( $post_type_name, 'thumbnail' );
 
     if ( $show_in_rest && $supports_thumbnail ) {
@@ -16,7 +15,7 @@ function rest_api_featured_image_init() {
         'featured_image',
         array(
           'get_callback' => 'rest_api_featured_image_get_field',
-          'schema'       => null,
+          'schema' => null
         )
       );
     }
