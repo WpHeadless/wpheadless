@@ -7,7 +7,7 @@ services:
     build:
       context: ./wp-headless
       args:
-        WORDPRESS_VERSION: 4.9.1
+        WORDPRESS_VERSION: 4.9.2
         ACF_PRO_VERSION: 5.6.5
         PHP_VERSION: 7.2
         WORDPRESS_PLUGINS: |-

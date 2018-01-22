@@ -9,7 +9,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD
   wordpress:
-    image: tsertkov/wp-headless:4.9.1
+    image: tsertkov/wp-headless:4.9.2
     restart: unless-stopped
     ports:
       - "80:80"
