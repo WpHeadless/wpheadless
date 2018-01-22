@@ -2,6 +2,7 @@ ARG WORDPRESS_VERSION
 ARG PHP_VERSION
 FROM wordpress:${WORDPRESS_VERSION}-php${PHP_VERSION}
 
+ARG ACF_PRO_VERSION
 ARG WORDPRESS_PLUGINS
 ENV WORDPRESS_PLUGINS $WORDPRESS_PLUGINS
 
@@ -30,6 +31,9 @@ RUN set -e; \
   for plugin_file in $PLUGINS; do \
     curl -sS -O "https://downloads.wordpress.org/plugin/${plugin_file}"; \
   done; \
+  curl -sS -O -L "https://github.com/wp-premium/advanced-custom-fields-pro/archive/${ACF_PRO_VERSION}.zip"; \
+  unzip "${ACF_PRO_VERSION}.zip"; \
+  mv "advanced-custom-fields-pro-${ACF_PRO_VERSION}" "advanced-custom-fields-pro"; \
   ls *.zip | xargs -L1 unzip > /dev/null && rm -f *.zip; \
   chown -R www-data: .; \
   cd; \

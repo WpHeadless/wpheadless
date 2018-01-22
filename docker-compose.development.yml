@@ -8,10 +8,10 @@ services:
       context: ./wp-headless
       args:
         WORDPRESS_VERSION: 4.9.1
+        ACF_PRO_VERSION: 5.6.5
         PHP_VERSION: 7.2
         WORDPRESS_PLUGINS: |-
           custom-post-type-ui 1.5.6
-          advanced-custom-fields 4.4.12
           acf-to-rest-api 3.1.0
           amazon-s3-and-cloudfront 1.2.1
           amazon-web-services 1.0.4

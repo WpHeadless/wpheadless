@@ -38,6 +38,8 @@ PLUGINS="$( \
     | sed -e '/^\s*$/d'
 )"
 
+wp plugin activate "advanced-custom-fields-pro" --network
+
 for plugin_name in $PLUGINS; do
   wp plugin activate "$plugin_name" --network
 done
