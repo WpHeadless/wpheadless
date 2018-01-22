@@ -42,6 +42,10 @@ for plugin_name in $PLUGINS; do
   wp plugin activate "$plugin_name" --network
 done
 
+for plugin_url in $WORDPRESS_RUNTIME_PLUGINS; do
+  wp plugin install "$plugin_url" --activate-network
+done
+
 EOF
 
 # disable www-data user

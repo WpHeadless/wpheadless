@@ -11,13 +11,14 @@ services:
         PHP_VERSION: 7.2
         WORDPRESS_PLUGINS: |-
           custom-post-type-ui 1.5.6
-          advanced-custom-fields 4.4.12
           acf-to-rest-api 3.1.0
           amazon-s3-and-cloudfront 1.2.1
           amazon-web-services 1.0.4
           wordpress-importer 0.6.3
           jwt-authentication-for-wp-rest-api 1.2.4
           multisite-admin-bar-switcher 1.2.6
+        WORDPRESS_RUNTIME_PLUGINS: |-
+          https://github.com/wp-premium/advanced-custom-fields-pro/archive/5.6.5.zip
     volumes:
       - ./wordpress:/var/www/html
       - ./wp-headless/twentyseventeen-child:/var/www/html/wp-content/themes/twentyseventeen-child
