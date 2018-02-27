@@ -11,6 +11,8 @@ services:
   wordpress:
     image: tsertkov/wp-headless:4.9.2
     restart: unless-stopped
+    volumes:
+      - ./var/wordpress:/var/www/html
     ports:
       - "80:80"
     environment:
