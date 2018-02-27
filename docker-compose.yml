@@ -11,6 +11,8 @@ services:
   wordpress:
     image: tsertkov/wp-headless:${WORDPRESS_VERSION}
     restart: unless-stopped
+    volumes:
+      - ./var/wordpress:/var/www/html
     ports:
       - "80:80"
     depends_on:
