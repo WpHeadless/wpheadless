@@ -19,7 +19,6 @@ services:
           jwt-authentication-for-wp-rest-api 1.2.4
           multisite-admin-bar-switcher 1.2.6
     volumes:
-      - ./wordpress:/var/www/html
       - ./wp-headless/twentyseventeen-child:/var/www/html/wp-content/themes/twentyseventeen-child
       - ./wp-headless/apache.conf:/etc/apache2/conf-enabled/wordpress.conf
       - ./wp-headless/docker-wp-headless-entrypoint.sh:/usr/local/bin/docker-wp-headless-entrypoint.sh
