@@ -1,7 +1,7 @@
 version: "3"
 services:
   mysql:
-    image: mariadb:10.2
+    image: mariadb:10.3
     restart: unless-stopped
     volumes:
       - mysql:/var/lib/mysql
@@ -9,7 +9,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD
   wordpress:
-    image: tsertkov/wp-headless:4.9.2
+    image: tsertkov/wp-headless:4.9.4
     restart: unless-stopped
     volumes:
       - ./var/wordpress:/var/www/html

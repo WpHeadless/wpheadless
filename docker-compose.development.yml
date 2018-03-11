@@ -7,15 +7,15 @@ services:
     build:
       context: ./wp-headless
       args:
-        WORDPRESS_VERSION: 4.9.2
-        ACF_PRO_VERSION: 5.6.5
+        WORDPRESS_VERSION: 4.9.4
+        ACF_PRO_VERSION: 5.6.7
         PHP_VERSION: 7.2
         WORDPRESS_PLUGINS: |-
-          custom-post-type-ui 1.5.6
+          custom-post-type-ui 1.5.7
           acf-to-rest-api 3.1.0
-          amazon-s3-and-cloudfront 1.2.1
-          amazon-web-services 1.0.4
-          wordpress-importer 0.6.3
+          amazon-s3-and-cloudfront 1.3.2
+          amazon-web-services 1.0.5
+          wordpress-importer 0.6.4
           jwt-authentication-for-wp-rest-api 1.2.4
           multisite-admin-bar-switcher 1.2.6
     volumes:
