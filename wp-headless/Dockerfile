@@ -32,7 +32,8 @@ RUN set -e; \
     curl -sS -O "https://downloads.wordpress.org/plugin/${plugin_file}"; \
   done; \
   curl -sS -O -L "https://github.com/wp-premium/advanced-custom-fields-pro/archive/${ACF_PRO_VERSION}.zip"; \
-  unzip "${ACF_PRO_VERSION}.zip"; \
+  unzip "${ACF_PRO_VERSION}.zip" > /dev/null; \
+  rm "${ACF_PRO_VERSION}.zip"; \
   mv "advanced-custom-fields-pro-${ACF_PRO_VERSION}" "advanced-custom-fields-pro"; \
   ls *.zip | xargs -L1 unzip > /dev/null && rm -f *.zip; \
   chown -R www-data: .; \
