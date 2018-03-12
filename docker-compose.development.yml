@@ -14,7 +14,6 @@ services:
           custom-post-type-ui 1.5.7
           acf-to-rest-api 3.1.0
           amazon-s3-and-cloudfront 1.3.2
-          amazon-web-services 1.0.5
           wordpress-importer 0.6.4
           jwt-authentication-for-wp-rest-api 1.2.4
           multisite-admin-bar-switcher 1.2.6
