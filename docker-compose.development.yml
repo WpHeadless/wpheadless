@@ -17,6 +17,7 @@ services:
           wordpress-importer 0.6.4
           jwt-authentication-for-wp-rest-api 1.2.4
           multisite-admin-bar-switcher 1.2.6
+          title-and-nofollow-for-links 1.03
     volumes:
       - ./wp-headless/twentyseventeen-child:/var/www/html/wp-content/themes/twentyseventeen-child
       - ./wp-headless/apache.conf:/etc/apache2/conf-enabled/wordpress.conf
