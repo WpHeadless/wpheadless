@@ -1,11 +1,35 @@
 version: "3"
 services:
+  nginx-proxy:
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: ${WORDPRESS_DOMAIN}
+        awslogs-stream: nginx-proxy
+  nginx-gen:
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: ${WORDPRESS_DOMAIN}
+        awslogs-stream: nginx-gen
+  nginx-letsencrypt:
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: ${WORDPRESS_DOMAIN}
+        awslogs-stream: nginx-letsencrypt
   mysql:
     logging:
       driver: awslogs
       options:
         awslogs-group: ${WORDPRESS_DOMAIN}
         awslogs-stream: mysql
+  nginx-web:
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: ${WORDPRESS_DOMAIN}
+        awslogs-stream: nginx-web
   wp-headless:
     logging:
       driver: awslogs
