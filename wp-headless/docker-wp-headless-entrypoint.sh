@@ -26,7 +26,6 @@ echo "<?php
 define('DBI_AWS_ACCESS_KEY_ID', '${DBI_AWS_ACCESS_KEY_ID}');
 define('DBI_AWS_SECRET_ACCESS_KEY', '${DBI_AWS_SECRET_ACCESS_KEY}');
 define('FORCE_SSL_ADMIN', ${FORCE_SSL_ADMIN});
-define('JWT_AUTH_SECRET_KEY', '${JWT_AUTH_SECRET_KEY}');
 define('WP_DEFAULT_THEME', '${WP_DEFAULT_THEME}');
 " > wp-config-headless.php
 

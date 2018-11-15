@@ -15,7 +15,6 @@ services:
           acf-to-rest-api 3.1.0
           amazon-s3-and-cloudfront 1.3.2
           wordpress-importer 0.6.4
-          jwt-authentication-for-wp-rest-api 1.2.4
           multisite-admin-bar-switcher 1.2.6
           title-and-nofollow-for-links 1.03
     volumes:
