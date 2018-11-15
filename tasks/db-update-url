@@ -3,14 +3,15 @@
 set -eo pipefail
 
 DOMAIN="$WORDPRESS_DOMAIN"
+SITE_URL="https://${DOMAIN}/"
 MYSQL_CMD="mysql -N -h ${DB_HOST} -u ${DB_USER} -p${DB_PASSWORD} ${DB_NAME}"
 
 # Update url for master site
 $MYSQL_CMD <<EOF
 UPDATE wp_site SET domain="${DOMAIN}";
 UPDATE wp_blogs SET domain="${DOMAIN}";
-UPDATE wp_sitemeta SET meta_value="http://${DOMAIN}/" WHERE meta_key="siteurl";
-UPDATE wp_options SET option_value="http://${DOMAIN}" WHERE option_name in ("siteurl", "home");
+UPDATE wp_sitemeta SET meta_value="${SITE_URL}" WHERE meta_key="siteurl";
+UPDATE wp_options SET option_value="${SITE_URL}" WHERE option_name in ("siteurl", "home");
 EOF
 
 # Update url for all sites in multisite
@@ -21,6 +22,6 @@ echo 'show tables like "wp_%_options";' \
       UPDATE
         %
       SET
-        option_value=CONCAT('http://${DOMAIN}/', SUBSTRING_INDEX(option_value, '/', -1))
+        option_value=CONCAT('${SITE_URL}', SUBSTRING_INDEX(option_value, '/', -1))
       WHERE option_name in ('siteurl', 'home');
 EOF
