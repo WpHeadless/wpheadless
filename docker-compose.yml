@@ -76,6 +76,8 @@ services:
   wordpress:
     image: tsertkov/wp-headless:4.9.8
     restart: unless-stopped
+    depends_on:
+      - mysql
     volumes:
       - ./var/wp-core:/var/www/html
       - ./var/wp-content:/var/www/html/wp-content
