@@ -67,6 +67,12 @@ services:
       - ./mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf:ro
     environment:
       - MYSQL_ROOT_PASSWORD
+    logging:
+      driver: json-file
+      options:
+        max-size: 2m
+        max-file: "10"
+
   wordpress:
     image: tsertkov/wp-headless:4.9.8
     restart: unless-stopped
@@ -87,5 +93,11 @@ services:
       - WORDPRESS_TITLE
       - WORDPRESS_ADMIN_EMAIL
       - FORCE_SSL_ADMIN
+    logging:
+      driver: json-file
+      options:
+        max-size: 2m
+        max-file: "10"
+
 volumes:
   mysql:
