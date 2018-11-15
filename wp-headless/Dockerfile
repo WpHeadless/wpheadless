@@ -25,7 +25,8 @@ RUN set -e; \
     ; \
   PLUGINS="$( \
     echo $WORDPRESS_PLUGINS \
-    | sed -e 's/\(\S\+\)\s\(\S\+\)\s*/\1.\2.zip\n/g' \
+    | sed -e 's/\(\S\+\)\s\?\(\S\+\)\?\s*/\1.\2.zip\n/g' \
+    | sed -e 's/\.\./\./g' \
     | sed -e '/^\s*$/d' \
     )"; \
   for plugin_file in $PLUGINS; do \
