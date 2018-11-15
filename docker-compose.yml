@@ -9,7 +9,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD
   wordpress:
-    image: tsertkov/wp-headless:4.9.4
+    image: tsertkov/wp-headless:4.9.8
     restart: unless-stopped
     volumes:
       - ./var/wordpress:/var/www/html
