@@ -7,17 +7,15 @@ services:
     build:
       context: ./wp-headless
       args:
-        WORDPRESS_VERSION: 4.9.4
-        ACF_PRO_VERSION: 5.6.7
+        WORDPRESS_VERSION: 4.9.8
+        ACF_PRO_VERSION: 5.7.6
         PHP_VERSION: 7.2
         WORDPRESS_PLUGINS: |-
-          custom-post-type-ui 1.5.7
+          custom-post-type-ui 1.6.0
           acf-to-rest-api 3.1.0
-          amazon-s3-and-cloudfront 1.3.2
+          amazon-s3-and-cloudfront 2.0
           wordpress-importer 0.6.4
-          jwt-authentication-for-wp-rest-api 1.2.4
-          multisite-admin-bar-switcher 1.2.6
-          title-and-nofollow-for-links 1.03
+          title-and-nofollow-for-links
     volumes:
       - ./wp-headless/twentyseventeen-child:/var/www/html/wp-content/themes/twentyseventeen-child
       - ./wp-headless/apache.conf:/etc/apache2/conf-enabled/wordpress.conf

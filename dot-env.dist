@@ -1,6 +1,7 @@
 COMPOSE_FILE=docker-compose.yml:docker-compose.development.yml
-WORDPRESS_URL=http://localhost
-WORDPRESS_ADMIN_EMAIL=
+WORDPRESS_DOMAIN=example.com
+WORDPRESS_URL=https://example.com
+WORDPRESS_ADMIN_EMAIL=webmaster@example.com
 MYSQL_ROOT_PASSWORD=
 DBI_AWS_ACCESS_KEY_ID=
 DBI_AWS_SECRET_ACCESS_KEY=
@@ -9,4 +10,3 @@ WORDPRESS_TITLE=wp-headless
 WORDPRESS_DB_HOST=mysql
 WORDPRESS_DB_USER=root
 WORDPRESS_DB_NAME=wordpress
-JWT_AUTH_SECRET_KEY=
