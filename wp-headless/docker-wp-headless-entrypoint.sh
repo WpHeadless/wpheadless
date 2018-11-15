@@ -39,6 +39,7 @@ PLUGINS="$( \
 )"
 
 wp plugin activate "advanced-custom-fields-pro" --network
+wp plugin activate "content-update-notifier" --network
 
 for plugin_name in $PLUGINS; do
   wp plugin activate "$plugin_name" --network

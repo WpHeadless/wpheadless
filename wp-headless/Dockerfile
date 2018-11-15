@@ -35,6 +35,10 @@ RUN set -e; \
   unzip "${ACF_PRO_VERSION}.zip" > /dev/null; \
   rm "${ACF_PRO_VERSION}.zip"; \
   mv "advanced-custom-fields-pro-${ACF_PRO_VERSION}" "advanced-custom-fields-pro"; \
+  curl -s -O -L "https://github.com/tsertkov/content-update-notifier/archive/master.zip"; \
+  unzip "master.zip" > /dev/null; \
+  rm "master.zip"; \
+  mv "content-update-notifier-master" "content-update-notifier"; \
   ls *.zip | xargs -L1 unzip > /dev/null && rm -f *.zip; \
   chown -R www-data: .; \
   cd; \
