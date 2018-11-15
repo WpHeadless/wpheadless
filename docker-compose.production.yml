@@ -4,11 +4,11 @@ services:
     logging:
       driver: awslogs
       options:
-        awslogs-group: wp-headless
+        awslogs-group: ${WORDPRESS_DOMAIN}
         awslogs-stream: mysql
-  wordpress:
+  wp-headless:
     logging:
       driver: awslogs
       options:
-        awslogs-group: wp-headless
-        awslogs-stream: wordpress
+        awslogs-group: ${WORDPRESS_DOMAIN}
+        awslogs-stream: wp-headless

@@ -3,13 +3,13 @@ services:
   mysql:
     ports:
       - 3306:3306
-  wordpress:
+  wp-headless:
     build:
       context: ./wp-headless
       args:
         WORDPRESS_VERSION: 4.9.8
         ACF_PRO_VERSION: 5.7.6
-        PHP_VERSION: 7.2
+        PHP_VERSION: 7.2-fpm
         WORDPRESS_PLUGINS: |-
           custom-post-type-ui 1.6.0
           acf-to-rest-api 3.1.0
