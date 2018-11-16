@@ -3,6 +3,15 @@
 set -e
 set -o pipefail
 
+# production php.ini with some higher linits
+cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
+echo "
+upload_max_filesize=16M
+post_max_size=16M
+upload_tmp_dir=/tmp
+session.save_path=/tmp
+" >> /usr/local/etc/php/php.ini
+
 test -e index.php -a -e wp-includes/version.php || exit 0
 
 # enable www-data user
