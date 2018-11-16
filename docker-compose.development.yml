@@ -1,6 +1,9 @@
 version: "3"
 services:
   mysql:
+    networks:
+      - backend
+      - frontend
     ports:
       - 3306:3306
   wp-headless:
