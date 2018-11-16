@@ -5,6 +5,8 @@ services:
       tsertkov/php-mysql-runner
     depends_on:
       - mysql
+    networks:
+      - backend
     volumes:
       - .:/app/
     working_dir: /app
