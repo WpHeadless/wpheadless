@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+WEBROOT=/var/www/wordpress/html
+
+#
+# Download & extract wp files into web root
+#
+
+[ -d "$WEBROOT" ] || mkdir -p "$WEBROOT"
+if [ -z "$(ls -A "$WEBROOT")" ]; then
+  echo -n "Downloading Wordpress ${WORDPRESS_VERSION}"
+  echo " (https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz)"
+  curl -o wordpress.tar.gz -fSLs "https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz"
+  echo -n "Checksum for "
+  echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c -
+  tar --no-same-owner --strip-components=1 -C "$WEBROOT" -xzf wordpress.tar.gz wordpress
+  rm wordpress.tar.gz
+fi
+
+#
+# Copy custom plugins
+#
+
+cd "${WEBROOT}/wp-content/plugins"
+PLUGINS="$(
+  echo $WORDPRESS_PLUGINS | \
+  sed \
+    -e 's/\(\S\+\)\s\?\(\S\+\)\?\s*/\1.\2.zip\n/g' \
+    -e 's/\.\./\./g' \
+    -e '/^\s*$/d'
+)"
+for plugin_file in $PLUGINS; do
+  plugin_url="https://downloads.wordpress.org/plugin/${plugin_file}"
+  echo "Downloading plugin ${plugin_url}"
+  curl -sS -O "$plugin_url"
+  unzip -o "$plugin_file" > /dev/null
+  rm "$plugin_file"
+done
+
+plugin_url="https://github.com/wp-premium/advanced-custom-fields-pro/archive/${ACF_PRO_VERSION}.zip"
+echo "Downloading plugin ${plugin_url}"
+curl -sS -O -L "$plugin_url"
+unzip -o "${ACF_PRO_VERSION}.zip" > /dev/null
+rm "${ACF_PRO_VERSION}.zip"
+[ -d advanced-custom-fields-pro ] && rm -rf advanced-custom-fields-pro
+mv -f "advanced-custom-fields-pro-${ACF_PRO_VERSION}" advanced-custom-fields-pro
+
+plugin_url=https://github.com/tsertkov/content-update-notifier/archive/master.zip
+echo "Downloading plugin ${plugin_url}"
+curl -sS -O -L "$plugin_url"
+unzip -o master.zip > /dev/null
+rm master.zip
+[ -d content-update-notifier ] && rm -rf content-update-notifier
+mv -f content-update-notifier-master content-update-notifier
+
+#
+# Copy custom theme
+#
+
+echo "Copying custom theme ${WP_DEFAULT_THEME}"
+cp -rf "/app/wp-headless/${WP_DEFAULT_THEME}" "${WEBROOT}/wp-content/themes"
+
+#
+# Prepare wp-config.php file
+#
+
+WP_CONFIG_PATH=$(dirname "$WEBROOT")/wp-config.php
+echo "Generating ${WP_CONFIG_PATH}"
+php /app/wp-headless/wp-config-tpl.php > "$WP_CONFIG_PATH"
+
+# Create db and user if necessary
+mysql -h "$DB_HOST" -u root -p"${MYSQL_ROOT_PASSWORD}" <<EOF
+CREATE DATABASE IF NOT EXISTS ${DB_NAME};
+CREATE USER IF NOT EXISTS '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';
+GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'%';
+EOF
+
+# Change working directory to WEBROOT for wp-cli
+cd /var/www/wordpress/html
+WP="wp --allow-root"
+
+# Install multisite wp
+$WP core is-installed --network || \
+  $WP core multisite-install \
+    --url="https://${DOMAIN}" \
+    --title="$WORDPRESS_TITLE" \
+    --admin_email="$ADMIN_EMAIL" \
+    --skip-config \
+    --skip-email
+
+# Enable/disable themes
+$WP theme is-active twentyseventeen && \
+  $WP theme disable twentyseventeen --network
+$WP theme is-active twentyseventeen-child || \
+  $WP theme enable twentyseventeen-child --network --activate
+
+# Enable plugins
+PLUGINS="$(
+  echo $WORDPRESS_PLUGINS \
+    | sed -e 's/\(\S\+\)\s\S\+\s*/\1\n/g' \
+    | sed -e '/^\s*$/d'
+  echo advanced-custom-fields-pro
+  echo content-update-notifier
+)"
+
+for plugin_name in $PLUGINS; do
+  $WP plugin is-active "$plugin_name" || \
+    $WP plugin activate "$plugin_name" --network
+done

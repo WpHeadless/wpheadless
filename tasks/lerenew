@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+set -e
+
+certbot \
+  certonly \
+  -n \
+  --agree-tos \
+  --force-renewal \
+  --webroot --webroot-path=/var/www/html \
+  -m "$ADMIN_EMAIL" \
+  -d "$DOMAIN"
