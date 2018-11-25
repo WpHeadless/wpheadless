@@ -1,25 +1,8 @@
 version: "3"
 services:
   mysql:
-    networks:
-      - backend
-      - frontend
     ports:
       - 3306:3306
-  wp-headless:
+  php-fpm:
     build:
-      context: ./wp-headless
-      args:
-        WORDPRESS_VERSION: 4.9.8
-        ACF_PRO_VERSION: 5.7.6
-        PHP_VERSION: 7.2-fpm
-        WORDPRESS_PLUGINS: |-
-          custom-post-type-ui 1.6.0
-          acf-to-rest-api 3.1.0
-          amazon-s3-and-cloudfront 2.0
-          wordpress-importer 0.6.4
-          title-and-nofollow-for-links
-    volumes:
-      - ./wp-headless/twentyseventeen-child:/var/www/html/wp-content/themes/twentyseventeen-child
-      - ./wp-headless/apache.conf:/etc/apache2/conf-enabled/wordpress.conf
-      - ./wp-headless/docker-wp-headless-entrypoint.sh:/usr/local/bin/docker-wp-headless-entrypoint.sh
+      context: ./php-fpm-wp
