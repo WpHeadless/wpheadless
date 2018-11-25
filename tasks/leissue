@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+set -e
+
+certbot \
+  certonly \
+  -n \
+  --agree-tos \
+  --standalone \
+  -m "$ADMIN_EMAIL" \
+  -d "$DOMAIN"

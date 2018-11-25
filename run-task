@@ -5,17 +5,25 @@ TASKS_DIR="tasks"
 if [ $# -eq 0 ]; then
   echo "Usage: $(basename "$0") <TASK> [ARGS...]"
   echo "Available tasks:"
-  echo "  sh"
+  echo "  <task-service-name>-sh"
   echo "$(ls "$TASKS_DIR")" | sed 's/^/  /'
   exit 1
 fi
 
-if [ "$1" == "sh" ]; then
-  TASK="/usr/bin/env $@"
+TASK=$1
+TASK_SERVICE="task-${TASK%%-*}"
+shift 1
+
+if [ "${TASK#*-}" == "sh" ]; then
+  if [ $# -eq 0 ]; then
+    TASK="sh"
+  else
+    TASK="$@"
+  fi
 else
-  TASK="${TASKS_DIR}/$@"
+  TASK="${TASKS_DIR}/${TASK} $@"
 fi
 
 docker-compose \
   -f docker-compose.yml -f docker-compose.tasks.yml \
-  run --rm task_runner $TASK
+  run --rm --service-ports "$TASK_SERVICE" $TASK

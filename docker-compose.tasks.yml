@@ -1,18 +1,61 @@
 version: "3"
+
 services:
-  task_runner:
-    image:
-      tsertkov/php-mysql-runner
-    depends_on:
-      - mysql
+  x-task-certbot: &task-certbot
+    image: certbot/certbot
+    entrypoint: []
+    working_dir: /app
+    volumes:
+      - ./tasks:/app/tasks:ro
+      - ./var/letsencrypt:/etc/letsencrypt
+      - ./var/certbot-webroot:/var/www/html
+    environment:
+      - DOMAIN
+      - ADMIN_EMAIL
+  task-lerenew:
+    <<: *task-certbot
+  task-leissue:
+    <<: *task-certbot
+    ports:
+      - 80:80
+      - 443:443
+  task-wp:
+    image: wordpress:cli-php7.2
+    entrypoint: []
+    working_dir: /app
+    user: root
     networks:
       - backend
     volumes:
-      - .:/app/
-    working_dir: /app
+      - .:/app
+      - wordpress:/var/www/wordpress
     environment:
-      - DB_NAME=${WORDPRESS_DB_NAME}
-      - DB_USER=${WORDPRESS_DB_USER}
-      - DB_HOST=${WORDPRESS_DB_HOST}
-      - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - WORDPRESS_DOMAIN
+      - DOMAIN
+      - ADMIN_EMAIL
+      - DB_NAME
+      - DB_USER
+      - DB_HOST
+      - DB_PASSWORD
+      - MYSQL_ROOT_PASSWORD
+      - DBI_AWS_ACCESS_KEY_ID
+      - DBI_AWS_SECRET_ACCESS_KEY
+      - AUTH_KEY
+      - SECURE_AUTH_KEY
+      - LOGGED_IN_KEY
+      - NONCE_KEY
+      - AUTH_SALT
+      - SECURE_AUTH_SALT
+      - LOGGED_IN_SALT
+      - NONCE_SALT
+      - WORDPRESS_VERSION=4.9.8
+      - WORDPRESS_SHA1=0945bab959cba127531dceb2c4fed81770812b4f
+      - WP_DEFAULT_THEME=twentyseventeen-child
+      - WORDPRESS_TITLE=wp-headless
+      - ACF_PRO_VERSION=5.7.6
+      - PHP_VERSION=7.2
+      - WORDPRESS_PLUGINS=
+          custom-post-type-ui 1.6.0
+          acf-to-rest-api 3.1.0
+          amazon-s3-and-cloudfront 2.0
+          wordpress-importer 0.6.4
+          title-and-nofollow-for-links
