@@ -2,7 +2,6 @@
 
 set -eo pipefail
 
-DOMAIN="$WORDPRESS_DOMAIN"
 SITEURL="https://${DOMAIN}/"
 MYSQL_CMD="mysql -N -h ${DB_HOST} -u ${DB_USER} -p${DB_PASSWORD} ${DB_NAME}"
 
