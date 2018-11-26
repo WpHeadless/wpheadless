@@ -9,3 +9,8 @@ certbot \
   --standalone \
   -m "$ADMIN_EMAIL" \
   -d "$DOMAIN"
+
+openssl \
+  dhparam \
+  -dsaparam \
+  -out "/etc/letsencrypt/live/${DOMAIN}/dhparam.pem" 4096
