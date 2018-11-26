@@ -5,9 +5,9 @@ services:
     entrypoint: []
     working_dir: /app
     volumes:
+      - certbot-webroot:/var/www/html
       - ./tasks:/app/tasks:ro
       - ./var/letsencrypt:/etc/letsencrypt
-      - ./var/certbot-webroot:/var/www/html
     environment:
       - DOMAIN
       - ADMIN_EMAIL
