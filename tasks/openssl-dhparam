@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+set -e
+
+mkdir -p /etc/letsencrypt/live/${DOMAIN} > /dev/null
+
+openssl \
+  dhparam \
+  -dsaparam \
+  -out "/etc/letsencrypt/live/${DOMAIN}/dhparam.pem" 4096

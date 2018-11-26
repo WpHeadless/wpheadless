@@ -21,6 +21,10 @@ services:
       - 80:80
       - 443:443
 
+  task-openssl:
+    <<: *task-certbot
+    command: sh
+
   task-wp:
     image: wordpress:cli-php7.2
     entrypoint: []
