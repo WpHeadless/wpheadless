@@ -39,6 +39,7 @@ for plugin_file in $PLUGINS; do
   rm "$plugin_file"
 done
 
+# ACF plugin is different - GitHub release
 plugin_url="https://github.com/wp-premium/advanced-custom-fields-pro/archive/${ACF_PRO_VERSION}.zip"
 echo "Downloading plugin ${plugin_url}"
 curl -sS -O -L "$plugin_url"
@@ -47,6 +48,7 @@ rm "${ACF_PRO_VERSION}.zip"
 [ -d advanced-custom-fields-pro ] && rm -rf advanced-custom-fields-pro
 mv -f "advanced-custom-fields-pro-${ACF_PRO_VERSION}" advanced-custom-fields-pro
 
+# CUN plugin is different - GitHub branch
 plugin_url=https://github.com/tsertkov/content-update-notifier/archive/master.zip
 echo "Downloading plugin ${plugin_url}"
 curl -sS -O -L "$plugin_url"
@@ -70,18 +72,27 @@ WP_CONFIG_PATH=$(dirname "$WEBROOT")/wp-config.php
 echo "Generating ${WP_CONFIG_PATH}"
 php /app/wp-headless/wp-config-tpl.php > "$WP_CONFIG_PATH"
 
+#
 # Create db and user if necessary
+#
+
 mysql -h "$DB_HOST" -u root -p"${MYSQL_ROOT_PASSWORD}" <<EOF
 CREATE DATABASE IF NOT EXISTS ${DB_NAME};
 CREATE USER IF NOT EXISTS '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';
 GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'%';
 EOF
 
-# Change working directory to WEBROOT for wp-cli
+#
+# Prepare environment to wp-cli
+#
+
 cd /var/www/wordpress/html
 WP="wp --allow-root"
 
+#
 # Install multisite wp
+#
+
 $WP core is-installed --network || \
   $WP core multisite-install \
     --url="https://${DOMAIN}" \
@@ -90,13 +101,19 @@ $WP core is-installed --network || \
     --skip-config \
     --skip-email
 
+#
 # Enable/disable themes
+#
+
 $WP theme is-active twentyseventeen && \
   $WP theme disable twentyseventeen --network
 $WP theme is-active twentyseventeen-child || \
   $WP theme enable twentyseventeen-child --network --activate
 
+#
 # Enable plugins
+#
+
 PLUGINS="$(
   echo $WORDPRESS_PLUGINS \
     | sed -e 's/\(\S\+\)\s\S\+\s*/\1\n/g' \
