@@ -18,11 +18,7 @@ services:
       - ./nginx:/etc/nginx/conf.d:ro
       - ./var/letsencrypt:/etc/letsencrypt:ro
       - ./var/wp-uploads:/var/www/wp-uploads:ro
-      - ./var/certbot-webroot:/var/www/html
-    environment:
-      - VIRTUAL_HOST=${DOMAIN}
-      - LETSENCRYPT_HOST=${DOMAIN}
-      - LETSENCRYPT_EMAIL=${ADMIN_EMAIL}
+      - ./var/certbot-webroot:/var/www/html:ro
 
   mysql:
     image: mariadb:10.3
