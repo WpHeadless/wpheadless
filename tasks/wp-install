@@ -20,7 +20,7 @@ if [ -z "$(ls -A "$WEBROOT")" ]; then
 fi
 
 #
-# Copy custom plugins
+# Download plugins given in $WORDPRESS_PLUGINS
 #
 
 cd "${WEBROOT}/wp-content/plugins"
