@@ -4,6 +4,6 @@ services:
     ports:
       - 3306:3306
 
-  php-fpm:
+  php:
     build:
       context: ./php-fpm-wp

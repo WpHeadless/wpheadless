@@ -6,5 +6,5 @@ services:
   mysql:
     logging: { driver: "awslogs", options: { awslogs-group: "${DOMAIN}", awslogs-stream: "mysql" } }
 
-  php-fpm:
-    logging: { driver: "awslogs", options: { awslogs-group: "${DOMAIN}", awslogs-stream: "php-fpm" } }
+  php:
+    logging: { driver: "awslogs", options: { awslogs-group: "${DOMAIN}", awslogs-stream: "php" } }

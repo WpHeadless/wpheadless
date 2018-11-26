@@ -4,7 +4,7 @@ services:
     image: nginx
     restart: unless-stopped
     depends_on:
-      - php-fpm
+      - php
     networks:
       - frontend
       - backend
@@ -31,7 +31,7 @@ services:
       - MYSQL_ROOT_PASSWORD
       - MYSQL_ALLOW_EMPTY_PASSWORD=1
 
-  php-fpm:
+  php:
     image: tsertkov/php-fpm-wp:7.2
     restart: unless-stopped
     networks:
