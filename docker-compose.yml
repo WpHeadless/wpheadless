@@ -13,7 +13,7 @@ services:
       - 443:443
     volumes:
       - wordpress:/var/www/wordpress:ro
-      - certbot-webroot:/var/www/html:ro
+      - certbot:/var/www/html:ro
       - ./nginx:/etc/nginx/conf.d:ro
       - ./var/letsencrypt/live/${DOMAIN}:/etc/letsencrypt/live/${DOMAIN}:ro
       - ./var/letsencrypt/archive/${DOMAIN}:/etc/letsencrypt/archive/${DOMAIN}:ro
@@ -43,7 +43,7 @@ services:
 volumes:
   mysql:
   wordpress:
-  certbot-webroot:
+  certbot:
 
 networks:
   frontend:

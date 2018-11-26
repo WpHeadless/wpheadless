@@ -5,7 +5,7 @@ services:
     entrypoint: []
     working_dir: /app
     volumes:
-      - certbot-webroot:/var/www/html
+      - certbot:/var/www/html
       - ./tasks:/app/tasks:ro
       - ./var/letsencrypt:/etc/letsencrypt
     environment:
