@@ -15,8 +15,8 @@ services:
       - wordpress:/var/www/wordpress:ro
       - certbot-webroot:/var/www/html:ro
       - ./nginx:/etc/nginx/conf.d:ro
-      - ./var/letsencrypt/live/${DOMAIN}:/var/letsencrypt/live/${DOMAIN}:ro
-      - ./var/letsencrypt/archive/${DOMAIN}:/var/letsencrypt/archive/${DOMAIN}:ro
+      - ./var/letsencrypt/live/${DOMAIN}:/etc/letsencrypt/live/${DOMAIN}:ro
+      - ./var/letsencrypt/archive/${DOMAIN}:/etc/letsencrypt/archive/${DOMAIN}:ro
       - ./var/wp-uploads:/var/www/wp-uploads:ro
 
   mysql:
