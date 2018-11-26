@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+set -e
+
+mkdir -p /etc/letsencrypt/live/${DOMAIN} > /dev/null
+
+openssl \
+  req -subj "/CN=${DOMAIN}" \
+  -x509 -newkey rsa:4096 -nodes -days 365 \
+  -keyout /etc/letsencrypt/live/${DOMAIN}/privkey.pem \
+  -out /etc/letsencrypt/live/${DOMAIN}/fullchain.pem
