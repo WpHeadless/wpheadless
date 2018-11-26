@@ -1,5 +1,4 @@
 version: "3"
-
 services:
   x-task-certbot: &task-certbot
     image: certbot/certbot
@@ -12,13 +11,16 @@ services:
     environment:
       - DOMAIN
       - ADMIN_EMAIL
+
   task-lerenew:
     <<: *task-certbot
+
   task-leissue:
     <<: *task-certbot
     ports:
       - 80:80
       - 443:443
+
   task-wp:
     image: wordpress:cli-php7.2
     entrypoint: []

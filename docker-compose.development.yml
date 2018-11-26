@@ -3,6 +3,7 @@ services:
   mysql:
     ports:
       - 3306:3306
+
   php-fpm:
     build:
       context: ./php-fpm-wp
