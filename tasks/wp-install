@@ -72,6 +72,14 @@ WP_CONFIG_PATH=$(dirname "$WEBROOT")/wp-config.php
 echo "Generating ${WP_CONFIG_PATH}"
 php /app/wp-headless/wp-config-tpl.php > "$WP_CONFIG_PATH"
 
+
+#
+# Symlink uploads to dedicated RW docker volume mount
+#
+
+rm -rf /var/www/wordpress/html/wp-content/uploads
+ln -sf /var/www/wp-uploads /var/www/wordpress/html/wp-content/uploads
+
 #
 # Create db and user if necessary
 #

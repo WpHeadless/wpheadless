@@ -45,7 +45,6 @@ define('SECURE_AUTH_SALT', '<?php e('SECURE_AUTH_SALT')?>');
 define('LOGGED_IN_SALT', '<?php e('LOGGED_IN_SALT')?>');
 define('NONCE_SALT', '<?php e('NONCE_SALT')?>');
 define('WP_DEBUG', false);
-define('UPLOADS', '/var/www/wp-uploads');
 $table_prefix  = 'wp_';
 
 if ( !defined('ABSPATH') ) define('ABSPATH', dirname(__FILE__) . '/html/');
