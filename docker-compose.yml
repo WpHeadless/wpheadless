@@ -3,6 +3,11 @@ services:
   nginx:
     image: nginx
     restart: unless-stopped
+    command:
+      sh -c '
+        DOLLAR=$$ envsubst < /etc/nginx/nginx.conf.tpl > /etc/nginx/nginx.conf;
+        exec nginx -g "daemon off;"
+      '
     depends_on:
       - php
     networks:
@@ -14,10 +19,12 @@ services:
     volumes:
       - wordpress:/var/www/wordpress:ro
       - certbot:/var/www/html:ro
-      - ./nginx:/etc/nginx/conf.d:ro
+      - ./nginx/nginx.conf.tpl:/etc/nginx/nginx.conf.tpl:ro
       - ./var/letsencrypt/live/${DOMAIN}:/etc/letsencrypt/live/${DOMAIN}:ro
       - ./var/letsencrypt/archive/${DOMAIN}:/etc/letsencrypt/archive/${DOMAIN}:ro
       - ./var/wp-uploads:/var/www/wp-uploads:ro
+    environment:
+      - DOMAIN
 
   mysql:
     image: mariadb:10.3
