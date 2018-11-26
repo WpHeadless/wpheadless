@@ -29,6 +29,7 @@ services:
       - ./mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf:ro
     environment:
       - MYSQL_ROOT_PASSWORD
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
 
   php-fpm:
     image: tsertkov/php-fpm-wp:7.2
