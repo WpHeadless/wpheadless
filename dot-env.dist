@@ -1,6 +1,6 @@
 COMPOSE_FILE=docker-compose.yml:docker-compose.development.yml
-DOMAIN=example.com
-ADMIN_EMAIL=webmaster@example.com
+DOMAIN=localhost
+ADMIN_EMAIL=webmaster@localhost
 DB_HOST=mysql
 DB_USER=wp-headless
 DB_NAME=wp-headless
@@ -16,4 +16,3 @@ AUTH_SALT=
 SECURE_AUTH_SALT=
 LOGGED_IN_SALT=
 NONCE_SALT=
-
