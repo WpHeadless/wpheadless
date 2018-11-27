@@ -2,6 +2,7 @@ version: "3"
 services:
   smtp:
     image: namshi/smtp
+    hostname: ${DOMAIN}
     networks:
       - backend
 
