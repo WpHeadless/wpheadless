@@ -35,7 +35,9 @@ services:
     volumes:
       - wordpress:/var/www/wordpress
       - .:/app
-      - ./var/wp-uploads:/var/www/wp-uploads
+      - ./var/uploads:/var/www/uploads
+      - ./var/plugins:/var/www/plugins
+      - ./var/themes:/var/www/themes
     environment:
       - DOMAIN
       - ADMIN_EMAIL

@@ -78,7 +78,14 @@ php /app/wp-headless/wp-config-tpl.php > "$WP_CONFIG_PATH"
 #
 
 rm -rf /var/www/wordpress/html/wp-content/uploads
-ln -sf /var/www/wp-uploads /var/www/wordpress/html/wp-content/uploads
+ln -sf /var/www/uploads /var/www/wordpress/html/wp-content/uploads
+
+#
+# Symlink custom plugins and themes
+#
+
+ln -sf /var/www/plugins/* "${WEBROOT}/wp-content/plugins/"
+ln -sf /var/www/themes/* "${WEBROOT}/wp-content/themes/"
 
 #
 # Create db and user if necessary

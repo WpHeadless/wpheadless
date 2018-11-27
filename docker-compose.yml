@@ -22,7 +22,9 @@ services:
       - ./nginx/nginx.conf.tpl:/etc/nginx/nginx.conf.tpl:ro
       - ./var/letsencrypt/live/${DOMAIN}:/etc/letsencrypt/live/${DOMAIN}:ro
       - ./var/letsencrypt/archive/${DOMAIN}:/etc/letsencrypt/archive/${DOMAIN}:ro
-      - ./var/wp-uploads:/var/www/wp-uploads:ro
+      - ./var/uploads:/var/www/uploads:ro
+      - ./var/plugins:/var/www/plugins:ro
+      - ./var/themes:/var/www/themes:ro
     environment:
       - DOMAIN
 
@@ -45,7 +47,9 @@ services:
       - backend
     volumes:
       - wordpress:/var/www/wordpress:ro
-      - ./var/wp-uploads:/var/www/wp-uploads
+      - ./var/uploads:/var/www/uploads:ro
+      - ./var/plugins:/var/www/plugins:ro
+      - ./var/themes:/var/www/themes:ro
 
 volumes:
   mysql:
