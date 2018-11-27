@@ -26,6 +26,11 @@ RUN set -ex; \
     | xargs -rt apt-mark manual; \
   \
   apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
+  \
+  # install msmtp tp make sendmail work after borrowed wp code
+  apt-get install -y \
+    msmtp \
+  ; \
   rm -rf /var/lib/apt/lists/*
 
 # set recommended PHP.ini settings
@@ -38,6 +43,8 @@ RUN { \
     echo 'opcache.fast_shutdown=1'; \
     echo 'opcache.enable_cli=1'; \
   } > /usr/local/etc/php/conf.d/opcache-recommended.ini; \
+  echo 'sendmail_path=/usr/bin/msmtp --host smtp --read-envelope-from -t' \
+    > /usr/local/etc/php/conf.d/email.ini; \
   cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini; \
   { \
     echo 'php_admin_value[upload_max_filesize] = 16M'; \
