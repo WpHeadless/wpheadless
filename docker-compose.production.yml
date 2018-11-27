@@ -1,5 +1,8 @@
 version: "3"
 services:
+  smtp:
+    logging: { driver: "awslogs", options: { awslogs-group: "${DOMAIN}", awslogs-stream: "nginx" } }
+
   nginx:
     logging: { driver: "awslogs", options: { awslogs-group: "${DOMAIN}", awslogs-stream: "nginx" } }
 
