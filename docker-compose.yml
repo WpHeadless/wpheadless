@@ -9,11 +9,12 @@ services:
   nginx:
     image: nginx
     restart: unless-stopped
-    command:
+    command: "
       sh -c '
         DOLLAR=$$ envsubst < /etc/nginx/nginx.conf.tpl > /etc/nginx/nginx.conf;
-        exec nginx -g "daemon off;"
+        exec nginx -g \"daemon off;\"
       '
+    "
     depends_on:
       - php
     networks:
