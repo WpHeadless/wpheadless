@@ -47,7 +47,7 @@ services:
       - backend
     volumes:
       - wordpress:/var/www/wordpress:ro
-      - ./var/uploads:/var/www/uploads:ro
+      - ./var/uploads:/var/www/uploads
       - ./var/plugins:/var/www/plugins:ro
       - ./var/themes:/var/www/themes:ro
 
