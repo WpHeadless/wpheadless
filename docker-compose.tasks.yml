@@ -39,6 +39,7 @@ services:
       - ./var/plugins:/var/www/plugins
       - ./var/themes:/var/www/themes
     environment:
+      - SMTPHOST=smtp
       - DOMAIN
       - ADMIN_EMAIL
       - DB_NAME
