@@ -9,7 +9,11 @@ DUMP_FILE_PATH="${DUMP_DIR}/${DUMP_FILE_NAME}"
 NEW_DUMP_FILE_NAME="db-$(date +%Y%m%d-%H%M%S).sql"
 NEW_DUMP_FILE_PATH="/tmp/${NEW_DUMP_FILE_NAME}"
 
-mysqldump -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASSWORD" -B "$DB_NAME" \
+mysqldump \
+  -h "$DB_HOST" \
+  -u "$DB_USER" \
+  $([ ! -z "$DB_PASSWORD" ] && echo -p"$DB_PASSWORD") \
+  -B "$DB_NAME" \
   -r "$NEW_DUMP_FILE_PATH"
 
 gzip "$NEW_DUMP_FILE_PATH"
