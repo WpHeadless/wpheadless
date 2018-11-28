@@ -5,8 +5,6 @@ services:
     working_dir: $PWD
     command: "
       sh -c '
-        rm -rf /root &&
-        ln -s '$PWD' /root &&
         crontab cron/crontab &&
         crond -f -d 8
       '
@@ -16,6 +14,8 @@ services:
     volumes:
       - ..:${PWD}
       - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - APPROOT=$PWD
 
   smtp:
     image: namshi/smtp
