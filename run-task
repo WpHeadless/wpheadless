@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 
+cd "$(dirname "$0")"
 TASKS_DIR="tasks"
 
 if [ $# -eq 0 ]; then
@@ -16,6 +17,7 @@ shift 1
 
 if [ "${TASK#*-}" == "sh" ]; then
   if [ $# -eq 0 ]; then
+    # FIXME docker must be run with -it
     TASK="sh"
   else
     TASK="$@"
