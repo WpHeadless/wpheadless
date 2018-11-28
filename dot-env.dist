@@ -1,6 +1,6 @@
 COMPOSE_FILE=docker-compose.yml:docker-compose.development.yml
 DOMAIN=localhost
-ADMIN_EMAIL=webmaster@localhost.localdomain
+ADMIN_EMAIL=webmaster@example.com
 DB_HOST=mysql
 DB_USER=wp-headless
 DB_NAME=wp-headless
