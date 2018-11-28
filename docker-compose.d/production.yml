@@ -1,5 +1,8 @@
 version: "3"
 services:
+  cron:
+    logging: { driver: "awslogs", options: { awslogs-group: "${DOMAIN}", awslogs-stream: "nginx" } }
+
   smtp:
     logging: { driver: "awslogs", options: { awslogs-group: "${DOMAIN}", awslogs-stream: "nginx" } }
 

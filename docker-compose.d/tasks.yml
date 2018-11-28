@@ -3,11 +3,11 @@ services:
   x-task-certbot: &task-certbot
     image: certbot/certbot
     entrypoint: []
-    working_dir: /app
+    working_dir: $PWD
     volumes:
       - certbot:/var/www/html
-      - ./tasks:/app/tasks:ro
-      - ./var/letsencrypt:/etc/letsencrypt
+      - ../tasks:${PWD}/tasks:ro
+      - ../var/letsencrypt:/etc/letsencrypt
     environment:
       - DOMAIN
       - ADMIN_EMAIL
@@ -28,17 +28,18 @@ services:
   task-wp:
     image: wordpress:cli-php7.2
     entrypoint: []
-    working_dir: /app
+    working_dir: $PWD
     user: root
     networks:
       - backend
     volumes:
       - wordpress:/var/www/wordpress
-      - .:/app
-      - ./var/uploads:/var/www/uploads
-      - ./var/plugins:/var/www/plugins
-      - ./var/themes:/var/www/themes
+      - ..:/$PWD
+      - ../var/uploads:/var/www/uploads
+      - ../var/plugins:/var/www/plugins
+      - ../var/themes:/var/www/themes
     environment:
+      - APPROOT=$PWD
       - SMTPHOST=smtp
       - DOMAIN
       - ADMIN_EMAIL

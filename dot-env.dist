@@ -1,4 +1,3 @@
-COMPOSE_FILE=docker-compose.yml:docker-compose.development.yml
 DOMAIN=localhost
 ADMIN_EMAIL=webmaster@example.com
 DB_HOST=mysql

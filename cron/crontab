@@ -1,0 +1,2 @@
+0 1 * * * ./run-task wp-db-backup
+0 2 * * * ./run-task lerenew

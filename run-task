@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 TASKS_DIR="tasks"
 
@@ -24,6 +24,6 @@ else
   TASK="${TASKS_DIR}/${TASK} $@"
 fi
 
-docker-compose \
-  -f docker-compose.yml -f docker-compose.tasks.yml \
+./docker-compose \
+  -f docker-compose.d/tasks.yml \
   run --rm --service-ports "$TASK_SERVICE" $TASK

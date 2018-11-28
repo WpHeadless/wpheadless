@@ -1,5 +1,22 @@
 version: "3"
 services:
+  cron:
+    image: docker
+    working_dir: $PWD
+    command: "
+      sh -c '
+        rm -rf /root &&
+        ln -s '$PWD' /root &&
+        crontab cron/crontab &&
+        crond -f -d 8
+      '
+    "
+    networks:
+      - backend
+    volumes:
+      - ..:${PWD}
+      - /var/run/docker.sock:/var/run/docker.sock
+
   smtp:
     image: namshi/smtp
     hostname: ${DOMAIN}
@@ -26,12 +43,12 @@ services:
     volumes:
       - wordpress:/var/www/wordpress:ro
       - certbot:/var/www/html:ro
-      - ./nginx/nginx.conf.tpl:/etc/nginx/nginx.conf.tpl:ro
-      - ./var/letsencrypt/live/${DOMAIN}:/etc/letsencrypt/live/${DOMAIN}:ro
-      - ./var/letsencrypt/archive/${DOMAIN}:/etc/letsencrypt/archive/${DOMAIN}:ro
-      - ./var/uploads:/var/www/uploads:ro
-      - ./var/plugins:/var/www/plugins:ro
-      - ./var/themes:/var/www/themes:ro
+      - ../nginx/nginx.conf.tpl:/etc/nginx/nginx.conf.tpl:ro
+      - ../var/letsencrypt/live/${DOMAIN}:/etc/letsencrypt/live/${DOMAIN}:ro
+      - ../var/letsencrypt/archive/${DOMAIN}:/etc/letsencrypt/archive/${DOMAIN}:ro
+      - ../var/uploads:/var/www/uploads:ro
+      - ../var/plugins:/var/www/plugins:ro
+      - ../var/themes:/var/www/themes:ro
     environment:
       - DOMAIN
 
@@ -42,7 +59,7 @@ services:
       - backend
     volumes:
       - mysql:/var/lib/mysql
-      - ./mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf:ro
+      - ../mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf:ro
     environment:
       - MYSQL_ROOT_PASSWORD
       - MYSQL_ALLOW_EMPTY_PASSWORD=1
@@ -54,9 +71,9 @@ services:
       - backend
     volumes:
       - wordpress:/var/www/wordpress:ro
-      - ./var/uploads:/var/www/uploads
-      - ./var/plugins:/var/www/plugins:ro
-      - ./var/themes:/var/www/themes:ro
+      - ../var/uploads:/var/www/uploads
+      - ../var/plugins:/var/www/plugins:ro
+      - ../var/themes:/var/www/themes:ro
 
 volumes:
   mysql:

@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+cd "$(dirname "$0")"
+STAGE=$(cat .stage 2>/dev/null)
+STAGE=${STAGE:-production}
+DOCKER_COMPOSE_VERSION=1.23.1
+COMPOSE_PROJECT_NAME=wp-headless
+
+docker \
+  run --rm \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v "${PWD}:${PWD}" \
+  --workdir="${PWD}" \
+  --env PWD="$PWD" \
+  --env COMPOSE_PROJECT_NAME="$COMPOSE_PROJECT_NAME" \
+  "docker/compose:${DOCKER_COMPOSE_VERSION}" \
+  -f docker-compose.d/common.yml \
+  -f "docker-compose.d/${STAGE}.yml" \
+  $@;

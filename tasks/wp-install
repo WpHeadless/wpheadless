@@ -62,7 +62,7 @@ mv -f content-update-notifier-master content-update-notifier
 #
 
 echo "Copying custom theme ${WP_DEFAULT_THEME}"
-cp -rf "/app/wp-headless/${WP_DEFAULT_THEME}" "${WEBROOT}/wp-content/themes"
+cp -rf "${APPROOT}/wp-headless/${WP_DEFAULT_THEME}" "${WEBROOT}/wp-content/themes"
 
 #
 # Prepare wp-config.php file
@@ -70,8 +70,7 @@ cp -rf "/app/wp-headless/${WP_DEFAULT_THEME}" "${WEBROOT}/wp-content/themes"
 
 WP_CONFIG_PATH=$(dirname "$WEBROOT")/wp-config.php
 echo "Generating ${WP_CONFIG_PATH}"
-php /app/wp-headless/wp-config-tpl.php > "$WP_CONFIG_PATH"
-
+php "${APPROOT}/wp-headless/wp-config-tpl.php" > "$WP_CONFIG_PATH"
 
 #
 # Symlink uploads to dedicated RW docker volume mount
