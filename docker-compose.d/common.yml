@@ -1,7 +1,7 @@
 version: "3"
 services:
   cron:
-    image: docker
+    image: docker:stable
     working_dir: $PWD
     command: "
       sh -c '
@@ -18,13 +18,13 @@ services:
       - APPROOT=$PWD
 
   smtp:
-    image: namshi/smtp
+    image: namshi/smtp:latest
     hostname: ${DOMAIN}
     networks:
       - backend
 
   nginx:
-    image: nginx
+    image: nginx:1.15
     restart: unless-stopped
     command: "
       sh -c '
