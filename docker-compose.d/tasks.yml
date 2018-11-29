@@ -63,7 +63,6 @@ services:
       - WP_DEFAULT_THEME=twentyseventeen-child
       - WORDPRESS_TITLE=wp-headless
       - ACF_PRO_VERSION=5.7.6
-      - PHP_VERSION=7.2
       - WORDPRESS_PLUGINS=
           custom-post-type-ui 1.6.0
           acf-to-rest-api 3.1.0
