@@ -39,7 +39,7 @@ It is expected that dhparam and ssl certificates are in place already.
 
 Please note that Wordpress uploads folder is not backed up since uploads supposed to be hosted on AWS S3.
 
-## Service containers
+## Docker service containers
 
 - nginx: [nginx](https://hub.docker.com/_/nginx/)
 - mysql: [mariadb](https://hub.docker.com/_/mariadb/)
@@ -47,7 +47,7 @@ Please note that Wordpress uploads folder is not backed up since uploads suppose
 - smtp: [namshi/smtp](https://hub.docker.com/r/namshi/smtp/)
 - cron: [docker](https://hub.docker.com/_/docker/)
 
-## Run-task images
+## Docker run-task images
 
 `./run-task` runs scripts from `tasks/` inside temporary containers using following images:
 
