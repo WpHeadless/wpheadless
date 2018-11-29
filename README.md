@@ -22,6 +22,7 @@ wp-headless is Wordpress Multisite bundle providing API-only or Headless impleme
 
 There two executable files in project root: `./docker-compose` - docker-compose wrapper and `./run-task` - runner for scripted tasks from `tasks/` inside docker containers.
 
+- `cp dot-env.dist dot-env` - Copy `dot-env.dist` to `dot-env` then edit configuration parameters
 - `./run-task openssl-dhparam` - Generate DH params for nginx
 - `./run-task openssl-self-signed` or `./run-task leissue` - Get ssl certificate
 - `./docker-compose up -d` - Bring up services
