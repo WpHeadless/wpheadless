@@ -11,9 +11,8 @@ wp-headless is Wordpress Multisite bundle providing API-only or Headless impleme
 - Docker is the only dependency on server
 - HTTPS only
 - Self-signed certificate
-- Letsencrypt certificate issue
-- Letsencrypt certificate renew automation
-- Automated nightly Wordpress backup
+- Letsencrypt certificate issue & renew
+- Backup Wordpress nightly
 - Stage support (production, development)
 - Wordpress Multisite secure setup
 - SMTP server
