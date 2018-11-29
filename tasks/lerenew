@@ -2,11 +2,23 @@
 
 set -e
 
+# Since certbot exit with 0 not only when certificate was renewed successfully
+# but also when certificate is not yet due for renewal the only reliable
+# method for catching certificate renewals is deploy-hook.
+#
+# Solution implemented here uses deploy-hook script to create a file at
+# specific location and exit with 0 if it exists, or 1 otherwise.
+
+rm -f /root/certbot-renew-success
+
 certbot \
   certonly \
   -n \
   --agree-tos \
-  --force-renewal \
   --webroot --webroot-path=/var/www/html \
+  --deploy-hook=certbot/deploy-hook \
   -m "$ADMIN_EMAIL" \
   -d "$DOMAIN"
+
+code=$(test -f /root/certbot-renew-success)
+exit $code

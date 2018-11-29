@@ -14,6 +14,11 @@ services:
 
   task-lerenew:
     <<: *task-certbot
+    volumes:
+      - certbot:/var/www/html
+      - ../tasks:${PWD}/tasks:ro
+      - ../var/letsencrypt:/etc/letsencrypt
+      - ../certbot:${PWD}/certbot:ro
 
   task-leissue:
     <<: *task-certbot
