@@ -40,6 +40,21 @@ It is expected that dhparam and ssl certificates are in place already.
 
 Please note that Wordpress uploads folder is not backed up since uploads supposed to be hosted on AWS S3.
 
+## Service containers
+
+- nginx: [nginx](https://hub.docker.com/_/nginx/)
+- mysql: [mariadb](https://hub.docker.com/_/mariadb/)
+- php: [tsertkov/php-fpm-wp](https://hub.docker.com/r/tsertkov/php-fpm-wp/)
+- smtp: [namshi/smtp](https://hub.docker.com/r/namshi/smtp/)
+- cron: [docker](https://hub.docker.com/_/docker/)
+
+## Run-task images
+
+`./run-task` runs scripts from `tasks/` inside temporary containers using following images:
+
+- [certbot/certbot](https://hub.docker.com/r/certbot/certbot/)
+- [wordpress:cli](https://hub.docker.com/_/wordpress/)
+
 ## Similar projects
 
 There are other projects sharing the same idea of using Wordpress as API-only CMS.
