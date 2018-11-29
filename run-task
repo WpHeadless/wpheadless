@@ -19,7 +19,6 @@ shift 1
 
 if [ "${TASK#*-}" == "sh" ]; then
   if [ $# -eq 0 ]; then
-    # FIXME docker must be run with -it
     TASK="sh"
   else
     TASK="$@"
