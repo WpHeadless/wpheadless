@@ -42,7 +42,7 @@ Please note that Wordpress uploads folder is not backed up since uploads suppose
 
 ## Similar projects
 
-There are other projects sharing the very same idea using Wordpress as an API-only CMS.
+There are other projects sharing the same idea of using Wordpress as API-only CMS.
 
 - WordPress + React Starter kit https://github.com/postlight/headless-wp-starter
 - Rooftop CMS https://github.com/rooftopcms/rooftop-cms
