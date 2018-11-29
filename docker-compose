@@ -27,4 +27,4 @@ docker \
   "docker/compose:${DOCKER_COMPOSE_VERSION}" \
   -f docker-compose.d/common.yml \
   -f "docker-compose.d/${STAGE}.yml" \
-  $@;
+  "$@";
