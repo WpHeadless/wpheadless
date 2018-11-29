@@ -8,8 +8,17 @@ STAGE=${STAGE:-production}
 DOCKER_COMPOSE_VERSION=1.23.1
 COMPOSE_PROJECT_NAME=wp-headless
 
+if [ -t 1 ]; then
+    DOCKER_RUN_OPTIONS="-t"
+fi
+
+if [ -t 0 ]; then
+    DOCKER_RUN_OPTIONS="$DOCKER_RUN_OPTIONS -i"
+fi
+
 docker \
   run --rm \
+  $DOCKER_RUN_OPTIONS \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v "${PWD}:${PWD}" \
   --workdir="${PWD}" \
