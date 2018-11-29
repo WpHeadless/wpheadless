@@ -1,21 +1,40 @@
 # wp-headless
 
-> Wordpress Headless CMS
+> Use wp-headless to build great API-powered sites and services.
 
-## Usage
+# What is wp-headless?
 
-### Start clean
+wp-headless is Wordpress Multisite bundle providing API-only or Headless implementation of the CMS. It comes with fully automated docker based workflow to setup and maintain CMS service on your own server or localhost.
 
-Copy `dot-env.dist` to `dot-env` and add missing configuration values to the file.
+## Features
 
-Execute `docker-compose up` and wait for `Admin password` message from `wordpress_1` container. Use this password with 'admin' username to access Wordpress administration interface. Change the password immediately.
+- Docker is the only dependency on server
+- HTTPS only
+- Self-signed certificate
+- Letsencrypt certificate issue
+- Letsencrypt certificate renew automation
+- Automated nightly Wordpress backup
+- Stage support (production, development)
+- Wordpress Multisite secure setup
+- SMTP server
 
-### Restore from db backup
+## Install
 
-Assuming that `dot-env` and `./backup/db.sql.gz` files are in place.
+There two executable files in project root: `./docker-compose` - docker-compose wrapper and `./run-task` - runner for scripted tasks from `tasks/` inside docker containers.
 
-```
-$ docker-compose up -d mysql
-$ ./run-task db-restore
-$ docker-compose up -d wordpress
-```
+- `./run-task openssl-dhparam` - Generate DH params for nginx
+- `./run-task openssl-self-signed` or `./run-task leissue` - Get ssl certificate
+- `./docker-compose up -d` - Bring up services
+- `./run-task wp-install` - Download and configure Wordpress with custom plugins and themes
+
+After executing `wp-install` task you should find Wordpress admin user password in the logs. Do not forget to change it!
+
+## Restore from backup
+
+It is expected that dhparam and ssl certificates are in place already.
+
+- `./docker-compose up -d` - Bring up services
+- `./run-task wp-install` - Install clean wp-headless
+- `./run-task db-restore` - Restore database from backup file
+
+Please note that Wordpress uploads folder is not backed up since uploads supposed to be hosted on AWS S3.
