@@ -39,3 +39,10 @@ It is expected that dhparam and ssl certificates are in place already.
 - `./run-task db-restore` - Restore database from backup file
 
 Please note that Wordpress uploads folder is not backed up since uploads supposed to be hosted on AWS S3.
+
+## Similar projects
+
+There are other projects sharing the very same idea using Wordpress as an API-only CMS.
+
+- WordPress + React Starter kit https://github.com/postlight/headless-wp-starter
+- Rooftop CMS https://github.com/rooftopcms/rooftop-cms
