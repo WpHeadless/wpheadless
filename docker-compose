@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+set -eo pipefail
+
 cd "$(dirname "$0")"
 STAGE=$(cat .stage 2>/dev/null)
 STAGE=${STAGE:-production}

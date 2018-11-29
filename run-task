@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+set -eo pipefail
+
 cd "$(dirname "$0")"
 TASKS_DIR="tasks"
 
