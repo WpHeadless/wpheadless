@@ -1,6 +1,6 @@
 # wp-headless
 
-> Wordpress Headless CMS to build great API-powered sites and services.
+> Wordpress Headless CMS to build great API-powered websites, apps and services.
 
 # What is wp-headless?
 
