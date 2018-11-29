@@ -1,2 +1,2 @@
 0 1 * * * "${APPROOT}/run-task" wp-db-backup
-0 2 * * * "${APPROOT}/run-task" lerenew
+0 2 * * * "${APPROOT}/run-task" lerenew && "${APPROOT}/docker-compose" kill -s HUP nginx
