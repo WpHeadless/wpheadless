@@ -121,10 +121,10 @@ $WP core is-installed --network || \
 # Enable/disable themes
 #
 
-$WP theme is-active twentyseventeen && \
-  $WP theme disable twentyseventeen --network
 $WP theme is-active twentyseventeen-child || \
   $WP theme enable twentyseventeen-child --network --activate
+$WP theme is-active twentyseventeen && \
+  $WP theme disable twentyseventeen --network
 
 $WP theme delete twentyfifteen
 $WP theme delete twentysixteen
