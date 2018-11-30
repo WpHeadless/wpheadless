@@ -126,8 +126,11 @@ $WP theme is-active twentyseventeen && \
 $WP theme is-active twentyseventeen-child || \
   $WP theme enable twentyseventeen-child --network --activate
 
+$WP theme delete twentyfifteen
+$WP theme delete twentysixteen
+
 #
-# Enable plugins
+# Enable/disable plugins
 #
 
 PLUGINS="$(
@@ -142,3 +145,6 @@ for plugin_name in $PLUGINS; do
   $WP plugin is-active "$plugin_name" || \
     $WP plugin activate "$plugin_name" --network
 done
+
+$WP plugin delete hello
+$WP plugin delete akismet
