@@ -123,11 +123,12 @@ $WP core is-installed --network || \
 
 $WP theme is-active twentyseventeen-child || \
   $WP theme enable twentyseventeen-child --network --activate
-$WP theme is-active twentyseventeen && \
+
+$WP theme list --field=name --enabled=network | grep -xq twentyseventeen && \
   $WP theme disable twentyseventeen --network
 
-$WP theme delete twentyfifteen
-$WP theme delete twentysixteen
+$WP theme is-installed twentyfifteen && $WP theme delete twentyfifteen
+$WP theme is-installed twentysixteen && $WP theme delete twentysixteen
 
 #
 # Enable/disable plugins
@@ -141,10 +142,11 @@ PLUGINS="$(
   echo content-update-notifier
 )"
 
+WP_ENABLED_PLUGINS=$($WP plugin list --field=name --enabled=network)
 for plugin_name in $PLUGINS; do
-  $WP plugin is-active "$plugin_name" || \
+  echo "$WP_ENABLED_PLUGINS" | grep -xq "$plugin_name" || \
     $WP plugin activate "$plugin_name" --network
 done
 
-$WP plugin delete hello
-$WP plugin delete akismet
+$WP plugin is-installed hello && $WP plugin delete hello
+$WP plugin is-installed akismet && $WP plugin delete akismet
