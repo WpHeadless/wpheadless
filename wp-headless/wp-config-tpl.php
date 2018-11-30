@@ -19,6 +19,9 @@ define('DOMAIN_CURRENT_SITE', '<?php e('DOMAIN')?>');
 define('PATH_CURRENT_SITE', '/');
 define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);
+define('AUTOMATIC_UPDATER_DISABLED', true);
+define('DISABLE_WP_CRON', true);
+define('DISALLOW_FILE_MODS', true);
 $base = '/';
 
 if (
