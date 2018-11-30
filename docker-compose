@@ -3,10 +3,14 @@
 set -eo pipefail
 
 cd "$(dirname "$0")"
-STAGE=$(cat .stage 2>/dev/null)
-STAGE=${STAGE:-production}
 DOCKER_COMPOSE_VERSION=1.23.1
 COMPOSE_PROJECT_NAME=wp-headless
+
+if [ -f .production ]; then
+  STAGE='production'
+else
+  STAGE='development'
+fi
 
 if [ -t 1 ]; then
   DOCKER_RUN_OPTIONS="-t"
