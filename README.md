@@ -12,7 +12,7 @@ wp-headless is Wordpress Multisite bundle providing API-only or Headless impleme
 - HTTPS only
 - Self-signed certificate
 - Letsencrypt certificate issue & renew
-- Backup Wordpress nightly
+- Automated backup
 - Stage support (production, development)
 - Wordpress Multisite secure setup
 - SMTP server
