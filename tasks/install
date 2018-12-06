@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+if [ $# -eq 2 ]; then
+  STAGE="$1"
+  DOMAIN="$2"
+else
+  STAGE="development"
+  DOMAIN="localhost"
+fi
+
+./run-task configure "$DOMAIN"
+
+if [ "$STAGE" = "production" ]; then
+  touch .production
+  ./run-task leissue
+else
+  ./run-task openssl-self-signed
+fi
+
+./run-task openssl-dhparam
+./docker-compose up -d
+./run-task wp-install
