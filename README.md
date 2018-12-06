@@ -21,15 +21,20 @@ wp-headless is Wordpress Multisite bundle providing API-only or Headless impleme
 
 There two executable files in project root: `./docker-compose` - docker-compose wrapper and `./run-task` - runner for scripted tasks from `tasks/` inside docker containers.
 
-Use `./run-task install [DOMAIN] [STAGE]` to install wp-headless. Default domain - `localhost`, default stage - `development`.
+Use `./run-task install [DOMAIN] [ADMIN_EMAIL] [ADMIN_PASSWORD] [STAGE]` to install wp-headless.
+
+- `DOMAIN`: Domain to install wp-headless on.
+- `ADMIN_EMAIL`: Admin user email.
+- `ADMIN_PASSWORD`: Wordpress admin password. If not given a random password will be generated.
+- `STAGE`: `production` or `development`, default `development`.
 
 For example:
 
 - `./run-task install` - development stage on https://localhost
 - `./run-task install example.com` - development stage on https://example.com
-- `./run-task install example.com production` - production stage on https://example.com
+- `./run-task install example.com webmaster@example.com 12345678 production` - production stage on https://example.com
 
-After executing `wp-install` task you should find Wordpress admin user password in the logs.
+If password was not specified a random one will be used and printed in command output.
 
 ## Backup
 
