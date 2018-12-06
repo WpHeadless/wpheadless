@@ -23,10 +23,10 @@ There two executable files in project root: `./docker-compose` - docker-compose 
 
 Use `./run-task install [DOMAIN] [ADMIN_EMAIL] [ADMIN_PASSWORD] [STAGE]` to install wp-headless.
 
-- `DOMAIN`: Domain to install wp-headless on.
-- `ADMIN_EMAIL`: Admin user email.
+- `DOMAIN`: Domain to install wp-headless on. Default `localhost`.
+- `ADMIN_EMAIL`: Admin user email. Default `webmaster@example.com` or `webmaster@${DOMAIN}` if `DOMAIN` is set.
 - `ADMIN_PASSWORD`: Wordpress admin password. If not given a random password will be generated.
-- `STAGE`: `production` or `development`, default `development`.
+- `STAGE`: `production` or `development`. Default `development`.
 
 For example:
 
