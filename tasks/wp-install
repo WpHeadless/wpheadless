@@ -169,10 +169,10 @@ PLUGINS="$(
   echo content-update-notifier
 )"
 
-WP_ENABLED_PLUGINS=$($WP plugin list --field=name --enabled=network)
+WP_ENABLED_PLUGINS=$($WP plugin list --field=name --status=active-network)
 for plugin_name in $PLUGINS; do
   echo "$WP_ENABLED_PLUGINS" | grep -xq "$plugin_name" || \
-    $WP plugin activate "$plugin_name" --network
+  $WP plugin activate "$plugin_name" --network
 done
 
 $WP plugin is-installed hello && $WP plugin delete hello
