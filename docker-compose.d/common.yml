@@ -1,79 +1,4 @@
 version: "3"
-services:
-  cron:
-    image: docker:stable
-    working_dir: $PWD
-    command: "
-      sh -c '
-        crontab cron/crontab &&
-        crond -f -d 8
-      '
-    "
-    networks:
-      - backend
-    volumes:
-      - ..:${PWD}
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - APPROOT=$PWD
-
-  smtp:
-    image: namshi/smtp:latest
-    hostname: ${DOMAIN}
-    networks:
-      - backend
-
-  nginx:
-    image: nginx:1.15
-    restart: unless-stopped
-    command: "
-      sh -c '
-        DOLLAR=$$ envsubst < /etc/nginx/nginx.conf.tpl > /etc/nginx/nginx.conf;
-        exec nginx -g \"daemon off;\"
-      '
-    "
-    depends_on:
-      - php
-    networks:
-      - frontend
-      - backend
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - wordpress:/var/www/wordpress:ro
-      - certbot:/var/www/html:ro
-      - ../nginx/nginx.conf.tpl:/etc/nginx/nginx.conf.tpl:ro
-      - ../var/letsencrypt/live/${DOMAIN}:/etc/letsencrypt/live/${DOMAIN}:ro
-      - ../var/letsencrypt/archive/${DOMAIN}:/etc/letsencrypt/archive/${DOMAIN}:ro
-      - ../var/uploads:/var/www/uploads:ro
-      - ../var/plugins:/var/www/plugins:ro
-      - ../var/themes:/var/www/themes:ro
-    environment:
-      - DOMAIN
-
-  mysql:
-    image: mariadb:10.3
-    restart: unless-stopped
-    networks:
-      - backend
-    volumes:
-      - mysql:/var/lib/mysql
-      - ../mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf:ro
-    environment:
-      - MYSQL_ROOT_PASSWORD
-      - MYSQL_ALLOW_EMPTY_PASSWORD=1
-
-  php:
-    image: tsertkov/php-fpm-wp:7.2
-    restart: unless-stopped
-    networks:
-      - backend
-    volumes:
-      - wordpress:/var/www/wordpress:ro
-      - ../var/uploads:/var/www/uploads
-      - ../var/plugins:/var/www/plugins:ro
-      - ../var/themes:/var/www/themes:ro
 
 volumes:
   mysql:
@@ -81,5 +6,4 @@ volumes:
   certbot:
 
 networks:
-  frontend:
   backend:
