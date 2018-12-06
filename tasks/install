@@ -1,28 +1,28 @@
 #!/usr/bin/env bash
 
-STAGE="development"
-DOMAIN="localhost"
+set -eo pipefail
 
-if [ $# -eq 1 ]; then
-  DOMAIN="$1"
-elif [ $# -gt 1 ]; then
-  DOMAIN="$1"
-  STAGE="$2"
-fi
+DOMAIN="${1:-localhost}"
+ADMIN_EMAIL="$2"
+ADMIN_PASSWORD="$3"
+STAGE="${4:-development}"
 
 if [ "$STAGE" = "production" ]; then
   touch .production
   export DOMAIN
+else
+  rm -f .production
 fi
 
-./run-task configure "$DOMAIN"
+./run-task configure "$DOMAIN" "$ADMIN_EMAIL"
 
 if [ "$STAGE" = "production" ]; then
-  ./run-task leissue
+  ./run-task leissue-standalone || \
+    ./run-task openssl-self-signed
 else
   ./run-task openssl-self-signed
 fi
 
 ./run-task openssl-dhparam
 ./docker-compose up -d
-./run-task wp-install
+./run-task wp-install "$ADMIN_PASSWORD"

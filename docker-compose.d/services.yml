@@ -16,6 +16,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - APPROOT=$PWD
+      - STAGE
 
   smtp:
     image: namshi/smtp:latest

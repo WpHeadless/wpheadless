@@ -11,6 +11,7 @@ services:
     environment:
       - DOMAIN
       - ADMIN_EMAIL
+      - STAGE
 
   task-lerenew:
     <<: *task-certbot
@@ -52,15 +53,16 @@ services:
     environment:
       - APPROOT=$PWD
       - SMTPHOST=smtp
+      - DB_HOST=mysql
+      - STAGE
       - DOMAIN
       - ADMIN_EMAIL
       - DB_NAME
       - DB_USER
-      - DB_HOST
       - DB_PASSWORD
       - MYSQL_ROOT_PASSWORD
-      - DBI_AWS_ACCESS_KEY_ID
-      - DBI_AWS_SECRET_ACCESS_KEY
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
       - AUTH_KEY
       - SECURE_AUTH_KEY
       - LOGGED_IN_KEY

@@ -8,8 +8,8 @@ echo '<?php', PHP_EOL;
 # Custom wp-config.php for wp-headless
 #
 
-define('DBI_AWS_ACCESS_KEY_ID', '<?php e('DBI_AWS_ACCESS_KEY_ID')?>');
-define('DBI_AWS_SECRET_ACCESS_KEY', '<?php e('DBI_AWS_SECRET_ACCESS_KEY')?>');
+define('DBI_AWS_ACCESS_KEY_ID', '<?php e('AWS_ACCESS_KEY_ID')?>');
+define('DBI_AWS_SECRET_ACCESS_KEY', '<?php e('AWS_SECRET_ACCESS_KEY')?>');
 define('FORCE_SSL_ADMIN', true);
 define('WP_DEFAULT_THEME', '<?php e('WP_DEFAULT_THEME')?>');
 define('WP_ALLOW_MULTISITE', true);

@@ -3,6 +3,7 @@
 set -eo pipefail
 
 WEBROOT=/var/www/wordpress/html
+ADMIN_PASSWORD="$1"
 
 #
 # Download & extract wp files into web root
@@ -113,13 +114,25 @@ WP="wp --allow-root"
 # Install multisite wp
 #
 
-$WP core is-installed --network || \
+if ! $WP core is-installed --network; then
+  WP_CORE_OPTIONS=""
+
+  if [ "$STAGE" != "production" ]; then
+    WP_CORE_OPTIONS="${WP_CORE_OPTIONS} --skip-email"
+  fi
+
+  if [ ! -z "$ADMIN_PASSWORD" ]; then
+    WP_CORE_OPTIONS="${WP_CORE_OPTIONS} --admin_password=${ADMIN_PASSWORD}"
+  fi
+
   $WP core multisite-install \
     --url="https://${DOMAIN}" \
     --title="$WORDPRESS_TITLE" \
     --admin_email="$ADMIN_EMAIL" \
     --skip-config \
-    --skip-email
+    $WP_CORE_OPTIONS \
+    ;
+fi
 
 #
 # Enable/disable themes

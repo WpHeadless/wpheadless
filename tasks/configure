@@ -3,15 +3,18 @@
 cp dot-env.dist dot-env
 
 DOMAIN="${1:-localhost}"
+ADMIN_EMAIL="$2"
 
-if [ "$DOMAIN" = "localhost" ]; then
-  EMAIL_DOMAIN="example.com"
-else
-  EMAIL_DOMAIN="$DOMAIN"
+if [ -z "$ADMIN_EMAIL" ]; then
+  if [ "$DOMAIN" = "localhost" ]; then
+    EMAIL_DOMAIN="webmaster@example.com"
+  else
+    EMAIL_DOMAIN="webmaster@$DOMAIN"
+  fi
 fi
 
 sed -i -e "s/^DOMAIN=.*/DOMAIN=${DOMAIN}/" dot-env
-sed -i -e "s/^ADMIN_EMAIL=.*/ADMIN_EMAIL=webmaster@${EMAIL_DOMAIN}/" dot-env
+sed -i -e "s/^ADMIN_EMAIL=.*/ADMIN_EMAIL=${ADMIN_EMAIL}/" dot-env
 sed -i -e "s/^DB_PASSWORD=.*/DB_PASSWORD=$(openssl rand -hex 12)/" dot-env
 sed -i -e "s/^MYSQL_ROOT_PASSWORD=.*/MYSQL_ROOT_PASSWORD=$(openssl rand -hex 12)/" dot-env
 sed -i -e "s/^AUTH_KEY=.*/AUTH_KEY=$(openssl rand -hex 32)/" dot-env

@@ -43,9 +43,10 @@ docker \
   $DOCKER_RUN_OPTIONS \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v "${PWD}:${PWD}" \
-  --workdir="${PWD}" \
+  --workdir="$PWD" \
   --env DOMAIN \
-  --env PWD="$PWD" \
+  --env PWD \
+  --env STAGE="$STAGE" \
   --env COMPOSE_PROJECT_NAME="$COMPOSE_PROJECT_NAME" \
   "docker/compose:${DOCKER_COMPOSE_VERSION}" \
   $DOCKER_COMPOSE_OPTIONS \

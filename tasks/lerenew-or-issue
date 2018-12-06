@@ -11,10 +11,17 @@ set -e
 
 rm -f /root/certbot-renew-success
 
+CERTBOT_OPTIONS="certonly -n --agree-tos"
+
+if [ "$STAGE" != "production" ]; then
+  CERTBOT_OPTIONS="${CERTBOT_OPTIONS} --staging"
+  echo "[leissue-or-issue]: Requesting Letsencrypt test certificate"
+else
+  echo "[leissue-or-issue]: Requesting Letsencrypt certificate"
+fi
+
 certbot \
-  certonly \
-  -n \
-  --agree-tos \
+  $CERTBOT_OPTIONS \
   --webroot --webroot-path=/var/www/html \
   --deploy-hook=certbot/deploy-hook \
   -m "$ADMIN_EMAIL" \
