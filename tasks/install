@@ -10,10 +10,14 @@ elif [ $# -gt 1 ]; then
   STAGE="$2"
 fi
 
+if [ "$STAGE" = "production" ]; then
+  touch .production
+  export DOMAIN
+fi
+
 ./run-task configure "$DOMAIN"
 
 if [ "$STAGE" = "production" ]; then
-  touch .production
   ./run-task leissue
 else
   ./run-task openssl-self-signed
