@@ -14,6 +14,14 @@ else
   rm -f .production
 fi
 
+if [ -z "$ADMIN_EMAIL" ]; then
+  if [ "$DOMAIN" = "localhost" ]; then
+    ADMIN_EMAIL="webmaster@example.com"
+  else
+    ADMIN_EMAIL="webmaster@${DOMAIN}"
+  fi
+fi
+
 ./run-task configure "$DOMAIN" "$ADMIN_EMAIL"
 
 if [ "$STAGE" = "production" ]; then
