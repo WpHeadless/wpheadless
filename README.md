@@ -21,24 +21,21 @@ wp-headless is Wordpress Multisite bundle providing API-only or Headless impleme
 
 There two executable files in project root: `./docker-compose` - docker-compose wrapper and `./run-task` - runner for scripted tasks from `tasks/` inside docker containers.
 
-- `cp dot-env.dist dot-env` - Copy `dot-env.dist` to `dot-env` then edit configuration parameters
-- `touch .production` - Create .production file if this is production environment
-- `./run-task openssl-dhparam` - Generate DH params for nginx
-- `./run-task openssl-self-signed` or `./run-task leissue` - Get ssl certificate
-- `./docker-compose up -d` - Bring up services
-- `./run-task wp-install` - Download and configure Wordpress with custom plugins and themes
+Use `./run-task install [DOMAIN] [STAGE]` to install wp-headless. Default domain - `localhost`, default stage - `development`.
 
-After executing `wp-install` task you should find Wordpress admin user password in the logs. Do not forget to change it!
+For example:
 
-## Restore from backup
+- `./run-task install` - development stage on https://localhost
+- `./run-task install example.com` - development stage on https://example.com
+- `./run-task install example.com production` - production stage on https://example.com
 
-It is expected that dhparam and ssl certificates are in place already.
+After executing `wp-install` task you should find Wordpress admin user password in the logs.
 
-- `./docker-compose up -d` - Bring up services
-- `./run-task wp-install` - Install clean wp-headless
-- `./run-task db-restore` - Restore database from backup file
+## Backup
 
-Please note that Wordpress uploads folder is not backed up since uploads supposed to be hosted on AWS S3.
+Database backup task is executed nightly by cron service.
+
+To restore database from backup file make sure wp-headless is running and execute `./run-task db-restore`.
 
 ## Docker service containers
 
