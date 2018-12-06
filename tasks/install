@@ -5,7 +5,7 @@ DOMAIN="localhost"
 
 if [ $# -eq 1 ]; then
   DOMAIN="$1"
-if [ $# -gt 1 ]; then
+elif [ $# -gt 1 ]; then
   DOMAIN="$1"
   STAGE="$2"
 fi
