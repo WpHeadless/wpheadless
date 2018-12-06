@@ -24,9 +24,16 @@ if [ "${TASK#*-}" == "sh" ]; then
     TASK="$@"
   fi
 else
-  TASK="${TASKS_DIR}/${TASK} $@"
+  TASK_FILE="${TASKS_DIR}/${TASK}"
+  TASK="${TASK_FILE} $@"
+
+  if [ ! -f "$TASK_FILE" ]; then
+    echo Task "$TASK" does not exist
+    exit 1
+  fi
 fi
 
-./docker-compose \
-  -f docker-compose.d/tasks.yml \
-  run --rm --service-ports "$TASK_SERVICE" $TASK
+grep -m 1 -x -q -E "\s+${TASK_SERVICE}:" docker-compose.d/tasks.yml \
+  && COMPOSE_SERVICES_TYPE=tasks ./docker-compose \
+      run --rm --service-ports "$TASK_SERVICE" $TASK \
+  || $TASK
