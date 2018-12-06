@@ -32,9 +32,9 @@ services:
 
   task-configure:
     <<: *task-certbot
+    command: sh
     volumes:
       - ..:/$PWD
-    command: sh
 
   task-wp:
     image: wordpress:cli-php7.2
