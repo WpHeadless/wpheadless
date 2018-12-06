@@ -2,21 +2,23 @@
 
 cp dot-env.dist dot-env
 
-DOMAIN="$1"
+DOMAIN="${1:-localhost}"
 
 if [ "$DOMAIN" = "localhost" ]; then
   EMAIL_DOMAIN="example.com"
+else
+  EMAIL_DOMAIN="$DOMAIN"
 fi
 
-sed -i '' -e "s/^DOMAIN=.*/DOMAIN=${DOMAIN}/" dot-env
-sed -i '' -e "s/^ADMIN_EMAIL=.*/ADMIN_EMAIL=webmaster@${EMAIL_DOMAIN}/" dot-env
-sed -i '' -e "s/^DB_PASSWORD=.*/DB_PASSWORD=$(openssl rand -hex 12)/" dot-env
-sed -i '' -e "s/^MYSQL_ROOT_PASSWORD=.*/MYSQL_ROOT_PASSWORD=$(openssl rand -hex 12)/" dot-env
-sed -i '' -e "s/^AUTH_KEY=.*/AUTH_KEY=$(openssl rand -hex 32)/" dot-env
-sed -i '' -e "s/^SECURE_AUTH_KEY=.*/SECURE_AUTH_KEY=$(openssl rand -hex 32)/" dot-env
-sed -i '' -e "s/^LOGGED_IN_KEY=.*/LOGGED_IN_KEY=$(openssl rand -hex 32)/" dot-env
-sed -i '' -e "s/^NONCE_KEY=.*/NONCE_KEY=$(openssl rand -hex 32)/" dot-env
-sed -i '' -e "s/^AUTH_SALT=.*/AUTH_SALT=$(openssl rand -hex 32)/" dot-env
-sed -i '' -e "s/^SECURE_AUTH_SALT=.*/SECURE_AUTH_SALT=$(openssl rand -hex 32)/" dot-env
-sed -i '' -e "s/^LOGGED_IN_SALT=.*/LOGGED_IN_SALT=$(openssl rand -hex 32)/" dot-env
-sed -i '' -e "s/^NONCE_SALT=.*/NONCE_SALT=$(openssl rand -hex 32)/" dot-env
+sed -i -e "s/^DOMAIN=.*/DOMAIN=${DOMAIN}/" dot-env
+sed -i -e "s/^ADMIN_EMAIL=.*/ADMIN_EMAIL=webmaster@${EMAIL_DOMAIN}/" dot-env
+sed -i -e "s/^DB_PASSWORD=.*/DB_PASSWORD=$(openssl rand -hex 12)/" dot-env
+sed -i -e "s/^MYSQL_ROOT_PASSWORD=.*/MYSQL_ROOT_PASSWORD=$(openssl rand -hex 12)/" dot-env
+sed -i -e "s/^AUTH_KEY=.*/AUTH_KEY=$(openssl rand -hex 32)/" dot-env
+sed -i -e "s/^SECURE_AUTH_KEY=.*/SECURE_AUTH_KEY=$(openssl rand -hex 32)/" dot-env
+sed -i -e "s/^LOGGED_IN_KEY=.*/LOGGED_IN_KEY=$(openssl rand -hex 32)/" dot-env
+sed -i -e "s/^NONCE_KEY=.*/NONCE_KEY=$(openssl rand -hex 32)/" dot-env
+sed -i -e "s/^AUTH_SALT=.*/AUTH_SALT=$(openssl rand -hex 32)/" dot-env
+sed -i -e "s/^SECURE_AUTH_SALT=.*/SECURE_AUTH_SALT=$(openssl rand -hex 32)/" dot-env
+sed -i -e "s/^LOGGED_IN_SALT=.*/LOGGED_IN_SALT=$(openssl rand -hex 32)/" dot-env
+sed -i -e "s/^NONCE_SALT=.*/NONCE_SALT=$(openssl rand -hex 32)/" dot-env

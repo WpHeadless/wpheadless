@@ -30,6 +30,12 @@ services:
     <<: *task-certbot
     command: sh
 
+  task-configure:
+    <<: *task-certbot
+    volumes:
+      - ..:/$PWD
+    command: sh
+
   task-wp:
     image: wordpress:cli-php7.2
     entrypoint: []
