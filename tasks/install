@@ -2,10 +2,28 @@
 
 set -eo pipefail
 
-DOMAIN="${1:-localhost}"
-ADMIN_EMAIL="$2"
-ADMIN_PASSWORD="$3"
-STAGE="${4:-development}"
+DOMAIN="localhost"
+STAGE="development"
+
+for i in "$@"; do
+  case $i in
+    --domain=*)
+      DOMAIN="${i#*=}"
+      ;;
+    --admin-email=*)
+      ADMIN_EMAIL="${i#*=}"
+      ;;
+    --admin-password=*)
+      ADMIN_PASSWORD="${i#*=}"
+      ;;
+    --stage=*)
+      STAGE="${i#*=}"
+      ;;
+    --uploads-bucket=*)
+      UPLOADS_BUCKET="${i#*=}"
+      ;;
+  esac
+done
 
 if [ "$STAGE" = "production" ]; then
   touch .production
@@ -14,15 +32,9 @@ else
   rm -f .production
 fi
 
-if [ -z "$ADMIN_EMAIL" ]; then
-  if [ "$DOMAIN" = "localhost" ]; then
-    ADMIN_EMAIL="webmaster@example.com"
-  else
-    ADMIN_EMAIL="webmaster@${DOMAIN}"
-  fi
-fi
-
-./run-task configure "$DOMAIN" "$ADMIN_EMAIL"
+./run-task configure \
+  --domain="$DOMAIN" \
+  --admin-email="$ADMIN_EMAIL"
 
 if [ "$STAGE" = "production" ]; then
   ./run-task leissue-standalone || \
@@ -33,4 +45,7 @@ fi
 
 ./run-task openssl-dhparam
 ./docker-compose up -d
-./run-task wp-install "$ADMIN_PASSWORD"
+
+./run-task wp-install \
+  --admin-password="$ADMIN_PASSWORD" \
+  --uploads-bucket="$UPLOADS_BUCKET"

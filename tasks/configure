@@ -1,15 +1,25 @@
 #!/usr/bin/env sh
 
-cp dot-env.dist dot-env
+DOMAIN="localhost"
 
-DOMAIN="${1:-localhost}"
-ADMIN_EMAIL="$2"
+for i in "$@"; do
+  case $i in
+    --domain=*)
+      DOMAIN="${i#*=}"
+      ;;
+    --admin-email=*)
+      ADMIN_EMAIL="${i#*=}"
+      ;;
+  esac
+done
+
+cp dot-env.dist dot-env
 
 if [ -z "$ADMIN_EMAIL" ]; then
   if [ "$DOMAIN" = "localhost" ]; then
-    EMAIL_DOMAIN="webmaster@example.com"
+    ADMIN_EMAIL="webmaster@example.com"
   else
-    EMAIL_DOMAIN="webmaster@$DOMAIN"
+    ADMIN_EMAIL="webmaster@${DOMAIN}"
   fi
 fi
 

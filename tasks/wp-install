@@ -2,8 +2,18 @@
 
 set -eo pipefail
 
+for i in "$@"; do
+  case $i in
+    --admin-password=*)
+      ADMIN_PASSWORD="${i#*=}"
+      ;;
+    --uploads-bucket=*)
+      UPLOADS_BUCKET="${i#*=}"
+      ;;
+  esac
+done
+
 WEBROOT=/var/www/wordpress/html
-ADMIN_PASSWORD="$1"
 
 #
 # Download & extract wp files into web root
