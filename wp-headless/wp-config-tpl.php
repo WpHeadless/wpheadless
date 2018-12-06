@@ -8,8 +8,15 @@ echo '<?php', PHP_EOL;
 # Custom wp-config.php for wp-headless
 #
 
-define('DBI_AWS_ACCESS_KEY_ID', '<?php e('AWS_ACCESS_KEY_ID')?>');
-define('DBI_AWS_SECRET_ACCESS_KEY', '<?php e('AWS_SECRET_ACCESS_KEY')?>');
+<?php if (getenv('STAGE') === 'production'): ?>
+define('AS3CF_AWS_USE_EC2_IAM_ROLE', true);
+<?php elseif (getenv('AWS_ACCESS_KEY_ID')): ?>
+define('AS3CF_SETTINGS', serialize(array(
+  'provider' => 'aws',
+  'access-key-id' => '<?php e('AWS_ACCESS_KEY_ID')?>',
+  'secret-access-key' => '<?php e('AWS_SECRET_ACCESS_KEY')?>',
+)));
+<?php endif; ?>
 define('FORCE_SSL_ADMIN', true);
 define('WP_DEFAULT_THEME', '<?php e('WP_DEFAULT_THEME')?>');
 define('WP_ALLOW_MULTISITE', true);
@@ -48,7 +55,7 @@ define('SECURE_AUTH_SALT', '<?php e('SECURE_AUTH_SALT')?>');
 define('LOGGED_IN_SALT', '<?php e('LOGGED_IN_SALT')?>');
 define('NONCE_SALT', '<?php e('NONCE_SALT')?>');
 define('WP_DEBUG', false);
-$table_prefix  = 'wp_';
+$table_prefix = 'wp_';
 
 if ( !defined('ABSPATH') ) define('ABSPATH', dirname(__FILE__) . '/html/');
 require_once(ABSPATH . 'wp-settings.php');
