@@ -74,7 +74,7 @@ services:
       - WORDPRESS_VERSION=4.9.8
       - WORDPRESS_SHA1=0945bab959cba127531dceb2c4fed81770812b4f
       - WP_DEFAULT_THEME=twentyseventeen-child
-      - WORDPRESS_TITLE=wp-headless
+      - WORDPRESS_TITLE=WpHeadless
       - ACF_PRO_VERSION=5.7.6
       - WORDPRESS_PLUGINS=
           custom-post-type-ui 1.6.0

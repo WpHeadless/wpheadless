@@ -3,7 +3,7 @@
 set -eo pipefail
 
 DOCKER_COMPOSE_VERSION=1.23.1
-COMPOSE_PROJECT_NAME=wp-headless
+COMPOSE_PROJECT_NAME=wpheadless
 COMPOSE_SERVICES_TYPE=${COMPOSE_SERVICES_TYPE:-services}
 
 cd "$(dirname "$0")"
