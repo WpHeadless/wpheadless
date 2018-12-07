@@ -184,4 +184,5 @@ $WP plugin is-installed akismet && $WP plugin delete akismet
 
 if [ ! -z "$UPLOADS_BUCKET" ] && [ "$STAGE" = "production" ]; then
   # TODO preconfigure amazon-s3-and-cloudfront plugin
+  echo -n
 fi
