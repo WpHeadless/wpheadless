@@ -1,10 +1,10 @@
-# wp-headless
+# WpHeadless
 
 > Wordpress Headless CMS to build great API-powered websites, apps and services.
 
-# What is wp-headless?
+# What is WpHeadless?
 
-wp-headless is Wordpress Multisite bundle providing API-only or Headless implementation of the CMS. It comes with fully automated docker based workflow to setup and maintain CMS service on your own server or localhost.
+WpHeadless is Wordpress Multisite bundle providing API-only or Headless implementation of the CMS. It comes with fully automated docker based workflow to setup and maintain CMS service on your own server or localhost.
 
 ## Features
 
@@ -21,13 +21,13 @@ wp-headless is Wordpress Multisite bundle providing API-only or Headless impleme
 
 There two executable files in project root: `./docker-compose` - docker-compose wrapper and `./run-task` - runner for scripted tasks from `tasks/` inside docker containers.
 
-Use `run-task` script to install wp-headless.
+Use `run-task` script to install WpHeadless.
 
 ```
 Usage: ./run-task [OPTIONS] install
 
 Options:
-  --domain          : Domain to install wp-headless on. Default: localhost.
+  --domain          : Domain to install WpHeadless on. Default: localhost.
   --admin-email     : Admin user email. Default webmaster@example.com or webmaster@${DOMAIN} when DOMAIN is set.
   --admin-password  : Wordpress admin password. If not given a random password will be generated.
   --stage           : Production or development. Default: development.
@@ -45,7 +45,7 @@ If password is not specified a random one is generated and printed in command ou
 
 Database backup task is executed nightly by cron service.
 
-To restore database from backup file make sure wp-headless is running and execute `./run-task db-restore`.
+To restore database from backup file make sure WpHeadless is running and execute `./run-task db-restore`.
 
 ## Docker service containers
 
