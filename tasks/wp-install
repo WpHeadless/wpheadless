@@ -183,23 +183,5 @@ $WP plugin is-installed akismet && $WP plugin delete akismet
 #
 
 if [ ! -z "$UPLOADS_BUCKET" ] && [ "$STAGE" = "production" ]; then
-  export UPLOADS_BUCKET
-  php << 'EOF'
-<?php
-  $db = new mysqli(getenv('DB_HOST'), getenv('DB_USER'), getenv('DB_PASSWORD'), getenv('DB_NAME'));
-
-  $res = $db->query('SELECT meta_value FROM wp_sitemeta WHERE meta_key="tantan_wordpress_s3"');
-  $row = $res->fetch_object();
-
-  $meta_value = unserialize($row->meta_value);
-  $meta_value['bucket'] = getenv('UPLOADS_BUCKET');
-  $meta_value = serialize($meta_value);
-
-  print_r($meta_value);
-
-  $stmt = $db->prepare('UPDATE wp_sitemeta SET meta_value=? WHERE meta_key="tantan_wordpress_s3"');
-  $stmt->bind_param('s', $meta_value);
-  $stmt->execute();
-?>
-EOF
+  # TODO preconfigure amazon-s3-and-cloudfront plugin
 fi
