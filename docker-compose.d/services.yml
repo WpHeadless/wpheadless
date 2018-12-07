@@ -66,7 +66,7 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=1
 
   php:
-    image: tsertkov/php-fpm-wp:7.2
+    image: wpheadless/wp-php-fpm:7.2
     restart: unless-stopped
     networks:
       - backend

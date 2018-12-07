@@ -51,7 +51,7 @@ To restore database from backup file make sure WpHeadless is running and execute
 
 - nginx: [nginx](https://hub.docker.com/_/nginx/)
 - mysql: [mariadb](https://hub.docker.com/_/mariadb/)
-- php: [tsertkov/php-fpm-wp](https://hub.docker.com/r/tsertkov/php-fpm-wp/)
+- php: [wpheadless/wp-php-fpm](https://hub.docker.com/r/wpheadless/wp-php-fpm/)
 - smtp: [namshi/smtp](https://hub.docker.com/r/namshi/smtp/)
 - cron: [docker](https://hub.docker.com/_/docker/)
 

@@ -6,4 +6,4 @@ services:
 
   php:
     build:
-      context: ../php-fpm-wp
+      context: ../wp-php-fpm
