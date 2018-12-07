@@ -32,6 +32,10 @@ else
   rm -f .production
 fi
 
+# Pull all docker images at once
+COMPOSE_SERVICES_TYPE=services ./docker-compose pull
+COMPOSE_SERVICES_TYPE=tasks ./docker-compose pull
+
 ./run-task configure \
   --domain="$DOMAIN" \
   --admin-email="$ADMIN_EMAIL"
