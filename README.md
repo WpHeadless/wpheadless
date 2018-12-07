@@ -39,7 +39,7 @@ For example:
 - `./run-task install --domain=example.com` - development stage on https://example.com
 - `./run-task install --domain=example.com --admin-email=webmaster@example.com --admin-password=12345678 --stage=production` - production stage on https://example.com
 
-If password was not specified a random one will be used and printed in command output.
+If password is not specified a random one is generated and printed in command output.
 
 ## Backup
 
