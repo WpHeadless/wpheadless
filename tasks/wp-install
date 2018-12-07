@@ -60,7 +60,7 @@ rm "${ACF_PRO_VERSION}.zip"
 mv -f "advanced-custom-fields-pro-${ACF_PRO_VERSION}" advanced-custom-fields-pro
 
 # CUN plugin is different - GitHub branch
-plugin_url=https://github.com/tsertkov/content-update-notifier/archive/master.zip
+plugin_url=https://github.com/WpHeadless/content-update-notifier/archive/master.zip
 echo "Downloading plugin ${plugin_url}"
 curl -sS -O -L "$plugin_url"
 unzip -o master.zip > /dev/null
