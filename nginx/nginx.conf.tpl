@@ -55,12 +55,12 @@ http {
     ssl_session_timeout 5m;
     ssl_session_cache shared:SSL:10m;
     ssl_session_tickets off;
-    ssl_certificate /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
-    ssl_dhparam /etc/letsencrypt/live/${DOMAIN}/dhparam.pem;
+    ssl_certificate /etc/letsencrypt/active/${DOMAIN}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/active/${DOMAIN}/privkey.pem;
+    ssl_dhparam /etc/letsencrypt/dhparam.pem;
     ssl_stapling on;
     ssl_stapling_verify on;
-    ssl_trusted_certificate /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
+    ssl_trusted_certificate /etc/letsencrypt/active/${DOMAIN}/fullchain.pem;
 
     add_header Strict-Transport-Security "max-age=31536000" always;
     add_header X-Frame-Options SAMEORIGIN always;

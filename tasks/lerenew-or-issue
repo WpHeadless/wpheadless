@@ -28,4 +28,20 @@ certbot \
   -d "$DOMAIN"
 
 code=$(test -f /root/certbot-renew-success)
+
+# Update actual certificate symlink
+if [ $code -eq 0 ]; then
+  certificate_dir="$(
+    find /etc/letsencrypt/live -type d \
+      -name '${DOMAIN}' -or -name '${DOMAIN}-*' \
+      | sort -r \
+      | head -n1
+  )"
+
+  certificate_name="$(basename "$certificate_dir")"
+  active_certificate_dir="/etc/letsencrypt/active/${certificate_name}"
+  mkdir -p "$active_certificate_dir"
+  ln -sf "${certificate_dir}/*" "${active_certificate_dir}/."
+fi
+
 exit $code

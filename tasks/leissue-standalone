@@ -14,5 +14,16 @@ fi
 certbot \
   $CERTBOT_OPTIONS \
   -m "$ADMIN_EMAIL" \
-  -d "$DOMAIN" \
-  ;
+  -d "$DOMAIN"
+
+certificate_dir="$(
+  find /etc/letsencrypt/live -type d \
+    -name '${DOMAIN}' -or -name '${DOMAIN}-*' \
+    | sort -r \
+    | head -n1
+)"
+
+certificate_name="$(basename "$certificate_dir")"
+active_certificate_dir="/etc/letsencrypt/active/${certificate_name}"
+mkdir -p "$active_certificate_dir"
+ln -sf "${certificate_dir}/*" "${active_certificate_dir}/."
