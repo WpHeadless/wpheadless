@@ -63,7 +63,7 @@ http {
     ssl_trusted_certificate /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
 
     add_header Strict-Transport-Security "max-age=31536000" always;
-    # add_header X-Frame-Options SAMEORIGIN always;
+    add_header X-Frame-Options SAMEORIGIN always;
 
     if (!-e ${DOLLAR}request_filename) {
       # Don't use `${DOLLAR}uri` here, see https://github.com/yandex/gixy/issues/77
