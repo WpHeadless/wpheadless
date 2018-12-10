@@ -12,7 +12,7 @@ services:
     networks:
       - backend
     volumes:
-      - ..:${PWD}
+      - ..:$PWD
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - APPROOT=$PWD
