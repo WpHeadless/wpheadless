@@ -72,7 +72,7 @@ http {
       rewrite ^(/[^/]+)?(/.*\.php) ${DOLLAR}2 last;
     }
 
-    location  /. {
+    location /. {
       return 404;
     }
 
@@ -86,7 +86,7 @@ http {
 
       # Allow php processing everywhere but in uploads/
       if (${DOLLAR}uri !~ "^/wp-content/uploads/") {
-          fastcgi_pass php:9000;
+        fastcgi_pass php:9000;
       }
 
       fastcgi_index index.php;
