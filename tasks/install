@@ -27,12 +27,12 @@ done
 
 if [ "$STAGE" = "production" ]; then
   touch .production
-  export DOMAIN
 else
   rm -f .production
 fi
 
 # Pull all docker images at once
+export DOMAIN
 COMPOSE_SERVICES_TYPE=services ./docker-compose pull
 COMPOSE_SERVICES_TYPE=tasks ./docker-compose pull
 
