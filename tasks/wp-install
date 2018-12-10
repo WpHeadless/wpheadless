@@ -23,11 +23,11 @@ WEBROOT=/var/www/wordpress/html
 if [ -z "$(ls -A "$WEBROOT")" ]; then
   echo -n "Downloading Wordpress ${WORDPRESS_VERSION}"
   echo " (https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz)"
-  curl -o wordpress.tar.gz -fSLs "https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz"
+  curl -o /tmp/wordpress.tar.gz -fSLs "https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz"
   echo -n "Checksum for "
-  echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c -
-  tar --no-same-owner --strip-components=1 -C "$WEBROOT" -xzf wordpress.tar.gz wordpress
-  rm wordpress.tar.gz
+  echo "$WORDPRESS_SHA1 */tmp/wordpress.tar.gz" | sha1sum -c -
+  tar --no-same-owner --strip-components=1 -C "$WEBROOT" -xzf /tmp/wordpress.tar.gz wordpress
+  rm /tmp/wordpress.tar.gz
 fi
 
 #
@@ -45,26 +45,28 @@ PLUGINS="$(
 for plugin_file in $PLUGINS; do
   plugin_url="https://downloads.wordpress.org/plugin/${plugin_file}"
   echo "Downloading plugin ${plugin_url}"
-  curl -sS -O "$plugin_url"
-  unzip -o "$plugin_file" > /dev/null
-  rm "$plugin_file"
+  curl -o "/tmp/${plugin_file}" -fSLs "$plugin_url"
+  unzip -o "/tmp/${plugin_file}" > /dev/null
+  rm "/tmp/${plugin_file}"
 done
 
 # ACF plugin is different - GitHub release
-plugin_url="https://github.com/wp-premium/advanced-custom-fields-pro/archive/${ACF_PRO_VERSION}.zip"
+plugin_file="${ACF_PRO_VERSION}.zip"
+plugin_url="https://github.com/wp-premium/advanced-custom-fields-pro/archive/${plugin_file}"
 echo "Downloading plugin ${plugin_url}"
-curl -sS -O -L "$plugin_url"
-unzip -o "${ACF_PRO_VERSION}.zip" > /dev/null
-rm "${ACF_PRO_VERSION}.zip"
+curl -o "/tmp/${plugin_file}" -fSLs "${plugin_url}"
+unzip -o "/tmp/${plugin_file}" > /dev/null
+rm "/tmp/${plugin_file}"
 [ -d advanced-custom-fields-pro ] && rm -rf advanced-custom-fields-pro
 mv -f "advanced-custom-fields-pro-${ACF_PRO_VERSION}" advanced-custom-fields-pro
 
 # CUN plugin is different - GitHub branch
-plugin_url=https://github.com/WpHeadless/content-update-notifier/archive/master.zip
+plugin_file="master.zip"
+plugin_url="https://github.com/WpHeadless/content-update-notifier/archive/${plugin_file}"
 echo "Downloading plugin ${plugin_url}"
-curl -sS -O -L "$plugin_url"
-unzip -o master.zip > /dev/null
-rm master.zip
+curl -o "/tmp/${plugin_file}" -fSLs "$plugin_url"
+unzip -o "/tmp/${plugin_file}" > /dev/null
+rm "/tmp/${plugin_file}"
 [ -d content-update-notifier ] && rm -rf content-update-notifier
 mv -f content-update-notifier-master content-update-notifier
 
