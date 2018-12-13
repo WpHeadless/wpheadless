@@ -2,6 +2,7 @@ version: "3"
 services:
   cron:
     image: docker:stable
+    restart: unless-stopped
     working_dir: $PWD
     command: "
       sh -c '
@@ -20,6 +21,7 @@ services:
 
   smtp:
     image: namshi/smtp:latest
+    restart: unless-stopped
     hostname: $DOMAIN
     networks:
       - backend
