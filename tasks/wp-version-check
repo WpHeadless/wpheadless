@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+UPTODATE=0
+
+# Wordpress core
+LATEST_WORDPRESS_VERSION="$(php -r 'print_r(json_decode(file_get_contents("https://api.wordpress.org/core/version-check/1.7/"))->offers[0]->version);')"
+if [ "$LATEST_WORDPRESS_VERSION" != "$WORDPRESS_VERSION" ]; then
+  echo "Wordpress core: ${WORDPRESS_VERSION} -> ${LATEST_WORDPRESS_VERSION}"
+  UPTODATE=1
+fi
+
+# Advanced Custom Fields Pro
+LATEST_ACF_PRO_VERSION="$(curl -Ss https://api.github.com/repos/wp-premium/advanced-custom-fields-pro/tags | php -r 'echo json_decode(file_get_contents("php://stdin"))[0]->name;')"
+if [ "$LATEST_ACF_PRO_VERSION" != "$ACF_PRO_VERSION" ]; then
+  echo "Plugin ACF PRO: ${ACF_PRO_VERSION} -> ${LATEST_ACF_PRO_VERSION}"
+  UPTODATE=1
+fi
+
+if [ $UPTODATE -eq 0 ]; then
+  echo "Everything is up to date!"
+fi
