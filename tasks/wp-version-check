@@ -18,6 +18,18 @@ if [ "$LATEST_ACF_PRO_VERSION" != "$ACF_PRO_VERSION" ]; then
   UPTODATE=1
 fi
 
+# Wordpress plugins
+for plugin_file in $WORDPRESS_PLUGINS; do
+  PLUGIN_NAME="$(echo "$plugin_file" | cut -d = -f 1)"
+  PLUGIN_VERSION="$(echo "$plugin_file" | cut -d = -f 2)"
+  LATEST_PLUGIN_VERSION="$(php -r "echo json_decode(file_get_contents(\"https://api.wordpress.org/plugins/info/1.0/${PLUGIN_NAME}.json\"))->version;")"
+
+  if [ "$LATEST_PLUGIN_VERSION" != "$PLUGIN_VERSION" ]; then
+    echo "Plugin ${PLUGIN_NAME}: ${PLUGIN_VERSION} -> ${LATEST_PLUGIN_VERSION}"
+    UPTODATE=1
+  fi
+done
+
 if [ $UPTODATE -eq 0 ]; then
   echo "Everything is up to date!"
 fi

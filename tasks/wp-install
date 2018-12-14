@@ -14,6 +14,7 @@ for i in "$@"; do
 done
 
 WEBROOT=/var/www/wordpress/html
+WP="wp --allow-root --path="${WEBROOT}""
 
 #
 # Download & extract wp files into web root
@@ -21,61 +22,10 @@ WEBROOT=/var/www/wordpress/html
 
 [ -d "$WEBROOT" ] || mkdir -p "$WEBROOT"
 if [ -z "$(ls -A "$WEBROOT")" ]; then
-  echo -n "Downloading Wordpress ${WORDPRESS_VERSION}"
-  echo " (https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz)"
-  curl -o /tmp/wordpress.tar.gz -fSLs "https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz"
-  echo -n "Checksum for "
-  echo "$WORDPRESS_SHA1 */tmp/wordpress.tar.gz" | sha1sum -c -
-  tar --no-same-owner --strip-components=1 -C "$WEBROOT" -xzf /tmp/wordpress.tar.gz wordpress
-  rm /tmp/wordpress.tar.gz
+  $WP core download --version="$WORDPRESS_VERSION" --skip-content
+  mkdir -p "${WEBROOT}/wp-content/themes"
+  mkdir -p "${WEBROOT}/wp-content/plugins"
 fi
-
-#
-# Download plugins given in $WORDPRESS_PLUGINS
-#
-
-cd "${WEBROOT}/wp-content/plugins"
-PLUGINS="$(
-  echo $WORDPRESS_PLUGINS | \
-  sed \
-    -e 's/\(\S\+\)\s\?\(\S\+\)\?\s*/\1.\2.zip\n/g' \
-    -e 's/\.\./\./g' \
-    -e '/^\s*$/d'
-)"
-for plugin_file in $PLUGINS; do
-  plugin_url="https://downloads.wordpress.org/plugin/${plugin_file}"
-  echo "Downloading plugin ${plugin_url}"
-  curl -o "/tmp/${plugin_file}" -fSLs "$plugin_url"
-  unzip -o "/tmp/${plugin_file}" > /dev/null
-  rm "/tmp/${plugin_file}"
-done
-
-# ACF plugin is different - GitHub release
-plugin_file="${ACF_PRO_VERSION}.zip"
-plugin_url="https://github.com/wp-premium/advanced-custom-fields-pro/archive/${plugin_file}"
-echo "Downloading plugin ${plugin_url}"
-curl -o "/tmp/${plugin_file}" -fSLs "${plugin_url}"
-unzip -o "/tmp/${plugin_file}" > /dev/null
-rm "/tmp/${plugin_file}"
-[ -d advanced-custom-fields-pro ] && rm -rf advanced-custom-fields-pro
-mv -f "advanced-custom-fields-pro-${ACF_PRO_VERSION}" advanced-custom-fields-pro
-
-# CUN plugin is different - GitHub branch
-plugin_file="master.zip"
-plugin_url="https://github.com/WpHeadless/content-update-notifier/archive/${plugin_file}"
-echo "Downloading plugin ${plugin_url}"
-curl -o "/tmp/${plugin_file}" -fSLs "$plugin_url"
-unzip -o "/tmp/${plugin_file}" > /dev/null
-rm "/tmp/${plugin_file}"
-[ -d content-update-notifier ] && rm -rf content-update-notifier
-mv -f content-update-notifier-master content-update-notifier
-
-#
-# Copy custom theme
-#
-
-echo "Copying custom theme ${WP_DEFAULT_THEME}"
-cp -rf "${APPROOT}/wp-headless/${WP_DEFAULT_THEME}" "${WEBROOT}/wp-content/themes"
 
 #
 # Prepare wp-config.php file
@@ -84,6 +34,13 @@ cp -rf "${APPROOT}/wp-headless/${WP_DEFAULT_THEME}" "${WEBROOT}/wp-content/theme
 WP_CONFIG_PATH=$(dirname "$WEBROOT")/wp-config.php
 echo "Generating ${WP_CONFIG_PATH}"
 php "${APPROOT}/wp-headless/wp-config-tpl.php" > "$WP_CONFIG_PATH"
+
+#
+# Copy custom theme
+#
+
+echo "Copying custom theme ${WP_DEFAULT_THEME}"
+cp -rf "${APPROOT}/wp-headless/${WP_DEFAULT_THEME}" "${WEBROOT}/wp-content/themes"
 
 #
 # Symlink uploads to dedicated RW docker volume mount
@@ -114,13 +71,6 @@ CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;
 CREATE USER IF NOT EXISTS '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';
 GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO '${DB_USER}'@'%';
 EOF
-
-#
-# Prepare environment to wp-cli
-#
-
-cd /var/www/wordpress/html
-WP="wp --allow-root"
 
 #
 # Install multisite wp
@@ -163,22 +113,31 @@ $WP theme is-installed twentysixteen && $WP theme delete twentysixteen
 # Enable/disable plugins
 #
 
-PLUGINS="$(
-  echo $WORDPRESS_PLUGINS \
-    | sed -e 's/\(\S\+\)\s\S\+\s*/\1\n/g' \
-    | sed -e '/^\s*$/d'
-  echo advanced-custom-fields-pro
-  echo content-update-notifier
-)"
+$WP plugin is-installed hello && $WP plugin uninstall hello --deactivate
+$WP plugin is-installed akismet && $WP plugin uninstall akismet --deactivate
 
 WP_ENABLED_PLUGINS=$($WP plugin list --field=name --status=active-network)
-for plugin_name in $PLUGINS; do
-  echo "$WP_ENABLED_PLUGINS" | grep -xq "$plugin_name" || \
-  $WP plugin activate "$plugin_name" --network
-done
 
-$WP plugin is-installed hello && $WP plugin delete hello
-$WP plugin is-installed akismet && $WP plugin delete akismet
+# Install ACF Pro from GitHub
+if ! echo "$WP_ENABLED_PLUGINS" | grep -xq "advanced-custom-fields-pro"; then
+  PLUGIN_URL="https://github.com/wp-premium/advanced-custom-fields-pro/archive/${ACF_PRO_VERSION}.zip"
+  $WP plugin install "$PLUGIN_URL" --activate-network
+fi
+
+# Install CUN from GitHub
+if ! echo "$WP_ENABLED_PLUGINS" | grep -xq "content-update-notifier"; then
+  PLUGIN_URL="https://github.com/WpHeadless/content-update-notifier/archive/master.zip"
+  $WP plugin install "$PLUGIN_URL" --activate-network
+fi
+
+# Install plugins from wordpress.org
+for plugin_file in $WORDPRESS_PLUGINS; do
+  PLUGIN_NAME="$(echo "$plugin_file" | cut -d = -f 1)"
+  PLUGIN_VERSION="$(echo "$plugin_file" | cut -d = -f 2)"
+
+  echo "$WP_ENABLED_PLUGINS" | grep -xq "$PLUGIN_NAME" || \
+    $WP plugin install "$PLUGIN_NAME" --version="$PLUGIN_VERSION" --activate-network
+done
 
 #
 # Configure plugins

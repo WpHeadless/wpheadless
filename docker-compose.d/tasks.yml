@@ -72,13 +72,12 @@ services:
       - LOGGED_IN_SALT
       - NONCE_SALT
       - WORDPRESS_VERSION=4.9.8
-      - WORDPRESS_SHA1=0945bab959cba127531dceb2c4fed81770812b4f
       - WP_DEFAULT_THEME=twentyseventeen-child
       - WORDPRESS_TITLE=WpHeadless
       - ACF_PRO_VERSION=5.7.6
       - WORDPRESS_PLUGINS=
-          custom-post-type-ui 1.6.0
-          acf-to-rest-api 3.1.0
-          amazon-s3-and-cloudfront 2.0
-          wordpress-importer 0.6.4
-          title-and-nofollow-for-links
+          custom-post-type-ui=1.6.0
+          acf-to-rest-api=3.1.0
+          amazon-s3-and-cloudfront=2.0
+          wordpress-importer=0.6.4
+          title-and-nofollow-for-links=1.07
