@@ -80,3 +80,4 @@ services:
           amazon-s3-and-cloudfront=2.0
           wordpress-importer=0.6.4
           title-and-nofollow-for-links=1.07
+          disable-comments=1.8.0
