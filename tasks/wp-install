@@ -104,11 +104,8 @@ $WP theme is-active wpheadless || \
   $WP theme enable wpheadless --network --activate
 
 #
-# Enable/disable plugins
+# Install & activate plugins
 #
-
-$WP plugin is-installed hello && $WP plugin uninstall hello --deactivate
-$WP plugin is-installed akismet && $WP plugin uninstall akismet --deactivate
 
 WP_ENABLED_PLUGINS=$($WP plugin list --field=name --status=active-network)
 
@@ -138,6 +135,7 @@ done
 #
 
 if [ ! -z "$UPLOADS_BUCKET" ] && [ "$STAGE" = "production" ]; then
-  # TODO preconfigure amazon-s3-and-cloudfront plugin
+  # TODO configure amazon-s3-and-cloudfront plugin
+  # TODO configure disable-comments plugin
   echo -n
 fi
