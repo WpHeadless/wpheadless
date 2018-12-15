@@ -17,8 +17,6 @@ add_action( 'admin_menu', function () {
 add_action( '_network_admin_menu', function () {
   array_map( 'remove_menu_page', [
     'index.php',
-    'plugins.php',
-    'themes.php'
   ] );
 
   remove_submenu_page( 'settings.php', 'setup.php' );

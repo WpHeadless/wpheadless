@@ -33,14 +33,14 @@ fi
 
 WP_CONFIG_PATH=$(dirname "$WEBROOT")/wp-config.php
 echo "Generating ${WP_CONFIG_PATH}"
-php "${APPROOT}/wp-headless/wp-config-tpl.php" > "$WP_CONFIG_PATH"
+php "${APPROOT}/wordpress/wp-config-tpl.php" > "$WP_CONFIG_PATH"
 
 #
 # Copy custom theme
 #
 
-echo "Copying custom theme ${WP_DEFAULT_THEME}"
-cp -rf "${APPROOT}/wp-headless/${WP_DEFAULT_THEME}" "${WEBROOT}/wp-content/themes"
+echo "Copying custom wpheadless theme"
+cp -rf "${APPROOT}/wordpress/wpheadless" "${WEBROOT}/wp-content/themes"
 
 #
 # Symlink uploads to dedicated RW docker volume mount
@@ -97,17 +97,11 @@ if ! $WP core is-installed --network; then
 fi
 
 #
-# Enable/disable themes
+# Activate theme
 #
 
-$WP theme is-active twentyseventeen-child || \
-  $WP theme enable twentyseventeen-child --network --activate
-
-$WP theme list --field=name --enabled=network | grep -xq twentyseventeen && \
-  $WP theme disable twentyseventeen --network
-
-$WP theme is-installed twentyfifteen && $WP theme delete twentyfifteen
-$WP theme is-installed twentysixteen && $WP theme delete twentysixteen
+$WP theme is-active wpheadless || \
+  $WP theme enable wpheadless --network --activate
 
 #
 # Enable/disable plugins

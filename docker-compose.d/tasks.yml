@@ -72,7 +72,6 @@ services:
       - LOGGED_IN_SALT
       - NONCE_SALT
       - WORDPRESS_VERSION=5.0.1
-      - WP_DEFAULT_THEME=twentyseventeen-child
       - WORDPRESS_TITLE=WpHeadless
       - ACF_PRO_VERSION=5.7.8
       - WORDPRESS_PLUGINS=
