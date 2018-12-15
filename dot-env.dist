@@ -1,7 +1,7 @@
 DOMAIN=localhost
 ADMIN_EMAIL=webmaster@example.com
-DB_USER=wp-headless
-DB_NAME=wp-headless
+DB_USER=wpheadless
+DB_NAME=wpheadless
 DB_PASSWORD=
 MYSQL_ROOT_PASSWORD=
 AWS_ACCESS_KEY_ID=
