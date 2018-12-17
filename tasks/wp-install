@@ -36,11 +36,11 @@ echo "Generating ${WP_CONFIG_PATH}"
 php "${APPROOT}/wordpress/wp-config-tpl.php" > "$WP_CONFIG_PATH"
 
 #
-# Copy custom theme
+# Copy mu-plugins
 #
 
-echo "Copying custom wpheadless theme"
-cp -rf "${APPROOT}/wordpress/wpheadless" "${WEBROOT}/wp-content/themes"
+echo "Copying mu-plugins"
+cp -rf "${APPROOT}/wordpress/mu-plugins" "${WEBROOT}/wp-content/"
 
 #
 # Symlink uploads to dedicated RW docker volume mount
@@ -100,13 +100,6 @@ if ! $WP core is-installed --network; then
     $WP_CORE_OPTIONS \
     ;
 fi
-
-#
-# Activate theme
-#
-
-$WP theme is-active wpheadless || \
-  $WP theme enable wpheadless --network --activate
 
 #
 # Install & activate plugins
