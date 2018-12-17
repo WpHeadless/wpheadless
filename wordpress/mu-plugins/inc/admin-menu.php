@@ -1,5 +1,7 @@
 <?php
 
+if (!is_admin()) return;
+
 add_action( 'admin_menu', function () {
   array_map( 'remove_menu_page', [
     'index.php',
