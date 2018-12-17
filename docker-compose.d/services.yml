@@ -50,7 +50,6 @@ services:
       - ../var/letsencrypt:/etc/letsencrypt:ro
       - ../var/uploads:/var/www/wordpress-uploads:ro
       - ../var/plugins:/var/www/wordpress-plugins:ro
-      - ../var/themes:/var/www/wordpress-themes:ro
     environment:
       - DOMAIN
 
@@ -75,7 +74,6 @@ services:
       - wordpress:/var/www/wordpress:ro
       - ../var/uploads:/var/www/wordpress-uploads
       - ../var/plugins:/var/www/wordpress-plugins:ro
-      - ../var/themes:/var/www/wordpress-themes:ro
 
 networks:
   frontend:

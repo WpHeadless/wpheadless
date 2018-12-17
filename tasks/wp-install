@@ -23,9 +23,14 @@ WP="wp --allow-root --path="${WEBROOT}""
 [ -d "$WEBROOT" ] || mkdir -p "$WEBROOT"
 if [ -z "$(ls -A "$WEBROOT")" ]; then
   $WP core download --version="$WORDPRESS_VERSION" --skip-content
-  mkdir -p "${WEBROOT}/wp-content/themes"
   mkdir -p "${WEBROOT}/wp-content/plugins"
 fi
+
+#
+# Disable themes
+#
+
+sed -i -e "s/^define('WP_USE_THEMES', true);/define('WP_USE_THEMES', false);/" "${WEBROOT}/index.php"
 
 #
 # Prepare wp-config.php file
@@ -51,15 +56,11 @@ ln -sf /var/www/wordpress-uploads /var/www/wordpress/html/wp-content/uploads
 chmod 777 /var/www/wordpress-uploads
 
 #
-# Symlink custom plugins and themes
+# Symlink custom plugins
 #
 
 if [ ! -z "$(ls -A /var/www/wordpress-plugins/)" ]; then
   ln -sf /var/www/wordpress-plugins/* "${WEBROOT}/wp-content/plugins/"
-fi
-
-if [ ! -z "$(ls -A /var/www/wordpress-themes/)" ]; then
-  ln -sf /var/www/wordpress-themes/* "${WEBROOT}/wp-content/themes/"
 fi
 
 #
