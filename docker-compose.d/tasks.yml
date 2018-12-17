@@ -47,9 +47,9 @@ services:
     volumes:
       - wordpress:/var/www/wordpress
       - ..:/$PWD
-      - ../var/uploads:/var/www/uploads
-      - ../var/plugins:/var/www/plugins
-      - ../var/themes:/var/www/themes
+      - ../var/uploads:/var/www/wordpress-uploads
+      - ../var/plugins:/var/www/wordpress-plugins
+      - ../var/themes:/var/www/wordpress-themes
     environment:
       - APPROOT=$PWD
       - SMTPHOST=smtp

@@ -47,15 +47,20 @@ cp -rf "${APPROOT}/wordpress/wpheadless" "${WEBROOT}/wp-content/themes"
 #
 
 rm -rf /var/www/wordpress/html/wp-content/uploads
-ln -sf /var/www/uploads /var/www/wordpress/html/wp-content/uploads
-chmod 777 /var/www/uploads
+ln -sf /var/www/wordpress-uploads /var/www/wordpress/html/wp-content/uploads
+chmod 777 /var/www/wordpress-uploads
 
 #
 # Symlink custom plugins and themes
 #
 
-ln -sf /var/www/plugins/* "${WEBROOT}/wp-content/plugins/"
-ln -sf /var/www/themes/* "${WEBROOT}/wp-content/themes/"
+if [ ! -z "$(ls -A /var/www/wordpress-plugins/)" ]; then
+  ln -sf /var/www/wordpress-plugins/* "${WEBROOT}/wp-content/plugins/"
+fi
+
+if [ ! -z "$(ls -A /var/www/wordpress-themes/)" ]; then
+  ln -sf /var/www/wordpress-themes/* "${WEBROOT}/wp-content/themes/"
+fi
 
 #
 # Create db and user if necessary
