@@ -72,10 +72,6 @@ http {
       rewrite ^(/[^/]+)?(/.*\.php) ${DOLLAR}2 last;
     }
 
-    location /. {
-      return 404;
-    }
-
     location / {
       try_files ${DOLLAR}uri ${DOLLAR}uri/ /index.php?${DOLLAR}args;
     }
@@ -96,5 +92,3 @@ http {
     }
   }
 }
-
-
