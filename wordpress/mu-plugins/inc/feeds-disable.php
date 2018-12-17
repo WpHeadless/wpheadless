@@ -1,7 +1,6 @@
 <?php
 
 function wpheadless_disable_feed () {
-  // wp_die( '', '', [ 'response' => 404 ]);
   global $wp_query;
   $wp_query->set_404();
   status_header( 404 );
