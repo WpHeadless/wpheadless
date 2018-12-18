@@ -37,8 +37,8 @@ COMPOSE_SERVICES_TYPE=services ./docker-compose pull
 COMPOSE_SERVICES_TYPE=tasks ./docker-compose pull
 
 ./run-task configure \
-  --domain="$DOMAIN" \
-  --admin-email="$ADMIN_EMAIL"
+  --domain="'$DOMAIN'" \
+  --admin-email="'$ADMIN_EMAIL'"
 
 if [ "$STAGE" = "production" ]; then
   ./run-task leissue-standalone || \
@@ -51,5 +51,5 @@ fi
 ./docker-compose up -d
 
 ./run-task wp-install \
-  --admin-password="$ADMIN_PASSWORD" \
-  --uploads-bucket="$UPLOADS_BUCKET"
+  --admin-password="'$ADMIN_PASSWORD'" \
+  --uploads-bucket="'$UPLOADS_BUCKET'"

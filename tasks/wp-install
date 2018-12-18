@@ -89,17 +89,24 @@ if ! $WP core is-installed --network; then
     WP_CORE_OPTIONS="${WP_CORE_OPTIONS} --skip-email"
   fi
 
+  # TODO find solution to pass quoted admin password argument via WP_CORE_OPTIONS
+  # and remove this if condition keeping only else branch
   if [ ! -z "$ADMIN_PASSWORD" ]; then
-    WP_CORE_OPTIONS="${WP_CORE_OPTIONS} --admin_password=${ADMIN_PASSWORD}"
+    $WP core multisite-install \
+      --url="https://${DOMAIN}" \
+      --title="$WORDPRESS_TITLE" \
+      --admin_email="$ADMIN_EMAIL" \
+      --admin_password="$ADMIN_PASSWORD" \
+      $WP_CORE_OPTIONS \
+      ;
+  else
+    $WP core multisite-install \
+      --url="https://${DOMAIN}" \
+      --title="$WORDPRESS_TITLE" \
+      --admin_email="$ADMIN_EMAIL" \
+      $WP_CORE_OPTIONS \
+      ;
   fi
-
-  $WP core multisite-install \
-    --url="https://${DOMAIN}" \
-    --title="$WORDPRESS_TITLE" \
-    --admin_email="$ADMIN_EMAIL" \
-    --skip-config \
-    $WP_CORE_OPTIONS \
-    ;
 fi
 
 #
