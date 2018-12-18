@@ -35,7 +35,7 @@ fi
 
 if grep -m 1 -x -q -E "\s+${TASK_SERVICE}:" docker-compose.d/tasks.yml; then
   COMPOSE_SERVICES_TYPE=tasks ./docker-compose \
-    run --rm --service-ports "$TASK_SERVICE" $TASK
+    run --rm --service-ports "$TASK_SERVICE" sh -c "$TASK"
 else
   source "$TASK_FILE"
 fi
