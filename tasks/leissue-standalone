@@ -23,7 +23,6 @@ certificate_dir="$(
     | head -n1
 )"
 
-certificate_name="$(basename "$certificate_dir")"
-active_certificate_dir="/etc/letsencrypt/active/${certificate_name}"
+active_certificate_dir="/etc/letsencrypt/active/${DOMAIN}"
 mkdir -p "$active_certificate_dir"
 ln -sf "$certificate_dir"/* "${active_certificate_dir}/"
