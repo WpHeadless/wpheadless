@@ -66,29 +66,40 @@ http {
     add_header X-Frame-Options SAMEORIGIN always;
 
     if (!-e ${DOLLAR}request_filename) {
-      # Don't use `${DOLLAR}uri` here, see https://github.com/yandex/gixy/issues/77
-      rewrite /wp-admin${DOLLAR} ${DOLLAR}scheme://${DOLLAR}host${DOLLAR}request_uri/ permanent;
       rewrite ^(/[^/]+)?(/wp-.*) ${DOLLAR}2 last;
       rewrite ^(/[^/]+)?(/.*\.php) ${DOLLAR}2 last;
     }
 
-    location / {
-      try_files ${DOLLAR}uri ${DOLLAR}uri/ /index.php?${DOLLAR}args;
+    location = /robots.txt {
+      return 200 "User-agent: *\nDisallow: /\n";
+    }
+
+    location = / {
+      return 302 /wp-admin/;
+    }
+
+    # Allow only fixed set of files in Wordpress to be requested
+    location ~ ^/(?!(wp-admin|wp-includes|wp-content|wp-json|wp-activate\.php|wp-cron\.php|wp-login\.php|index\.php)) {
+      return 404;
+    }
+
+    # Disable php processing in uploads
+    location ~ ^/wp-content/uploads/.*${DOLLAR} {
+      try_files ${DOLLAR}uri =404;
     }
 
     location ~ \.php${DOLLAR} {
       try_files ${DOLLAR}uri =404;
       fastcgi_split_path_info ^(.+\.php)(/.+)${DOLLAR};
-
-      # Allow php processing everywhere but in uploads/
-      if (${DOLLAR}uri !~ "^/wp-content/uploads/") {
-        fastcgi_pass php:9000;
-      }
-
+      fastcgi_pass php:9000;
       fastcgi_index index.php;
       include fastcgi_params;
       fastcgi_param SCRIPT_FILENAME ${DOLLAR}document_root${DOLLAR}fastcgi_script_name;
       fastcgi_param PATH_INFO ${DOLLAR}fastcgi_path_info;
+    }
+
+    location / {
+      try_files ${DOLLAR}uri ${DOLLAR}uri/ /index.php?${DOLLAR}args;
     }
   }
 }
