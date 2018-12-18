@@ -18,7 +18,7 @@ certbot \
 
 certificate_dir="$(
   find /etc/letsencrypt/live -type d \
-    -name "${DOMAIN}" -or -name "${DOMAIN}-*" \
+    -name "$DOMAIN" -or -name "${DOMAIN}-*" \
     | sort -r \
     | head -n1
 )"

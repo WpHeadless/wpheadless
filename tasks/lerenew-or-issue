@@ -33,7 +33,7 @@ code=$(test -f /root/certbot-renew-success)
 if [ $code -eq 0 ]; then
   certificate_dir="$(
     find /etc/letsencrypt/live -type d \
-      -name '${DOMAIN}' -or -name '${DOMAIN}-*' \
+      -name "$DOMAIN" -or -name "${DOMAIN}-*" \
       | sort -r \
       | head -n1
   )"
