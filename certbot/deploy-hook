@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
 set -e
-touch /root/certbot-renew-success
+touch /tmp/certbot-renew-success
