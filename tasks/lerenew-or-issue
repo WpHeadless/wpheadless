@@ -9,7 +9,7 @@ set -e
 # Solution implemented here uses deploy-hook script to create a file at
 # specific location and exit with 0 if it exists, or 1 otherwise.
 
-rm -f /root/certbot-renew-success
+rm -f /tmp/certbot-renew-success
 
 CERTBOT_OPTIONS="certonly -n --agree-tos"
 
@@ -27,20 +27,17 @@ certbot \
   -m "$ADMIN_EMAIL" \
   -d "$DOMAIN"
 
-code=$(test -f /root/certbot-renew-success)
+# exit here if file does not exist
+test -f /tmp/certbot-renew-success
 
 # Update actual certificate symlink
-if [ $code -eq 0 ]; then
-  certificate_dir="$(
-    find /etc/letsencrypt/live -type d \
-      -name "$DOMAIN" -or -name "${DOMAIN}-*" \
-      | sort -r \
-      | head -n1
-  )"
+certificate_dir="$(
+  find /etc/letsencrypt/live -type d \
+    -name "$DOMAIN" -or -name "${DOMAIN}-*" \
+    | sort -r \
+    | head -n1
+)"
 
-  active_certificate_dir="/etc/letsencrypt/active/${DOMAIN}"
-  mkdir -p "$active_certificate_dir"
-  ln -sf "$certificate_dir"/* "${active_certificate_dir}/"
-fi
-
-exit $code
+active_certificate_dir="/etc/letsencrypt/active/${DOMAIN}"
+mkdir -p "$active_certificate_dir"
+ln -sf "$certificate_dir"/* "${active_certificate_dir}/"
