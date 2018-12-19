@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-DUMP="./backup/db.sql.gz"
+DUMP="var/backup/db.sql.gz"
 [ ! -e "$DUMP" ] && echo "No dump file exists" && exit 1
 
 gzip -dc "$DUMP" | \

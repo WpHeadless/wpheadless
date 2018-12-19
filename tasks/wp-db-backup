@@ -2,9 +2,8 @@
 
 set -eo pipefail
 
-DUMP_DIR="./backup"
+DUMP_DIR="var/backup"
 DUMP_FILE_NAME="db.sql.gz"
-DUMP_FILE_PATH="${DUMP_DIR}/${DUMP_FILE_NAME}"
 
 NEW_DUMP_FILE_NAME="db-$(date +%Y%m%d-%H%M%S).sql"
 NEW_DUMP_FILE_PATH="/tmp/${NEW_DUMP_FILE_NAME}"
@@ -20,6 +19,7 @@ gzip "$NEW_DUMP_FILE_PATH"
 NEW_DUMP_FILE_PATH="${NEW_DUMP_FILE_PATH}.gz"
 NEW_DUMP_FILE_NAME="db-$(date +%Y%m%d-%H%M%S).sql.gz"
 
+mkdir -p "$DUMP_DIR"
 cd "$DUMP_DIR"
 mv "$NEW_DUMP_FILE_PATH" "./${NEW_DUMP_FILE_NAME}"
 ln -sf "./${NEW_DUMP_FILE_NAME}" "$DUMP_FILE_NAME"
