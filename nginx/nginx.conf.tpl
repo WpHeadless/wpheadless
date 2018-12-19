@@ -70,6 +70,13 @@ http {
       rewrite ^(/[^/]+)?(/.*\.php) ${DOLLAR}2 last;
     }
 
+    error_page 403 404 /__empty-error-page__.html;
+
+    location = /__empty-error-page__.html {
+      internal;
+      return 200 "";
+    }
+
     location = /robots.txt {
       return 200 "User-agent: *\nDisallow: /\n";
     }
