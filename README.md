@@ -87,3 +87,8 @@ There are other projects sharing the same idea of using Wordpress as API-only CM
 
 - WordPress + React Starter kit https://github.com/postlight/headless-wp-starter
 - Rooftop CMS https://github.com/rooftopcms/rooftop-cms
+
+## Content as a service (CaaS) providers
+
+- https://contentful.com
+- https://prismic.io
