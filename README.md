@@ -57,11 +57,14 @@ $ ./run-task install \
 
 > When password is not specified a random one is generated and sent to stdout.
 
-## Backup
+## Scheduler
 
-Database backup task is executed nightly by cron service.
+WpHeadless contains scheduler service powered by cron running in dedicated lightweight container.
 
-To restore database from backup file make sure WpHeadless is running and execute `./run-task db-restore`.
+Jobs executed by scheduler:
+
+- nightly backup
+- letsencrypt certificate renew or issue (`production` stage only)
 
 ## Docker service containers
 
