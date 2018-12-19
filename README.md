@@ -8,20 +8,22 @@ WpHeadless is Wordpress Multisite bundle providing API-only or Headless implemen
 
 ## Features
 
-- Docker is the only dependency on server
+- Docker is the only dependency
 - HTTPS only
 - Self-signed certificate
 - Letsencrypt certificate issue & renew
-- Automated backup
-- Stage support (production, development)
+- Nightly backup
+- Stage support: `production`, `development`
 - Wordpress Multisite secure setup
 - SMTP server
 
 ## Install
 
-There two executable files in project root: `./docker-compose` - docker-compose wrapper and `./run-task` - runner for scripted tasks from `tasks/` inside docker containers.
+There are two executable files in the project root:
+- `./docker-compose` - `docker-compose` wrapper. Use it just like real `docker-compose`.
+- `./run-task` - Task runner executing scripts from `tasks/` directory in containers.
 
-Use `run-task` script to install WpHeadless.
+Use `run-task` to install WpHeadless.
 
 ```
 Usage: ./run-task [OPTIONS] install
@@ -46,7 +48,7 @@ $ ./run-task install \
   --stage=production
 ```
 
-When password is not specified a random one is generated and sent to stdout.
+> When password is not specified a random one is generated and sent to stdout.
 
 ## Backup
 
