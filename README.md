@@ -4,7 +4,7 @@
 
 # What is WpHeadless?
 
-WpHeadless is Wordpress Multisite bundle providing API-only or Headless implementation of the CMS. It comes with fully automated docker based workflow to setup and maintain CMS service on your own server or https://localhost.
+WpHeadless is Wordpress Multisite bundle providing API-only or Headless implementation of the CMS and static site web-server. It comes with fully automated docker based workflow to setup and maintain CMS service on your own server or https://localhost.
 
 ## TL;DR;
 
