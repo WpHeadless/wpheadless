@@ -4,7 +4,7 @@
 
 # What is WpHeadless?
 
-WpHeadless is Wordpress Multisite bundle providing API-only or Headless implementation of the CMS. It comes with fully automated docker based workflow to setup and maintain CMS service on your own server or localhost.
+WpHeadless is Wordpress Multisite bundle providing API-only or Headless implementation of the CMS. It comes with fully automated docker based workflow to setup and maintain CMS service on your own server or https://localhost.
 
 ## Features
 
@@ -37,9 +37,16 @@ For example:
 
 - `./run-task install` - development stage on https://localhost
 - `./run-task install --domain=example.com` - development stage on https://example.com
-- `./run-task install --domain=example.com --admin-email=webmaster@example.com --admin-password=12345678 --stage=production` - production stage on https://example.com
 
-If password is not specified a random one is generated and printed in command output.
+```
+$ ./run-task install \
+  --domain=example.com \
+  --admin-email=webmaster@example.com \
+  --admin-password='1 2 3 4 5 6 7 8' \
+  --stage=production
+```
+
+When password is not specified a random one is generated and sent to stdout.
 
 ## Backup
 
