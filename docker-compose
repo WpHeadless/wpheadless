@@ -10,10 +10,12 @@ cd "$(dirname "$0")"
 
 # current stage detection
 
-if [ -f .production ]; then
-  STAGE='production'
-else
-  STAGE='development'
+if [ -z "$STAGE" ]; then
+  if [ -f .production ]; then
+    STAGE='production'
+  else
+    STAGE='development'
+  fi
 fi
 
 # docker run options
