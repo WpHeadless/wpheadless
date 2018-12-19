@@ -64,8 +64,8 @@ WpHeadless contains scheduler service powered by cron running in dedicated light
 
 Jobs executed by scheduler:
 
-- nightly backup
-- letsencrypt certificate renew or issue (`production` stage only)
+- Nightly backup
+- Letsencrypt certificate renew or issue (`production` stage only)
 
 ## Docker service containers
 
