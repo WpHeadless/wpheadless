@@ -106,7 +106,7 @@ http {
     }
 
     location / {
-      try_files ${DOLLAR}uri /index.php?${DOLLAR}args;
+      try_files ${DOLLAR}uri ${DOLLAR}uri/ /index.php?${DOLLAR}args;
     }
   }
 }
