@@ -2,5 +2,6 @@
 
 set -e
 
+./run-task wp-db-backup
 ./docker-compose down -v
 ./run-task clean
