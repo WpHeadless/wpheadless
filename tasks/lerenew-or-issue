@@ -25,7 +25,9 @@ certbot \
   --webroot --webroot-path=/var/www/html \
   --deploy-hook=certbot/deploy-hook \
   -m "$ADMIN_EMAIL" \
-  -d "$DOMAIN"
+  -d "$DOMAIN" \
+  $@ \
+  ;
 
 # exit here if file does not exist
 test -f /tmp/certbot-renew-success
