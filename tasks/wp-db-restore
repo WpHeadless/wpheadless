@@ -3,7 +3,7 @@
 set -eo pipefail
 
 DUMP="var/backup/db.sql.gz"
-[ ! -e "$DUMP" ] && echo "No dump file exists" && exit 1
+[ ! -f "$DUMP" ] && echo "No dump file found" && exit 1
 
 gzip -dc "$DUMP" | \
   mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASSWORD" \
