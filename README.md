@@ -22,6 +22,7 @@ $ open https://localhost
 - Nightly backup
 - Stage support: `production`, `development`
 - Wordpress Multisite secure setup
+- Static site web-server (HTTP only)
 - SMTP server
 
 ## Install
