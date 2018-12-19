@@ -30,14 +30,14 @@ fi
 
 # docker-compose options
 
-DOCKER_COMPOSE_OPTIONS='-f docker-compose.d/common.yml'
+DOCKER_COMPOSE_OPTIONS='-f compose.d/common.yml'
 
-if [ -f "docker-compose.d/${COMPOSE_SERVICES_TYPE}.yml" ]; then
-  DOCKER_COMPOSE_OPTIONS="${DOCKER_COMPOSE_OPTIONS} -f docker-compose.d/${COMPOSE_SERVICES_TYPE}.yml"
+if [ -f "compose.d/${COMPOSE_SERVICES_TYPE}.yml" ]; then
+  DOCKER_COMPOSE_OPTIONS="${DOCKER_COMPOSE_OPTIONS} -f compose.d/${COMPOSE_SERVICES_TYPE}.yml"
 fi
 
-if [ -f "docker-compose.d/${COMPOSE_SERVICES_TYPE}-${STAGE}.yml" ]; then
-  DOCKER_COMPOSE_OPTIONS="${DOCKER_COMPOSE_OPTIONS} -f docker-compose.d/${COMPOSE_SERVICES_TYPE}-${STAGE}.yml"
+if [ -f "compose.d/${COMPOSE_SERVICES_TYPE}-${STAGE}.yml" ]; then
+  DOCKER_COMPOSE_OPTIONS="${DOCKER_COMPOSE_OPTIONS} -f compose.d/${COMPOSE_SERVICES_TYPE}-${STAGE}.yml"
 fi
 
 docker \
