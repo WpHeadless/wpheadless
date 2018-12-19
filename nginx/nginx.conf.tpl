@@ -17,18 +17,31 @@ http {
   keepalive_timeout 65;
   gzip on;
 
+  log_format vhostlogs '${DOLLAR}host ${DOLLAR}remote_addr - ${DOLLAR}remote_user '
+                     '[${DOLLAR}time_local] "${DOLLAR}request" ${DOLLAR}status '
+                     '${DOLLAR}body_bytes_sent "${DOLLAR}http_referer" '
+                     '"${DOLLAR}http_user_agent"';
+
+  access_log /dev/stdout vhostlogs;
+  error_log /dev/stdout info;
+
   server {
     server_name _;
     listen 80 default_server;
     listen [::]:80 default_server;
 
-    access_log /dev/stdout;
-    error_log /dev/stdout info;
+    root /var/www/vhosts/${DOLLAR}host;
+  }
 
-    location '/.well-known/acme-challenge' {
+  server {
+    server_name ${DOMAIN};
+    listen 80;
+    listen [::]:80;
+
+    location /.well-known/acme-challenge {
       try_files ${DOLLAR}uri =404;
       default_type "text/plain";
-      root /var/www/html;
+      root /var/www/vhosts/${DOLLAR}host;
     }
 
     location / {
@@ -44,10 +57,8 @@ http {
     root /var/www/wordpress/html;
     index index.php;
 
-    error_log /dev/stdout info;
-    access_log /dev/stdout;
-
     resolver 8.8.8.8 8.8.4.4;
+    resolver_timeout 5s;
 
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
     ssl_ciphers 'ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:!DSS';

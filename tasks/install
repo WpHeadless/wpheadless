@@ -36,6 +36,9 @@ export DOMAIN
 COMPOSE_SERVICES_TYPE=services ./docker-compose pull
 COMPOSE_SERVICES_TYPE=tasks ./docker-compose pull
 
+# Create http vhost for served domain
+mkdir -p "var/vhosts/${DOMAIN}"
+
 ./run-task configure \
   --domain="'$DOMAIN'" \
   --admin-email="'$ADMIN_EMAIL'"

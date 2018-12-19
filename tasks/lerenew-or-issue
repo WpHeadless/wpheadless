@@ -22,7 +22,7 @@ fi
 
 certbot \
   $CERTBOT_OPTIONS \
-  --webroot --webroot-path=/var/www/html \
+  --webroot --webroot-path="/var/www/vhosts/${DOMAIN}" \
   --deploy-hook=certbot/deploy-hook \
   -m "$ADMIN_EMAIL" \
   -d "$DOMAIN" \

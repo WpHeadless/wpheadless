@@ -50,6 +50,7 @@ services:
       - ../var/letsencrypt:/etc/letsencrypt:ro
       - ../var/uploads:/var/www/wordpress-uploads:ro
       - ../var/plugins:/var/www/wordpress-plugins:ro
+      - ../var/vhosts:/var/www/vhosts:ro
     environment:
       - DOMAIN
 
