@@ -63,9 +63,9 @@ services:
       - SECURE_AUTH_SALT
       - LOGGED_IN_SALT
       - NONCE_SALT
-      - WORDPRESS_VERSION=5.0.1
+      - WORDPRESS_VERSION=5.0.2
       - WORDPRESS_TITLE=WpHeadless
-      - ACF_PRO_VERSION=5.7.8
+      - ACF_PRO_VERSION=5.7.9
       - WORDPRESS_PLUGINS=
           custom-post-type-ui=1.6.1
           acf-to-rest-api=3.1.0
