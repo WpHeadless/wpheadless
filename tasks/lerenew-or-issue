@@ -9,7 +9,15 @@ set -e
 # Solution implemented here uses deploy-hook script to create a file at
 # specific location and exit with 0 if it exists, or 1 otherwise.
 
-rm -f /tmp/certbot-renew-success
+DEPLOY_HOOK_PATH=/tmp/certbot-deploy-hook
+SUCCESS_FLAG_FILE=/tmp/certbot-renew-success
+
+cat > "$DEPLOY_HOOK_PATH" << EOT
+#!/usr/bin/env sh
+touch "${SUCCESS_FLAG_FILE}"
+EOT
+chmod +x "$DEPLOY_HOOK_PATH"
+rm -f "$SUCCESS_FLAG_FILE"
 
 CERTBOT_OPTIONS="certonly -n --agree-tos"
 
@@ -23,14 +31,14 @@ fi
 certbot \
   $CERTBOT_OPTIONS \
   --webroot --webroot-path="/var/www/vhosts/${DOMAIN}" \
-  --deploy-hook=certbot/deploy-hook \
+  --deploy-hook="$DEPLOY_HOOK_PATH" \
   -m "$ADMIN_EMAIL" \
   -d "$DOMAIN" \
   $@ \
   ;
 
 # exit here if file does not exist
-test -f /tmp/certbot-renew-success
+test -f "$SUCCESS_FLAG_FILE"
 
 # Update actual certificate symlink
 certificate_dir="$(

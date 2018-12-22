@@ -5,38 +5,31 @@ services:
     entrypoint: []
     working_dir: $PWD
     volumes:
-      - certbot:/var/www/html
       - ../tasks:${PWD}/tasks:ro
       - ../var/letsencrypt:/etc/letsencrypt
     environment:
       - DOMAIN
       - ADMIN_EMAIL
       - STAGE
-
   task-lerenew:
     <<: *task-certbot
     volumes:
-      - certbot:/var/www/html
       - ../tasks:${PWD}/tasks:ro
       - ../var/letsencrypt:/etc/letsencrypt
-      - ../certbot:${PWD}/certbot:ro
-
+      - ../var/vhosts:/var/www/vhosts
   task-leissue:
     <<: *task-certbot
     ports:
       - 80:80
       - 443:443
-
   task-openssl:
     <<: *task-certbot
     command: sh
-
   task-configure:
     <<: *task-certbot
     command: sh
     volumes:
       - ..:/$PWD
-
   task-wp:
     image: wordpress:cli-php7.2
     entrypoint: []
