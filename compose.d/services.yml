@@ -38,7 +38,6 @@ services:
       - 443:443
     volumes:
       - wordpress:/var/www/wordpress:ro
-      - certbot:/var/www/html:ro
       - ../nginx/nginx.conf.tpl:/etc/nginx/nginx.conf.tpl:ro
       - ../var/letsencrypt:/etc/letsencrypt:ro
       - ../var/uploads:/var/www/wordpress-uploads:ro
