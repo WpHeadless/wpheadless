@@ -4,12 +4,7 @@ services:
     image: docker:stable
     restart: unless-stopped
     working_dir: $PWD
-    command: "
-      sh -c '
-        crontab cron/crontab &&
-        crond -f -d 8
-      '
-    "
+    command: cron/docker_cmd.sh
     networks:
       - backend
     volumes:
@@ -18,14 +13,12 @@ services:
     environment:
       - APPROOT=$PWD
       - STAGE
-
   smtp:
     image: namshi/smtp:latest
     restart: unless-stopped
     hostname: $DOMAIN
     networks:
       - backend
-
   nginx:
     image: nginx:1.15
     restart: unless-stopped
@@ -53,7 +46,6 @@ services:
       - ../var/vhosts:/var/www/vhosts:ro
     environment:
       - DOMAIN
-
   mysql:
     image: mariadb:10.3
     restart: unless-stopped
@@ -75,6 +67,5 @@ services:
       - wordpress:/var/www/wordpress:ro
       - ../var/uploads:/var/www/wordpress-uploads
       - ../var/plugins:/var/www/wordpress-plugins:ro
-
 networks:
   frontend:
