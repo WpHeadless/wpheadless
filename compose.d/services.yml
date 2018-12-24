@@ -20,7 +20,7 @@ services:
     networks:
       - backend
   nginx:
-    image: nginx:1.15
+    image: nginx:1.14
     restart: unless-stopped
     command: /docker_cmd.sh
     depends_on:
