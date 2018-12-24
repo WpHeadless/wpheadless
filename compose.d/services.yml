@@ -22,12 +22,7 @@ services:
   nginx:
     image: nginx:1.15
     restart: unless-stopped
-    command: "
-      sh -c '
-        DOLLAR=$$ envsubst < /etc/nginx/nginx.conf.tpl > /etc/nginx/nginx.conf;
-        exec nginx -g \"daemon off;\"
-      '
-    "
+    command: /docker_cmd.sh
     depends_on:
       - php
     networks:
@@ -39,6 +34,7 @@ services:
     volumes:
       - wordpress:/var/www/wordpress:ro
       - ../nginx/nginx.conf.tpl:/etc/nginx/nginx.conf.tpl:ro
+      - ../nginx/docker_cmd.sh:/docker_cmd.sh:ro
       - ../var/letsencrypt:/etc/letsencrypt:ro
       - ../var/uploads:/var/www/wordpress-uploads:ro
       - ../var/plugins:/var/www/wordpress-plugins:ro
@@ -56,7 +52,6 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD
       - MYSQL_ALLOW_EMPTY_PASSWORD=1
-
   php:
     image: wpheadless/wp-php-fpm:7.2.2
     restart: unless-stopped
