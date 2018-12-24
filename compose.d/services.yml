@@ -61,5 +61,6 @@ services:
       - wordpress:/var/www/wordpress:ro
       - ../var/uploads:/var/www/wordpress-uploads
       - ../var/plugins:/var/www/wordpress-plugins:ro
+      - ../wordpress/mu-plugins:/var/www/wordpress-mu-plugins:ro
 networks:
   frontend:

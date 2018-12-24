@@ -41,13 +41,6 @@ echo "Generating ${WP_CONFIG_PATH}"
 php "${APPROOT}/wordpress/wp-config-tpl.php" > "$WP_CONFIG_PATH"
 
 #
-# Copy mu-plugins
-#
-
-echo "Copying mu-plugins"
-cp -rf "${APPROOT}/wordpress/mu-plugins" "${WEBROOT}/wp-content/"
-
-#
 # Symlink uploads to dedicated RW docker volume mount
 #
 
