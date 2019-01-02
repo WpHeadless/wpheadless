@@ -1,19 +1,19 @@
 #!/usr/bin/env sh
 
-DOMAIN="localhost"
+DOMAIN="${DOMAIN:-localhost}"
 
 for i in "$@"; do
   case $i in
     --domain=*)
       DOMAIN="${i#*=}"
+      DOMAIN_PATTERN='.*'
       ;;
     --admin-email=*)
       ADMIN_EMAIL="${i#*=}"
+      ADMIN_EMAIL_PATTERN='.*'
       ;;
   esac
 done
-
-cp dot-env.dist dot-env
 
 if [ -z "$ADMIN_EMAIL" ]; then
   if [ "$DOMAIN" = "localhost" ]; then
@@ -23,15 +23,19 @@ if [ -z "$ADMIN_EMAIL" ]; then
   fi
 fi
 
-sed -i -e "s/^DOMAIN=.*/DOMAIN=${DOMAIN}/" dot-env
-sed -i -e "s/^ADMIN_EMAIL=.*/ADMIN_EMAIL=${ADMIN_EMAIL}/" dot-env
-sed -i -e "s/^DB_PASSWORD=.*/DB_PASSWORD=$(openssl rand -hex 12)/" dot-env
-sed -i -e "s/^MYSQL_ROOT_PASSWORD=.*/MYSQL_ROOT_PASSWORD=$(openssl rand -hex 12)/" dot-env
-sed -i -e "s/^AUTH_KEY=.*/AUTH_KEY=$(openssl rand -hex 32)/" dot-env
-sed -i -e "s/^SECURE_AUTH_KEY=.*/SECURE_AUTH_KEY=$(openssl rand -hex 32)/" dot-env
-sed -i -e "s/^LOGGED_IN_KEY=.*/LOGGED_IN_KEY=$(openssl rand -hex 32)/" dot-env
-sed -i -e "s/^NONCE_KEY=.*/NONCE_KEY=$(openssl rand -hex 32)/" dot-env
-sed -i -e "s/^AUTH_SALT=.*/AUTH_SALT=$(openssl rand -hex 32)/" dot-env
-sed -i -e "s/^SECURE_AUTH_SALT=.*/SECURE_AUTH_SALT=$(openssl rand -hex 32)/" dot-env
-sed -i -e "s/^LOGGED_IN_SALT=.*/LOGGED_IN_SALT=$(openssl rand -hex 32)/" dot-env
-sed -i -e "s/^NONCE_SALT=.*/NONCE_SALT=$(openssl rand -hex 32)/" dot-env
+if [ ! -f dot-env ]; then
+  cp dot-env.dist dot-env
+fi
+
+sed -i -e "s/^DOMAIN=${DOMAIN_PATTERN-$}/DOMAIN=${DOMAIN}/" dot-env
+sed -i -e "s/^ADMIN_EMAIL=${ADMIN_EMAIL_PATTERN-$}/ADMIN_EMAIL=${ADMIN_EMAIL}/" dot-env
+sed -i -e "s/^DB_PASSWORD=$/DB_PASSWORD=$(openssl rand -hex 12)/" dot-env
+sed -i -e "s/^MYSQL_ROOT_PASSWORD=$/MYSQL_ROOT_PASSWORD=$(openssl rand -hex 12)/" dot-env
+sed -i -e "s/^AUTH_KEY=$/AUTH_KEY=$(openssl rand -hex 32)/" dot-env
+sed -i -e "s/^SECURE_AUTH_KEY=$/SECURE_AUTH_KEY=$(openssl rand -hex 32)/" dot-env
+sed -i -e "s/^LOGGED_IN_KEY=$/LOGGED_IN_KEY=$(openssl rand -hex 32)/" dot-env
+sed -i -e "s/^NONCE_KEY=$/NONCE_KEY=$(openssl rand -hex 32)/" dot-env
+sed -i -e "s/^AUTH_SALT=$/AUTH_SALT=$(openssl rand -hex 32)/" dot-env
+sed -i -e "s/^SECURE_AUTH_SALT=$/SECURE_AUTH_SALT=$(openssl rand -hex 32)/" dot-env
+sed -i -e "s/^LOGGED_IN_SALT=$/LOGGED_IN_SALT=$(openssl rand -hex 32)/" dot-env
+sed -i -e "s/^NONCE_SALT=$/NONCE_SALT=$(openssl rand -hex 32)/" dot-env

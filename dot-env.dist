@@ -1,5 +1,5 @@
-DOMAIN=localhost
-ADMIN_EMAIL=webmaster@example.com
+DOMAIN=
+ADMIN_EMAIL=
 DB_USER=wpheadless
 DB_NAME=wpheadless
 DB_PASSWORD=
