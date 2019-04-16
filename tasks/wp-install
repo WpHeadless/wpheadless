@@ -41,6 +41,12 @@ echo "Generating ${WP_CONFIG_PATH}"
 php "${APPROOT}/wordpress/wp-config-tpl.php" > "$WP_CONFIG_PATH"
 
 #
+# Copy multisite-cron scheduler
+#
+
+cp "${APPROOT}/wordpress/wp-cron-multisite.php" "$WEBROOT"
+
+#
 # Symlink uploads to dedicated RW docker volume mount
 #
 

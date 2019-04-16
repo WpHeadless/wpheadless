@@ -13,6 +13,7 @@ services:
     environment:
       - APPROOT=$PWD
       - STAGE
+      - DOMAIN
   smtp:
     image: namshi/smtp:latest
     restart: unless-stopped
