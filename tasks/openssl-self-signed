@@ -4,8 +4,21 @@ set -e
 
 mkdir -p "/etc/letsencrypt/active/${DOMAIN}"
 
+config=$(mktemp)
+cat > "$config" << EOF
+[dn]
+CN=${DOMAIN}
+[req]
+distinguished_name=dn
+[EXT]
+subjectAltName=DNS:${DOMAIN}
+keyUsage=digitalSignature
+extendedKeyUsage=serverAuth
+EOF
+
 openssl \
   req -subj "/CN=${DOMAIN}" \
   -x509 -newkey rsa:4096 -nodes -days 365 \
+  -extensions EXT -config "$config" \
   -keyout /etc/letsencrypt/active/${DOMAIN}/privkey.pem \
   -out /etc/letsencrypt/active/${DOMAIN}/fullchain.pem
