@@ -14,6 +14,10 @@ add_action( 'admin_menu', function () {
   remove_submenu_page( 'options-general.php', 'options-writing.php' );
   remove_submenu_page( 'options-general.php', 'options-reading.php' );
   remove_submenu_page( 'options-general.php', 'options-permalink.php' );
+  remove_submenu_page( 'options-general.php', 'options-privacy.php' );
+  remove_submenu_page( 'tools.php', 'site-health.php' );
+  remove_submenu_page( 'tools.php', 'export-personal-data.php' );
+  remove_submenu_page( 'tools.php', 'erase-personal-data.php' );
 } );
 
 add_action( 'network_admin_menu', function () {
