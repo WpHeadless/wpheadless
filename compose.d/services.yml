@@ -21,7 +21,7 @@ services:
     networks:
       - backend
   nginx:
-    image: nginx:1.14
+    image: nginx:1.17
     restart: unless-stopped
     command: /docker_cmd.sh
     depends_on:
@@ -43,7 +43,7 @@ services:
     environment:
       - DOMAIN
   mysql:
-    image: mariadb:10.3
+    image: mariadb:10.4
     restart: unless-stopped
     networks:
       - backend
@@ -54,7 +54,7 @@ services:
       - MYSQL_ROOT_PASSWORD
       - MYSQL_ALLOW_EMPTY_PASSWORD=1
   php:
-    image: wpheadless/wp-php-fpm:7.2.2
+    image: wpheadless/wp-php-fpm:7.4.0
     restart: unless-stopped
     networks:
       - backend

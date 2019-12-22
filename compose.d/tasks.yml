@@ -31,7 +31,7 @@ services:
     volumes:
       - ..:/$PWD
   task-wp:
-    image: wordpress:cli-php7.2
+    image: wordpress:cli-2-php7.4
     entrypoint: []
     working_dir: $PWD
     user: root
