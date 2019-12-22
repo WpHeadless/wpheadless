@@ -8,8 +8,7 @@ add_action( 'admin_bar_menu', function ($wp_adminbar) {
   $wp_adminbar->remove_menu( 'network-admin-t' );
   $wp_adminbar->remove_menu( 'view-site' );
   $wp_adminbar->remove_menu( 'edit-site' );
-  $wp_adminbar->remove_menu( 'new-post' );
-  $wp_adminbar->remove_menu( 'new-page' );
+  $wp_adminbar->remove_menu( 'new-content' );
 
   foreach ( get_sites() as $site ) {
     $wp_adminbar->remove_menu( "blog-{$site->blog_id}-d" );
