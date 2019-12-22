@@ -11,14 +11,13 @@ WpHeadless is Wordpress Multisite bundle providing API-only or Headless implemen
 ```
 $ git clone https://github.com/WpHeadless/wpheadless.git && wpheadless/run-task install
 $ open https://localhost
-``` 
+```
 
 ## Features
 
 - Docker is the only dependency
 - HTTPS only
-- Self-signed certificate
-- Letsencrypt certificate issue & renew
+- SSL/TLS certificates: Letsencrypt, Self-signed, mkcert
 - Nightly backup
 - Stage support: `production`, `development`
 - Wordpress Multisite secure setup

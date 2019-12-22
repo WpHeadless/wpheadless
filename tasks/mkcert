@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+DOMAIN="localhost"
+
+for i in "$@"; do
+  case $i in
+    --domain=*)
+      DOMAIN="${i#*=}"
+      ;;
+  esac
+done
+
+CERTDIR="var/letsencrypt/active/${DOMAIN}"
+
+mkcert \
+  -cert-file "${CERTDIR}/fullchain.pem" \
+  -key-file "${CERTDIR}/privkey.pem" \
+  "${DOMAIN}"
