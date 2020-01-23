@@ -4,6 +4,7 @@
 add_filter( 'rest_endpoints', function ( $endpoints ) {
   $endpointsToDisable = [
     '/oembed',
+    '/wp/v2/search',
     '/wp/v2/posts',
     '/wp/v2/pages',
     '/wp/v2/blocks',
