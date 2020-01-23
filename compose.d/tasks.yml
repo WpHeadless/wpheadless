@@ -66,11 +66,11 @@ services:
       - NONCE_SALT
       - WORDPRESS_VERSION=5.3.2
       - WORDPRESS_TITLE=WpHeadless
-      - ACF_PRO_VERSION=5.8.4
+      - ACF_PRO_VERSION=5.8.7
       - WORDPRESS_PLUGINS=
-          custom-post-type-ui=1.7.1
+          custom-post-type-ui=1.7.2
           acf-to-rest-api=3.1.0
           amazon-s3-and-cloudfront=2.3.2
           wordpress-importer=0.6.4
-          title-and-nofollow-for-links=1.07
+          title-and-nofollow-for-links=1.08
           disable-comments=1.10.2
