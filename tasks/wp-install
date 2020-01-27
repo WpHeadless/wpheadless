@@ -84,10 +84,6 @@ EOF
 if ! $WP core is-installed --network; then
   WP_CORE_OPTIONS=""
 
-  if [ "$STAGE" != "production" ]; then
-    WP_CORE_OPTIONS="${WP_CORE_OPTIONS} --skip-email"
-  fi
-
   # TODO find solution to pass quoted admin password argument via WP_CORE_OPTIONS
   # and remove this if condition keeping only else branch
   if [ ! -z "$ADMIN_PASSWORD" ]; then

@@ -3,5 +3,4 @@
 set -ex
 
 rm -rf \
-  .production \
   dot-env

@@ -12,7 +12,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - APPROOT=$PWD
-      - STAGE
+      - LETSENCRYPT
       - DOMAIN
   smtp:
     image: namshi/smtp:latest

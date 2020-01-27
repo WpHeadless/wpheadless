@@ -8,14 +8,9 @@ COMPOSE_SERVICES_TYPE=${COMPOSE_SERVICES_TYPE:-services}
 
 cd "$(dirname "$0")"
 
-# current stage detection
-
-if [ -z "$STAGE" ]; then
-  if [ -f .production ]; then
-    STAGE='production'
-  else
-    STAGE='development'
-  fi
+# extract DOCKER_ENV from .env if not passed directly
+if [ -z "$DOCKER_ENV" -a -f .env ]; then
+  DOCKER_ENV=$(source .env && echo $DOCKER_ENV)
 fi
 
 # docker run options
@@ -36,10 +31,12 @@ if [ -f "compose.d/${COMPOSE_SERVICES_TYPE}.yml" ]; then
   DOCKER_COMPOSE_OPTIONS="${DOCKER_COMPOSE_OPTIONS} -f compose.d/${COMPOSE_SERVICES_TYPE}.yml"
 fi
 
-if [ -f "compose.d/${COMPOSE_SERVICES_TYPE}-${STAGE}.yml" ]; then
-  DOCKER_COMPOSE_OPTIONS="${DOCKER_COMPOSE_OPTIONS} -f compose.d/${COMPOSE_SERVICES_TYPE}-${STAGE}.yml"
+if [ -f "compose.d/${COMPOSE_SERVICES_TYPE}-${DOCKER_ENV}.yml" ]; then
+  DOCKER_COMPOSE_OPTIONS="${DOCKER_COMPOSE_OPTIONS} -f compose.d/${COMPOSE_SERVICES_TYPE}-${DOCKER_ENV}.yml"
 fi
 
+# container running docker-compose will receive limited set of explicitly set environment variables
+# docker-compose will use .env to set environment variables available for containers
 docker \
   run --rm \
   $DOCKER_RUN_OPTIONS \
@@ -48,7 +45,6 @@ docker \
   --workdir="$PWD" \
   --env DOMAIN \
   --env PWD \
-  --env STAGE="$STAGE" \
   --env COMPOSE_PROJECT_NAME="$COMPOSE_PROJECT_NAME" \
   "docker/compose:${DOCKER_COMPOSE_VERSION}" \
   $DOCKER_COMPOSE_OPTIONS \

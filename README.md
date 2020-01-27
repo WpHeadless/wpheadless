@@ -19,7 +19,6 @@ $ open https://localhost
 - HTTPS only
 - SSL/TLS certificates: Letsencrypt, Self-signed, mkcert
 - Nightly backup
-- Stage support: `production`, `development`
 - Wordpress Multisite secure setup
 - Static site web-server (HTTP only)
 - SMTP server
@@ -39,20 +38,22 @@ Options:
   --domain          : Domain to install WpHeadless on. Default: localhost.
   --admin-email     : Admin user email. Default webmaster@example.com or webmaster@${DOMAIN} when DOMAIN is set.
   --admin-password  : Wordpress admin password. If not given a random password will be generated.
-  --stage           : Production or development. Default: development.
+  --letsencrypt     : Request certificate with letsencrypt if set to "true".
+  --docker-env      : Docker environment: local, aws
 ```
 
 For example:
 
-- `./run-task install` - development stage on https://localhost
-- `./run-task install --domain=example.com` - development stage on https://example.com
+- `./run-task install` - installs https://localhost
+- `./run-task install --domain=example.com` - installs https://example.com
 
 ```
 $ ./run-task install \
   --domain=example.com \
   --admin-email=webmaster@example.com \
   --admin-password='1 2 3 4 5 6 7 8' \
-  --stage=production
+  --letsencrypt=true \
+  --docker-env=local
 ```
 
 > When password is not specified a random one is generated and sent to stdout.
@@ -64,7 +65,7 @@ WpHeadless contains scheduler service powered by cron running in dedicated light
 Jobs executed by scheduler:
 
 - Nightly backup
-- Letsencrypt certificate renew or issue (`production` stage only)
+- Letsencrypt certificate renew or issue
 
 ## Docker service containers
 

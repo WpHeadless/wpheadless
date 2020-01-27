@@ -3,7 +3,7 @@
 set -eo pipefail
 
 DOMAIN="localhost"
-STAGE="development"
+LETSENCRYPT="false"
 
 for i in "$@"; do
   case $i in
@@ -16,23 +16,22 @@ for i in "$@"; do
     --admin-password=*)
       ADMIN_PASSWORD="${i#*=}"
       ;;
-    --stage=*)
-      STAGE="${i#*=}"
-      ;;
     --uploads-bucket=*)
       UPLOADS_BUCKET="${i#*=}"
+      ;;
+    --letsencrypt=*)
+      LETSENCRYPT="${i#*=}"
+      ;;
+    --docker-env=*)
+      DOCKER_ENV="${i#*=}"
       ;;
   esac
 done
 
-if [ "$STAGE" = "production" ]; then
-  touch .production
-else
-  rm -f .production
-fi
+# DOMAIN will be passed to docker containers
+export DOMAIN
 
 # Pull all docker images at once
-export DOMAIN
 COMPOSE_SERVICES_TYPE=services ./docker-compose pull
 COMPOSE_SERVICES_TYPE=tasks ./docker-compose pull
 
@@ -41,9 +40,11 @@ mkdir -p "var/vhosts/${DOMAIN}"
 
 ./run-task configure \
   --domain="'$DOMAIN'" \
-  --admin-email="'$ADMIN_EMAIL'"
+  --admin-email="'$ADMIN_EMAIL'" \
+  --letsencrypt="'$LETSENCRYPT'" \
+  --docker-env="'$DOCKER_ENV'"
 
-if [ "$STAGE" = "production" ]; then
+if [ "$LETSENCRYPT" = "true" ]; then
   ./run-task leissue-standalone || \
     ./run-task openssl-self-signed
 else

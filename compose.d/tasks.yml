@@ -10,7 +10,6 @@ services:
     environment:
       - DOMAIN
       - ADMIN_EMAIL
-      - STAGE
   task-lerenew:
     <<: *task-certbot
     volumes:
@@ -47,7 +46,6 @@ services:
       - APPROOT=$PWD
       - SMTPHOST=smtp
       - DB_HOST=mysql
-      - STAGE
       - DOMAIN
       - ADMIN_EMAIL
       - DB_NAME
