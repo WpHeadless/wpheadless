@@ -10,6 +10,15 @@ for i in "$@"; do
     --uploads-bucket=*)
       UPLOADS_BUCKET="${i#*=}"
       ;;
+    --aws-use-ec2-iam-role=*)
+      export AWS_USE_EC2_IAM_ROLE="${i#*=}"
+      ;;
+    --aws-access-key-id=*)
+      export AWS_ACCESS_KEY_ID="${i#*=}"
+      ;;
+    --aws-secret-access-key=*)
+      export AWS_SECRET_ACCESS_KEY="${i#*=}"
+      ;;
   esac
 done
 

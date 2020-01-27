@@ -8,7 +8,7 @@ echo '<?php', PHP_EOL;
 # Custom wp-config.php for wp-headless
 #
 
-<?php if (getenv('STAGE') === 'production'): ?>
+<?php if (getenv('AWS_USE_EC2_IAM_ROLE') === 'true'): ?>
 define('AS3CF_AWS_USE_EC2_IAM_ROLE', true);
 <?php elseif (getenv('AWS_ACCESS_KEY_ID')): ?>
 define('AS3CF_SETTINGS', serialize(array(
