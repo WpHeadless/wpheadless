@@ -4,13 +4,7 @@ set -e
 
 CERTBOT_OPTIONS="certonly -n --agree-tos --standalone"
 
-if [ "$STAGE" != "production" ]; then
-  CERTBOT_OPTIONS="${CERTBOT_OPTIONS} --staging"
-  echo "[leissue-standalone]: Requesting Letsencrypt test certificate"
-else
-  echo "[leissue-standalone]: Requesting Letsencrypt certificate"
-fi
-
+echo "[leissue-standalone]: Requesting Letsencrypt certificate"
 certbot \
   $CERTBOT_OPTIONS \
   -m "$ADMIN_EMAIL" \
