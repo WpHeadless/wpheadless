@@ -43,15 +43,15 @@ services:
       - ../var/plugins:/var/www/wordpress-plugins
       - ../wordpress/mu-plugins:/var/www/wordpress-mu-plugins
     environment:
+      - DOMAIN
+      - ADMIN_EMAIL
+      - DB_PASSWORD
+      - MYSQL_ROOT_PASSWORD
       - APPROOT=$PWD
       - SMTPHOST=smtp
       - DB_HOST=mysql
-      - DOMAIN
-      - ADMIN_EMAIL
-      - DB_NAME
-      - DB_USER
-      - DB_PASSWORD
-      - MYSQL_ROOT_PASSWORD
+      - DB_NAME=wpheadless
+      - DB_USER=wpheadless
       - WORDPRESS_VERSION=5.3.2
       - WORDPRESS_TITLE=WpHeadless
       - ACF_PRO_VERSION=5.8.7
