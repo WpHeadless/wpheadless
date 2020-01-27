@@ -10,7 +10,7 @@ cd "$(dirname "$0")"
 
 # extract DOCKER_ENV from .env if not passed directly
 if [ -z "$DOCKER_ENV" -a -f .env ]; then
-  DOCKER_ENV=$(source .env && echo $DOCKER_ENV)
+  DOCKER_ENV=$(source ./.env && echo $DOCKER_ENV)
 fi
 
 # docker run options
