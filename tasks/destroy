@@ -3,7 +3,7 @@
 set -e
 
 if [ "$1" != "--no-backup" ]; then
-  ./run-task wp-db-backup
+  ./run-task wp-backup
 fi
 
 ./docker-compose down -v
