@@ -139,13 +139,3 @@ for plugin_file in $WORDPRESS_PLUGINS; do
   echo "$WP_ENABLED_PLUGINS" | grep -xq "$PLUGIN_NAME" || \
     $WP plugin install "$PLUGIN_NAME" --version="$PLUGIN_VERSION" --activate-network
 done
-
-#
-# Configure plugins
-#
-
-if [ ! -z "$UPLOADS_BUCKET" ] && [ "$STAGE" = "production" ]; then
-  # TODO configure amazon-s3-and-cloudfront plugin
-  # TODO configure disable-comments plugin
-  echo -n
-fi
