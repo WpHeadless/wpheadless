@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+BACKUP_DIR="var/backup"
+BACKUP_FILE_NAME="${DOMAIN}-$(date +%Y%m%d-%H%M%S).tar.gz"
+BACKUP_FILE_PATH="${BACKUP_DIR}/${BACKUP_FILE_NAME}"
+TMP_DIR=$(mktemp -d)
+
+# db dump
+mysqldump \
+  -h "$DB_HOST" \
+  -u "$DB_USER" \
+  $([ ! -z "$DB_PASSWORD" ] && echo -p"$DB_PASSWORD") \
+  -B "$DB_NAME" \
+  -r "${TMP_DIR}/dump.sql"
+
+# Wordpress configuration
+cp /var/www/wordpress/wp-config.php "$TMP_DIR"
+
+# dot-env config
+cp dot-env "$TMP_DIR"
+
+# TODO: backup var/{letsencrypt, plugins, uploads, vhosts}
+
+mkdir -p "$BACKUP_DIR"
+tar -czf "$BACKUP_FILE_PATH" -C "$TMP_DIR" .
+
+cd "$BACKUP_DIR"
+ln -sf "./${BACKUP_FILE_NAME}" "${DOMAIN}.tar.gz"
+cd - > /dev/null
+
+echo "Backup created: ${BACKUP_FILE_PATH}"
