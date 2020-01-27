@@ -22,6 +22,15 @@ for i in "$@"; do
   esac
 done
 
+export AUTH_KEY="$(openssl rand -hex 32)"
+export SECURE_AUTH_KEY="$(openssl rand -hex 32)"
+export LOGGED_IN_KEY="$(openssl rand -hex 32)"
+export NONCE_KEY="$(openssl rand -hex 32)"
+export AUTH_SALT="$(openssl rand -hex 32)"
+export SECURE_AUTH_SALT="$(openssl rand -hex 32)"
+export LOGGED_IN_SALT="$(openssl rand -hex 32)"
+export NONCE_SALT="$(openssl rand -hex 32)"
+
 WEBROOT=/var/www/wordpress/html
 WP="wp --allow-root --path="${WEBROOT}""
 
