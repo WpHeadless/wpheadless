@@ -1,12 +1,12 @@
 version: "3"
 services:
   cron:
-    logging: { driver: "awslogs", options: { awslogs-group: "${DOMAIN}", awslogs-stream: "cron" } }
+    logging: { driver: "awslogs", options: { awslogs-create-group: "true", awslogs-group: "/wpheadless/${DOMAIN}", awslogs-stream: "cron" } }
   smtp:
-    logging: { driver: "awslogs", options: { awslogs-group: "${DOMAIN}", awslogs-stream: "smtp" } }
+    logging: { driver: "awslogs", options: { awslogs-create-group: "true", awslogs-group: "/wpheadless/${DOMAIN}", awslogs-stream: "smtp" } }
   nginx:
-    logging: { driver: "awslogs", options: { awslogs-group: "${DOMAIN}", awslogs-stream: "nginx" } }
+    logging: { driver: "awslogs", options: { awslogs-create-group: "true", awslogs-group: "/wpheadless/${DOMAIN}", awslogs-stream: "nginx" } }
   mysql:
-    logging: { driver: "awslogs", options: { awslogs-group: "${DOMAIN}", awslogs-stream: "mysql" } }
+    logging: { driver: "awslogs", options: { awslogs-create-group: "true", awslogs-group: "/wpheadless/${DOMAIN}", awslogs-stream: "mysql" } }
   php:
-    logging: { driver: "awslogs", options: { awslogs-group: "${DOMAIN}", awslogs-stream: "php" } }
+    logging: { driver: "awslogs", options: { awslogs-create-group: "true", awslogs-group: "/wpheadless/${DOMAIN}", awslogs-stream: "php" } }
