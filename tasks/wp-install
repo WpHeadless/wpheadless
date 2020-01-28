@@ -70,12 +70,11 @@ ln -sf /var/www/wordpress-uploads /var/www/wordpress/html/wp-content/uploads
 chmod 777 /var/www/wordpress-uploads
 
 #
-# Symlink custom plugins
+# Symlink plugins to dedicated docker volume mount
 #
 
-if [ ! -z "$(ls -A /var/www/wordpress-plugins/)" ]; then
-  ln -sf /var/www/wordpress-plugins/* "${WEBROOT}/wp-content/plugins/"
-fi
+rm -rf /var/www/wordpress/html/wp-content/plugins
+ln -sf /var/www/wordpress-plugins /var/www/wordpress/html/wp-content/plugins
 
 #
 # Create db and user if necessary
