@@ -3,4 +3,7 @@
 set -ex
 
 rm -rf \
-  dot-env
+  dot-env \
+  var/*
+
+echo "Done"
