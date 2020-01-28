@@ -38,7 +38,7 @@ WP="wp --allow-root --path="${WEBROOT}""
 [ -d "$WEBROOT" ] || mkdir -p "$WEBROOT"
 if [ -z "$(ls -A "$WEBROOT")" ]; then
   $WP core download --version="$WORDPRESS_VERSION" --skip-content
-  mkdir -p "${WEBROOT}/wp-content/plugins"
+  mkdir "${WEBROOT}/wp-content"
 fi
 
 #
@@ -46,6 +46,12 @@ fi
 #
 
 sed -i -e "s/^define( 'WP_USE_THEMES', true );/define( 'WP_USE_THEMES', false );/" "${WEBROOT}/index.php"
+
+#
+# Symlink themes to dedicated docker volume mount
+#
+
+ln -sf /var/www/wordpress-themes "${WEBROOT}/wp-content/themes"
 
 #
 # Prepare wp-config.php file
@@ -65,16 +71,14 @@ cp "${APPROOT}/wordpress/wp-cron-multisite.php" "$WEBROOT"
 # Symlink uploads to dedicated RW docker volume mount
 #
 
-rm -rf /var/www/wordpress/html/wp-content/uploads
-ln -sf /var/www/wordpress-uploads /var/www/wordpress/html/wp-content/uploads
+ln -sf /var/www/wordpress-uploads "${WEBROOT}/wp-content/uploads"
 chmod 777 /var/www/wordpress-uploads
 
 #
 # Symlink plugins to dedicated docker volume mount
 #
 
-rm -rf /var/www/wordpress/html/wp-content/plugins
-ln -sf /var/www/wordpress-plugins /var/www/wordpress/html/wp-content/plugins
+ln -sf /var/www/wordpress-plugins "${WEBROOT}/wp-content/plugins"
 
 #
 # Create db and user if necessary

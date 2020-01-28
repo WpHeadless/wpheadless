@@ -42,6 +42,7 @@ services:
       - ../var/uploads:/var/www/wordpress-uploads
       - ../var/plugins:/var/www/wordpress-plugins
       - ../wordpress/mu-plugins:/var/www/wordpress-mu-plugins
+      - ../wordpress/themes:/var/www/wordpress-themes
     environment:
       - DOMAIN
       - ADMIN_EMAIL

@@ -18,7 +18,7 @@ define('AS3CF_SETTINGS', serialize(array(
 )));
 <?php endif; ?>
 define('FORCE_SSL_ADMIN', true);
-define('WP_DEFAULT_THEME', '<?php e('WP_DEFAULT_THEME')?>');
+define('WP_DEFAULT_THEME', 'wpheadless');
 define('WP_ALLOW_MULTISITE', true);
 define('MULTISITE', true);
 define('SUBDOMAIN_INSTALL', false);
