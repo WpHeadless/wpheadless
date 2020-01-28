@@ -5,6 +5,11 @@ set -eo pipefail
 DOMAIN="localhost"
 LETSENCRYPT="false"
 
+if [ -f .env ]; then
+  echo "Error: wpheadless seems to be already installed! aborting..."
+  exit 1
+fi
+
 for i in "$@"; do
   case $i in
     --domain=*)
