@@ -42,10 +42,10 @@ if [ -z "$(ls -A "$WEBROOT")" ]; then
 fi
 
 #
-# Disable themes
+# Disable themes frontend
 #
 
-sed -i -e "s/^define('WP_USE_THEMES', true);/define('WP_USE_THEMES', false);/" "${WEBROOT}/index.php"
+sed -i -e "s/^define( 'WP_USE_THEMES', true );/define( 'WP_USE_THEMES', false );/" "${WEBROOT}/index.php"
 
 #
 # Prepare wp-config.php file
