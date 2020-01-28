@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-set -ex
+set -e
+
+if [ "$1" != "-f" ]; then
+  read -p "Remove all sites data? [y/N]: " confirm && [[ $confirm == [yY] ]] || exit 1
+fi
 
 rm -rf \
   dot-env \
