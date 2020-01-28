@@ -4,8 +4,8 @@ set -eo pipefail
 
 TMP_DIR=$(mktemp -d)
 
-BACKUP_FILE_PATH="var/backup/${1-${DOMAIN}.tar.gz}"
-[ ! -f "$BACKUP_FILE_PATH" ] && echo "No backup file found" && exit 1
+BACKUP_FILE_PATH="var/snapshots/${1-${DOMAIN}.tar.gz}"
+[ ! -f "$BACKUP_FILE_PATH" ] && echo "No snapshot file found" && exit 1
 
 tar -C "$TMP_DIR" -xzf "$BACKUP_FILE_PATH"
 
