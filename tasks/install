@@ -16,9 +16,6 @@ for i in "$@"; do
     --admin-password=*)
       ADMIN_PASSWORD="${i#*=}"
       ;;
-    --uploads-bucket=*)
-      UPLOADS_BUCKET="${i#*=}"
-      ;;
     --letsencrypt=*)
       LETSENCRYPT="${i#*=}"
       ;;
@@ -65,7 +62,6 @@ fi
 
 ./run-task wp-install \
   --admin-password="'$ADMIN_PASSWORD'" \
-  --uploads-bucket="'$UPLOADS_BUCKET'" \
   --aws-use-ec2-iam-role="'$AWS_USE_EC2_IAM_ROLE'" \
   --aws-access-key-id="'$AWS_ACCESS_KEY_ID'" \
   --aws-secret-access-key="'$AWS_SECRET_ACCESS_KEY'"

@@ -7,9 +7,6 @@ for i in "$@"; do
     --admin-password=*)
       ADMIN_PASSWORD="${i#*=}"
       ;;
-    --uploads-bucket=*)
-      UPLOADS_BUCKET="${i#*=}"
-      ;;
     --aws-use-ec2-iam-role=*)
       export AWS_USE_EC2_IAM_ROLE="${i#*=}"
       ;;
