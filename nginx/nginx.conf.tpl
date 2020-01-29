@@ -56,6 +56,7 @@ http {
 
     root /var/wordpress/html;
     index index.php;
+    client_max_body_size 100M;
 
     resolver 8.8.8.8 8.8.4.4;
     resolver_timeout 5s;
