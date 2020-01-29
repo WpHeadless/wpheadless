@@ -10,20 +10,12 @@ if [ -f .env ]; then
   exit 1
 fi
 
-for i in "$@"; do
-  case $i in
-    --domain=*)
-      DOMAIN="${i#*=}"
-      ;;
-  esac
-done
-
-BACKUP_FILE_NAME="${1-${DOMAIN}.tar.gz}"
+BACKUP_FILE_NAME="$1"
 BACKUP_FILE_PATH="${BACKUP_DIR}/${BACKUP_FILE_NAME}"
 [ ! -f "$BACKUP_FILE_PATH" ] && echo "No snapshot file found: ${BACKUP_FILE_PATH}" && exit 1
 
 # restore dot-env file from archive
-tar -xzf "$BACKUP_FILE_PATH" ./dot-env
+tar -xzf "$BACKUP_FILE_PATH" dot-env
 
 # start mysql service before before restoring database
 ./docker-compose up -d mysql

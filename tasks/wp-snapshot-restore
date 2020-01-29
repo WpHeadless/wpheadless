@@ -5,7 +5,7 @@ set -eo pipefail
 TMP_DIR=$(mktemp -d)
 
 BACKUP_DIR="snapshots"
-BACKUP_FILE_PATH="${BACKUP_DIR}/${1-${DOMAIN}.tar.gz}"
+BACKUP_FILE_PATH="${BACKUP_DIR}/${1}"
 [ ! -f "$BACKUP_FILE_PATH" ] && echo "No snapshot file found: ${BACKUP_FILE_PATH}" && exit 1
 
 # restore wordpress and var files
