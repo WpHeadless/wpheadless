@@ -42,10 +42,6 @@ done
 # DOMAIN will be passed to docker containers
 export DOMAIN
 
-# Pull all docker images at once
-COMPOSE_SERVICES_TYPE=services ./docker-compose pull
-COMPOSE_SERVICES_TYPE=tasks ./docker-compose pull
-
 # Create http vhost for served domain
 mkdir -p "var/vhosts/${DOMAIN}"
 
