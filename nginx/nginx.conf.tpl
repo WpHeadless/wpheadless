@@ -54,7 +54,7 @@ http {
     listen 443 ssl http2 default_server;
     listen [::]:443 ssl http2 default_server;
 
-    root /var/www/wordpress/html;
+    root /var/wordpress/html;
     index index.php;
 
     resolver 8.8.8.8 8.8.4.4;

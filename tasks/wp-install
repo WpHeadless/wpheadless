@@ -28,7 +28,7 @@ export SECURE_AUTH_SALT="$(openssl rand -hex 32)"
 export LOGGED_IN_SALT="$(openssl rand -hex 32)"
 export NONCE_SALT="$(openssl rand -hex 32)"
 
-WEBROOT=/var/www/wordpress/html
+WEBROOT=/var/wordpress/html
 WP="wp --allow-root --path="${WEBROOT}""
 
 #
@@ -51,7 +51,7 @@ sed -i -e "s/^define( 'WP_USE_THEMES', true );/define( 'WP_USE_THEMES', false );
 # Symlink themes to dedicated docker volume mount
 #
 
-ln -sf /var/www/wordpress-themes "${WEBROOT}/wp-content/themes"
+ln -sf /var/www/themes "${WEBROOT}/wp-content/themes"
 
 #
 # Prepare wp-config.php file
@@ -71,14 +71,14 @@ cp "${APPROOT}/wordpress/wp-cron-multisite.php" "$WEBROOT"
 # Symlink uploads to dedicated RW docker volume mount
 #
 
-ln -sf /var/www/wordpress-uploads "${WEBROOT}/wp-content/uploads"
-chmod 777 /var/www/wordpress-uploads
+ln -sf /var/www/uploads "${WEBROOT}/wp-content/uploads"
+chmod 777 /var/www/uploads
 
 #
 # Symlink plugins to dedicated docker volume mount
 #
 
-ln -sf /var/www/wordpress-plugins "${WEBROOT}/wp-content/plugins"
+ln -sf /var/www/plugins "${WEBROOT}/wp-content/plugins"
 
 #
 # Create db and user if necessary

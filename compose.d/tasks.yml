@@ -37,12 +37,9 @@ services:
     networks:
       - backend
     volumes:
-      - wordpress:/var/www/wordpress
+      - wordpress:/var/wordpress
       - ..:/$PWD
-      - ../var/uploads:/var/www/wordpress-uploads
-      - ../var/plugins:/var/www/wordpress-plugins
-      - ../wordpress/mu-plugins:/var/www/wordpress-mu-plugins
-      - ../wordpress/themes:/var/www/wordpress-themes
+      - ../var:/var/www
     environment:
       - DOMAIN
       - ADMIN_EMAIL

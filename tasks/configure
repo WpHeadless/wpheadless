@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 DOMAIN="${DOMAIN:-localhost}"
 MATCH_ALL_PATTERN='.*'

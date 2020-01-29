@@ -4,18 +4,42 @@ set -eo pipefail
 
 TMP_DIR=$(mktemp -d)
 
-BACKUP_FILE_PATH="var/snapshots/${1-${DOMAIN}.tar.gz}"
-[ ! -f "$BACKUP_FILE_PATH" ] && echo "No snapshot file found" && exit 1
+BACKUP_DIR="snapshots"
+BACKUP_FILE_PATH="${BACKUP_DIR}/${1-${DOMAIN}.tar.gz}"
+[ ! -f "$BACKUP_FILE_PATH" ] && echo "No snapshot file found: ${BACKUP_FILE_PATH}" && exit 1
 
-tar -C "$TMP_DIR" -xzf "$BACKUP_FILE_PATH"
+# restore wordpress and var files
+tar -C / -xzf "$BACKUP_FILE_PATH" var/www
+tar -C / -xzf "$BACKUP_FILE_PATH" var/wordpress
+
+# extract db dump into temporary directory
+tar -C "$TMP_DIR" -xzf "$BACKUP_FILE_PATH" dump.sql
+
+#
+# Create db and user if necessary
+#
+
+while ! mysqladmin ping -h"$DB_HOST" --silent; do
+  echo Waiting for "$DB_HOST"
+  sleep 1
+done
+
+mysql -h "$DB_HOST" -u root -p"${MYSQL_ROOT_PASSWORD}" <<EOF
+CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;
+CREATE USER IF NOT EXISTS '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';
+GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO '${DB_USER}'@'%';
+EOF
+
+#
+# Restore wordpress database from dump file
+#
+
+while ! mysqladmin ping -h"$DB_HOST" --silent; do
+  echo Waiting for "$DB_HOST"
+  sleep 1
+done
 
 mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASSWORD" < "${TMP_DIR}/dump.sql" \
   && echo "Database restored"
-
-cp "${TMP_DIR}/wp-config.php" /var/www/wordpress/wp-config.php \
-  && echo "wp-config.php file restored"
-
-cp "${TMP_DIR}/dot-env" . \
-  && echo "dot-env file restored"
 
 rm -rf "${TMP_DIR}"

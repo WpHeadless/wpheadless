@@ -15,16 +15,19 @@ mysqldump \
   -B "$DB_NAME" \
   -r "${TMP_DIR}/dump.sql"
 
-# Wordpress configuration
-cp /var/www/wordpress/wp-config.php "$TMP_DIR"
-
 # dot-env config
 cp dot-env "$TMP_DIR"
 
-# TODO: backup var/{letsencrypt, plugins, uploads, vhosts}
-
 mkdir -p "$BACKUP_DIR"
-tar -czf "$BACKUP_FILE_PATH" -C "$TMP_DIR" .
+
+echo "Creating snapshot: ${BACKUP_FILE_NAME}"
+tar -czf "$BACKUP_FILE_PATH" \
+  -C "$TMP_DIR" \
+  dot-env \
+  dump.sql \
+  -C / \
+  var/wordpress \
+  var/www
 
 cd "$BACKUP_DIR"
 ln -sf "./${BACKUP_FILE_NAME}" "${DOMAIN}.tar.gz"

@@ -28,7 +28,7 @@ define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);
 define('AUTOMATIC_UPDATER_DISABLED', true);
 define('DISALLOW_FILE_MODS', true);
-define('WPMU_PLUGIN_DIR', '/var/www/wordpress-mu-plugins');
+define('WPMU_PLUGIN_DIR', '/var/www/mu-plugins');
 define('DISABLE_WP_CRON', true);
 $base = '/';
 

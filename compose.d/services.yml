@@ -33,12 +33,12 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - wordpress:/var/www/wordpress:ro
+      - wordpress:/var/wordpress:ro
       - ../nginx/nginx.conf.tpl:/etc/nginx/nginx.conf.tpl:ro
       - ../nginx/docker_cmd.sh:/docker_cmd.sh:ro
       - ../var/letsencrypt:/etc/letsencrypt:ro
-      - ../var/uploads:/var/www/wordpress-uploads:ro
-      - ../var/plugins:/var/www/wordpress-plugins:ro
+      - ../var/uploads:/var/www/uploads:ro
+      - ../var/plugins:/var/www/plugins:ro
       - ../var/vhosts:/var/www/vhosts:ro
     environment:
       - DOMAIN
@@ -54,15 +54,15 @@ services:
       - MYSQL_ROOT_PASSWORD
       - MYSQL_ALLOW_EMPTY_PASSWORD=1
   php:
-    image: wpheadless/wp-php-fpm:7.4.0
+    image: wpheadless/wp-php-fpm:7.4.2
     restart: unless-stopped
     networks:
       - backend
     volumes:
-      - wordpress:/var/www/wordpress:ro
-      - ../var/uploads:/var/www/wordpress-uploads
-      - ../var/plugins:/var/www/wordpress-plugins:ro
-      - ../wordpress/themes:/var/www/wordpress-themes:ro
-      - ../wordpress/mu-plugins:/var/www/wordpress-mu-plugins:ro
+      - wordpress:/var/wordpress:ro
+      - ../var/uploads:/var/www/uploads
+      - ../var/plugins:/var/www/plugins:ro
+      - ../wordpress/themes:/var/www/themes:ro
+      - ../wordpress/mu-plugins:/var/www/mu-plugins:ro
 networks:
   frontend:
