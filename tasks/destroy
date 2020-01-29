@@ -7,4 +7,4 @@ if [ "$1" != "--no-backup" ]; then
 fi
 
 ./docker-compose down -v
-./run-task clean
+./run-task clean -f
