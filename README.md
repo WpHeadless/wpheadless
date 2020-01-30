@@ -22,6 +22,7 @@ $ open https://localhost
 - Wordpress Multisite secure setup
 - Static web-server vhost routing
 - Local SMTP server
+- Fine tuned /wp-admin for headless use-case
 
 ## Install
 
