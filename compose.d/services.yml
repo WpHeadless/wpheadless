@@ -1,7 +1,7 @@
 version: "3"
 services:
   cron:
-    image: docker:stable
+    image: $IMAGE_CRON
     restart: unless-stopped
     working_dir: $PWD
     command: cron/docker_cmd.sh
@@ -15,13 +15,13 @@ services:
       - LETSENCRYPT
       - DOMAIN
   smtp:
-    image: namshi/smtp:latest
+    image: $IMAGE_SMTP
     restart: unless-stopped
     hostname: $DOMAIN
     networks:
       - backend
   nginx:
-    image: nginx:1.17
+    image: $IMAGE_NGINX
     restart: unless-stopped
     command: /docker_cmd.sh
     depends_on:
@@ -54,7 +54,7 @@ services:
       - MYSQL_ROOT_PASSWORD
       - MYSQL_ALLOW_EMPTY_PASSWORD=1
   php:
-    image: wpheadless/wp-php-fpm:7.4.2
+    image: $IMAGE_PHP
     restart: unless-stopped
     networks:
       - backend

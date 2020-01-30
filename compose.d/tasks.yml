@@ -1,7 +1,7 @@
 version: "3"
 services:
   x-task-certbot: &task-certbot
-    image: certbot/certbot:latest
+    image: $IMAGE_CERTBOT
     entrypoint: []
     working_dir: $PWD
     volumes:
@@ -30,7 +30,7 @@ services:
     volumes:
       - ..:/$PWD
   task-wp:
-    image: wordpress:cli-2-php7.4
+    image: $IMAGE_WORDPRESS
     entrypoint: []
     working_dir: $PWD
     user: root

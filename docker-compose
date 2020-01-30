@@ -2,7 +2,9 @@
 
 set -eo pipefail
 
-DOCKER_COMPOSE_VERSION=1.25.3
+# init variables from .env
+source .env
+
 COMPOSE_PROJECT_NAME=wpheadless
 COMPOSE_SERVICES_TYPE=${COMPOSE_SERVICES_TYPE:-services}
 
@@ -46,7 +48,7 @@ docker \
   --env DOMAIN \
   --env PWD \
   --env COMPOSE_PROJECT_NAME="$COMPOSE_PROJECT_NAME" \
-  "docker/compose:${DOCKER_COMPOSE_VERSION}" \
+  "$IMAGE_COMPOSE" \
   $DOCKER_COMPOSE_OPTIONS \
   "$@" \
   ;
