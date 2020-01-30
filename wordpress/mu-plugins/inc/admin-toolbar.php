@@ -9,6 +9,7 @@ add_action( 'admin_bar_menu', function ($wp_adminbar) {
   $wp_adminbar->remove_menu( 'view-site' );
   $wp_adminbar->remove_menu( 'edit-site' );
   $wp_adminbar->remove_menu( 'new-content' );
+  $wp_adminbar->remove_menu( 'view' );
 
   // append wp-admin to site-name node href
   $site_name_node = $wp_adminbar->get_node( 'site-name' );
