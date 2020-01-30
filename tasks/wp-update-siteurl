@@ -14,13 +14,11 @@ UPDATE wp_options SET option_value="${SITEURL}" WHERE option_name in ("siteurl",
 EOF
 
 # Update url for all sites in multisite
-echo 'show tables like "wp_%_options";' \
-  | $MYSQL_CMD \
+$MYSQL_CMD -e 'show tables like "wp_%_options";' \
   | xargs -I % \
-    $MYSQL_CMD <<EOF
-      UPDATE
-        %
-      SET
-        option_value=CONCAT('${SITEURL}', SUBSTRING_INDEX(option_value, '/', -1))
-      WHERE option_name in ('siteurl', 'home');
-EOF
+    $MYSQL_CMD -e "\
+      UPDATE \
+        % \
+      SET \
+        option_value=CONCAT('${SITEURL}', SUBSTRING_INDEX(option_value, '/', -1)) \
+      WHERE option_name in ('siteurl', 'home');"
