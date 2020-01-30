@@ -53,7 +53,7 @@ $ ./run-task install \
   --admin-email=webmaster@example.com \
   --admin-password='1 2 3 4 5 6 7 8' \
   --letsencrypt=true \
-  --docker-env=local
+  --docker-env=aws
 ```
 
 > When password is not specified a random one is generated and sent to stdout.
