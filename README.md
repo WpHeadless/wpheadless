@@ -20,7 +20,7 @@ $ open https://localhost
 - SSL/TLS certificates: Letsencrypt, Self-signed, mkcert
 - Nightly backup
 - Wordpress Multisite secure setup
-- Static site web-server (HTTP only)
+- Static web-server vhost routing
 - Local SMTP server
 
 ## Install
