@@ -21,7 +21,7 @@ $ open https://localhost
 - Nightly backup
 - Wordpress Multisite secure setup
 - Static site web-server (HTTP only)
-- SMTP server
+- Local SMTP server
 
 ## Install
 
