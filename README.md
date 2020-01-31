@@ -1,6 +1,6 @@
 # WpHeadless
 
-> Wordpress Headless CMS to build great API-powered websites, apps and services.
+> Wordpress Headless Bundle to build great API-powered websites, apps and services.
 
 # What is WpHeadless?
 
