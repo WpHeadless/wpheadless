@@ -4,6 +4,7 @@ DOMAIN="${DOMAIN:-localhost}"
 MATCH_ALL_PATTERN='.*'
 DOCKER_ENV=
 LETSENCRYPT=false
+AWSLOGS_GROUP="\/wpheadless\/${DOMAIN}"
 
 for i in "$@"; do
   case $i in
@@ -18,6 +19,12 @@ for i in "$@"; do
       ;;
     --docker-env=*)
       DOCKER_ENV="${i#*=}"
+      ;;
+    --aws-logs-group=*)
+      val="${i#*=}"
+      if [ "$val" != "''" ]; then
+        AWSLOGS_GROUP="$val"
+      fi
       ;;
   esac
 done
@@ -38,5 +45,8 @@ sed -i -e "s/^DOMAIN=${MATCH_ALL_PATTERN-$}/DOMAIN=${DOMAIN}/" dot-env
 sed -i -e "s/^ADMIN_EMAIL=${MATCH_ALL_PATTERN-$}/ADMIN_EMAIL=${ADMIN_EMAIL}/" dot-env
 sed -i -e "s/^LETSENCRYPT=${MATCH_ALL_PATTERN-$}/LETSENCRYPT=${LETSENCRYPT}/" dot-env
 sed -i -e "s/^DOCKER_ENV=${MATCH_ALL_PATTERN-$}/DOCKER_ENV=${DOCKER_ENV}/" dot-env
+sed -i -e "s/^AWSLOGS_GROUP=${MATCH_ALL_PATTERN-$}$/AWSLOGS_GROUP=${AWSLOGS_GROUP}/" dot-env
+
+# replaced only once on clean dot-env
 sed -i -e "s/^DB_PASSWORD=$/DB_PASSWORD=$(openssl rand -hex 12)/" dot-env
 sed -i -e "s/^MYSQL_ROOT_PASSWORD=$/MYSQL_ROOT_PASSWORD=$(openssl rand -hex 12)/" dot-env

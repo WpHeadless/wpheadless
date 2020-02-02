@@ -41,6 +41,7 @@ Options:
   --admin-password  : Wordpress admin password. If not given a random password will be generated.
   --letsencrypt     : Request certificate with letsencrypt if set to "true".
   --docker-env      : Docker environment: local, aws
+  --aws-logs-group  : Aws logs group name for docker awslogs driver
 ```
 
 For example:
@@ -55,7 +56,8 @@ $ ./run-task install \
   --admin-password='1 2 3 4 5 6 7 8' \
   --letsencrypt=true \
   --docker-env=aws \
-  --aws-use-ec2-iam-role=true
+  --aws-use-ec2-iam-role=true \
+  --aws-logs-group=example-com-whpeadless
 ```
 
 > When password is not specified a random one is generated and sent to stdout.

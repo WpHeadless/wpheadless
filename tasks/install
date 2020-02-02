@@ -36,6 +36,9 @@ for i in "$@"; do
     --aws-secret-access-key=*)
       AWS_SECRET_ACCESS_KEY="${i#*=}"
       ;;
+    --aws-logs-group=*)
+      AWSLOGS_GROUP="${i#*=}"
+      ;;
   esac
 done
 
@@ -49,8 +52,9 @@ mkdir -p "var/vhosts/${DOMAIN}"
   --domain="'$DOMAIN'" \
   --admin-email="'$ADMIN_EMAIL'" \
   --letsencrypt="'$LETSENCRYPT'" \
-  --docker-env="'$DOCKER_ENV'"
-
+  --docker-env="'$DOCKER_ENV'" \
+  --aws-logs-group="'$AWSLOGS_GROUP'"
+exit
 if [ "$LETSENCRYPT" = "true" ]; then
   ./run-task leissue-standalone || \
     ./run-task openssl-self-signed
