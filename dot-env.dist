@@ -12,3 +12,4 @@ IMAGE_SMTP=namshi/smtp:latest
 IMAGE_NGINX=nginx:1.17
 IMAGE_MYSQL=mariadb:10.4
 IMAGE_PHP=wpheadless/wp-php-fpm:7.4.2
+AWSLOGS_GROUP=/wpheadless/$DOMAIN
