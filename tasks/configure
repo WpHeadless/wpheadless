@@ -22,7 +22,7 @@ for i in "$@"; do
       ;;
     --aws-logs-group=*)
       val="${i#*=}"
-      if [ "$val" != "''" ]; then
+      if [ ! -z "$val" ]; then
         AWSLOGS_GROUP="$val"
       fi
       ;;

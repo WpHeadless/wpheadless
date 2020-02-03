@@ -49,11 +49,11 @@ export DOMAIN
 mkdir -p "var/vhosts/${DOMAIN}"
 
 ./run-task configure \
-  --domain="'$DOMAIN'" \
-  --admin-email="'$ADMIN_EMAIL'" \
-  --letsencrypt="'$LETSENCRYPT'" \
-  --docker-env="'$DOCKER_ENV'" \
-  --aws-logs-group="'$AWSLOGS_GROUP'"
+  --domain="$DOMAIN" \
+  --admin-email="$ADMIN_EMAIL" \
+  --letsencrypt="$LETSENCRYPT" \
+  --docker-env="$DOCKER_ENV" \
+  --aws-logs-group="$AWSLOGS_GROUP"
 
 if [ "$LETSENCRYPT" = "true" ]; then
   ./run-task leissue-standalone || \
