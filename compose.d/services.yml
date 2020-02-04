@@ -56,10 +56,12 @@ services:
   php:
     image: $IMAGE_PHP
     restart: unless-stopped
+    command: /usr/local/wpheadless/docker_cmd.sh
     networks:
       - backend
     volumes:
       - wordpress:/var/wordpress:ro
+      - ../php:/usr/local/wpheadless:ro
       - ../var/uploads:/var/www/uploads
       - ../var/plugins:/var/www/plugins:ro
       - ../wordpress/themes:/var/www/themes:ro
