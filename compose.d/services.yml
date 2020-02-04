@@ -20,6 +20,10 @@ services:
     hostname: $DOMAIN
     networks:
       - backend
+    environment:
+      - SES_USER
+      - SES_PASSWORD
+      - SES_REGION
   nginx:
     image: $IMAGE_NGINX
     restart: unless-stopped
