@@ -45,6 +45,8 @@ services:
       - ADMIN_EMAIL
       - DB_PASSWORD
       - MYSQL_ROOT_PASSWORD
+      - MAIL_FROM_NAME
+      - MAIL_FROM_EMAIL
       - APPROOT=$PWD
       - SMTPHOST=smtp
       - DB_HOST=mysql

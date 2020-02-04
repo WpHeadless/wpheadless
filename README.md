@@ -53,6 +53,7 @@ For example:
 $ ./run-task install \
   --domain=example.com \
   --admin-email=webmaster@example.com \
+  --from-email=no-reply@example.com \
   --admin-password='1 2 3 4 5 6 7 8' \
   --letsencrypt=true \
   --docker-env=aws \

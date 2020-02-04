@@ -25,6 +25,8 @@ for i in "$@"; do
       if [ ! -z "$val" ]; then
         AWSLOGS_GROUP="$val"
       fi
+    --from-email=*)
+      FROM_EMAIL="${i#*=}"
       ;;
   esac
 done
@@ -37,16 +39,23 @@ if [ -z "$ADMIN_EMAIL" ]; then
   fi
 fi
 
+if [ -z "$FROM_EMAIL" ]; then
+  FROM_EMAIL="no-reply@${DOMAIN}"
+fi
+
 if [ ! -f dot-env ]; then
   cp dot-env.dist dot-env
 fi
 
-sed -i -e "s/^DOMAIN=${MATCH_ALL_PATTERN-$}/DOMAIN=${DOMAIN}/" dot-env
-sed -i -e "s/^ADMIN_EMAIL=${MATCH_ALL_PATTERN-$}/ADMIN_EMAIL=${ADMIN_EMAIL}/" dot-env
-sed -i -e "s/^LETSENCRYPT=${MATCH_ALL_PATTERN-$}/LETSENCRYPT=${LETSENCRYPT}/" dot-env
-sed -i -e "s/^DOCKER_ENV=${MATCH_ALL_PATTERN-$}/DOCKER_ENV=${DOCKER_ENV}/" dot-env
-sed -i -e "s/^AWSLOGS_GROUP=${MATCH_ALL_PATTERN-$}$/AWSLOGS_GROUP=${AWSLOGS_GROUP}/" dot-env
+sed -i .bak -e "s/^DOMAIN=${MATCH_ALL_PATTERN-$}/DOMAIN=${DOMAIN}/" dot-env
+sed -i .bak -e "s/^ADMIN_EMAIL=${MATCH_ALL_PATTERN-$}/ADMIN_EMAIL=${ADMIN_EMAIL}/" dot-env
+sed -i .bak -e "s/^LETSENCRYPT=${MATCH_ALL_PATTERN-$}/LETSENCRYPT=${LETSENCRYPT}/" dot-env
+sed -i .bak -e "s/^DOCKER_ENV=${MATCH_ALL_PATTERN-$}/DOCKER_ENV=${DOCKER_ENV}/" dot-env
+sed -i .bak -e "s/^AWSLOGS_GROUP=${MATCH_ALL_PATTERN-$}$/AWSLOGS_GROUP=${AWSLOGS_GROUP}/" dot-env
+sed -i .bak -e "s/^MAIL_FROM_EMAIL=${MATCH_ALL_PATTERN-$}$/MAIL_FROM_EMAIL=${FROM_EMAIL}/" dot-env
 
 # replaced only once on clean dot-env
-sed -i -e "s/^DB_PASSWORD=$/DB_PASSWORD=$(openssl rand -hex 12)/" dot-env
-sed -i -e "s/^MYSQL_ROOT_PASSWORD=$/MYSQL_ROOT_PASSWORD=$(openssl rand -hex 12)/" dot-env
+sed -i .bak -e "s/^DB_PASSWORD=$/DB_PASSWORD=$(openssl rand -hex 12)/" dot-env
+sed -i .bak -e "s/^MYSQL_ROOT_PASSWORD=$/MYSQL_ROOT_PASSWORD=$(openssl rand -hex 12)/" dot-env
+
+rm -rf dot-env.bak

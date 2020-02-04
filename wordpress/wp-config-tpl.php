@@ -30,6 +30,8 @@ define('AUTOMATIC_UPDATER_DISABLED', true);
 define('DISALLOW_FILE_MODS', true);
 define('WPMU_PLUGIN_DIR', '/var/www/mu-plugins');
 define('DISABLE_WP_CRON', true);
+define('WP_MAIL_FROM_NAME', '<?php e('MAIL_FROM_NAME')?>');
+define('WP_MAIL_FROM_EMAIL', '<?php e('MAIL_FROM_EMAIL')?>');
 $base = '/';
 
 if (

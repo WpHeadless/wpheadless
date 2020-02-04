@@ -39,6 +39,9 @@ for i in "$@"; do
     --aws-logs-group=*)
       AWSLOGS_GROUP="${i#*=}"
       ;;
+    --from-email=*)
+      FROM_EMAIL="${i#*=}"
+      ;;
   esac
 done
 
@@ -53,7 +56,8 @@ mkdir -p "var/vhosts/${DOMAIN}"
   --admin-email="$ADMIN_EMAIL" \
   --letsencrypt="$LETSENCRYPT" \
   --docker-env="$DOCKER_ENV" \
-  --aws-logs-group="$AWSLOGS_GROUP"
+  --aws-logs-group="$AWSLOGS_GROUP" \
+  --from-email="$FROM_EMAIL"
 
 if [ "$LETSENCRYPT" = "true" ]; then
   ./run-task leissue-standalone || \
