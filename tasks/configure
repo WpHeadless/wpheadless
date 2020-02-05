@@ -25,6 +25,7 @@ for i in "$@"; do
       if [ ! -z "$val" ]; then
         AWSLOGS_GROUP="$val"
       fi
+      ;;
     --from-email=*)
       FROM_EMAIL="${i#*=}"
       ;;
