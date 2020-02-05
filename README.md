@@ -40,7 +40,7 @@ Options:
   --admin-email     : Admin user email. Default webmaster@example.com or webmaster@${DOMAIN} when DOMAIN is set.
   --admin-password  : Wordpress admin password. If not given a random password will be generated.
   --letsencrypt     : Request certificate with letsencrypt if set to "true".
-  --docker-env      : Docker environment: local, aws
+  --docker-profile  : Docker configuration profile: aws
   --aws-logs-group  : Aws logs group name for docker awslogs driver
 ```
 
@@ -56,7 +56,7 @@ $ ./run-task install \
   --from-email=no-reply@example.com \
   --admin-password='1 2 3 4 5 6 7 8' \
   --letsencrypt=true \
-  --docker-env=aws \
+  --docker-profile=aws \
   --aws-use-ec2-iam-role=true \
   --aws-logs-group=example-com-whpeadless
 ```

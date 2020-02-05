@@ -24,8 +24,8 @@ for i in "$@"; do
     --letsencrypt=*)
       LETSENCRYPT="${i#*=}"
       ;;
-    --docker-env=*)
-      DOCKER_ENV="${i#*=}"
+    --docker-profile=*)
+      DOCKER_PROFILE="${i#*=}"
       ;;
     --aws-use-ec2-iam-role=*)
       AWS_USE_EC2_IAM_ROLE="${i#*=}"
@@ -55,7 +55,7 @@ mkdir -p "var/vhosts/${DOMAIN}"
   --domain="$DOMAIN" \
   --admin-email="$ADMIN_EMAIL" \
   --letsencrypt="$LETSENCRYPT" \
-  --docker-env="$DOCKER_ENV" \
+  --docker-profile="$DOCKER_PROFILE" \
   --aws-logs-group="$AWSLOGS_GROUP" \
   --from-email="$FROM_EMAIL"
 

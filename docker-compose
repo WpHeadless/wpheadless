@@ -10,9 +10,9 @@ COMPOSE_SERVICES_TYPE=${COMPOSE_SERVICES_TYPE:-services}
 
 cd "$(dirname "$0")"
 
-# extract DOCKER_ENV from .env if not passed directly
-if [ -z "$DOCKER_ENV" -a -f .env ]; then
-  DOCKER_ENV=$(source ./.env && echo $DOCKER_ENV)
+# extract DOCKER_PROFILE from .env if not passed directly
+if [ -z "$DOCKER_PROFILE" -a -f .env ]; then
+  DOCKER_PROFILE=$(source ./.env && echo $DOCKER_PROFILE)
 fi
 
 # docker run options
@@ -33,8 +33,8 @@ if [ -f "compose.d/${COMPOSE_SERVICES_TYPE}.yml" ]; then
   DOCKER_COMPOSE_OPTIONS="${DOCKER_COMPOSE_OPTIONS} -f compose.d/${COMPOSE_SERVICES_TYPE}.yml"
 fi
 
-if [ -f "compose.d/${COMPOSE_SERVICES_TYPE}-${DOCKER_ENV}.yml" ]; then
-  DOCKER_COMPOSE_OPTIONS="${DOCKER_COMPOSE_OPTIONS} -f compose.d/${COMPOSE_SERVICES_TYPE}-${DOCKER_ENV}.yml"
+if [ -f "compose.d/${DOCKER_PROFILE}.${COMPOSE_SERVICES_TYPE}.yml" ]; then
+  DOCKER_COMPOSE_OPTIONS="${DOCKER_COMPOSE_OPTIONS} -f compose.d/${DOCKER_PROFILE}.${COMPOSE_SERVICES_TYPE}.yml"
 fi
 
 # container running docker-compose will receive limited set of explicitly set environment variables
