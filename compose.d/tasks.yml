@@ -29,6 +29,16 @@ services:
     command: sh
     volumes:
       - ..:/$PWD
+  task-mysql-proxy:
+    image: marcnuri/port-forward
+    networks:
+      - backend
+    ports:
+      - 3306:3306
+    environment:
+      - REMOTE_HOST=mysql
+      - REMOTE_PORT=3306
+      - LOCAL_PORT=3306
   task-wp:
     image: $IMAGE_WORDPRESS
     entrypoint: []
