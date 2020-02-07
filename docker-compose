@@ -5,7 +5,7 @@ set -eo pipefail
 # init variables from .env
 source ./.env
 
-COMPOSE_PROJECT_NAME=wpheadless
+export COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME:-wpheadless}
 COMPOSE_SERVICES_TYPE=${COMPOSE_SERVICES_TYPE:-services}
 
 cd "$(dirname "$0")"
@@ -13,16 +13,6 @@ cd "$(dirname "$0")"
 # extract DOCKER_PROFILE from .env if not passed directly
 if [ -z "$DOCKER_PROFILE" -a -f .env ]; then
   DOCKER_PROFILE=$(source ./.env && echo $DOCKER_PROFILE)
-fi
-
-# docker run options
-
-if [ -t 1 ]; then
-  DOCKER_RUN_OPTIONS='-t'
-fi
-
-if [ -t 0 ]; then
-  DOCKER_RUN_OPTIONS="${DOCKER_RUN_OPTIONS} -i"
 fi
 
 # docker-compose options
@@ -37,18 +27,4 @@ if [ -f "compose.d/${DOCKER_PROFILE}.${COMPOSE_SERVICES_TYPE}.yml" ]; then
   DOCKER_COMPOSE_OPTIONS="${DOCKER_COMPOSE_OPTIONS} -f compose.d/${DOCKER_PROFILE}.${COMPOSE_SERVICES_TYPE}.yml"
 fi
 
-# container running docker-compose will receive limited set of explicitly set environment variables
-# docker-compose will use .env to set environment variables available for containers
-docker \
-  run --rm \
-  $DOCKER_RUN_OPTIONS \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-  -v "${PWD}:${PWD}" \
-  --workdir="$PWD" \
-  --env DOMAIN \
-  --env PWD \
-  --env COMPOSE_PROJECT_NAME="$COMPOSE_PROJECT_NAME" \
-  "$IMAGE_COMPOSE" \
-  $DOCKER_COMPOSE_OPTIONS \
-  "$@" \
-  ;
+docker-compose $DOCKER_COMPOSE_OPTIONS $@
