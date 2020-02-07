@@ -70,5 +70,5 @@ services:
           acf-to-rest-api=3.1.0
           amazon-s3-and-cloudfront=2.3.2
           wordpress-importer=0.6.4
-          title-and-nofollow-for-links=1.08
           disable-comments=1.10.2
+          title-and-nofollow-for-links=1.09
