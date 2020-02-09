@@ -10,7 +10,6 @@ SES_PASSWORD=
 SES_REGION=
 MAIL_FROM_NAME=wpheadless
 MAIL_FROM_EMAIL=
-IMAGE_COMPOSE=docker/compose:1.25.3
 IMAGE_WORDPRESS=wordpress:cli-2-php7.4
 IMAGE_CERTBOT=certbot/certbot:v1.1.0
 IMAGE_CRON=docker:stable
