@@ -66,7 +66,7 @@ services:
       - WORDPRESS_TITLE=WpHeadless
       - ACF_PRO_VERSION=5.8.7
       - WORDPRESS_PLUGINS=
-          custom-post-type-ui=1.7.2
+          custom-post-type-ui=1.7.3
           acf-to-rest-api=3.1.0
           amazon-s3-and-cloudfront=2.3.2
           wordpress-importer=0.6.4
