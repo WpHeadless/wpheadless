@@ -72,3 +72,5 @@ services:
           wordpress-importer=0.6.4
           disable-comments=1.10.2
           title-and-nofollow-for-links=1.09
+          wp-security-audit-log=4.0.0
+          activity-log-mainwp=1.4.1
