@@ -3,9 +3,6 @@
 if (!is_admin()) return;
 
 add_filter( 'wp_link_query', function ( $results ) {
-  foreach( $results as &$result )
-    $result['permalink'] = wp_get_shortlink( $result['ID'] );
-  // return $results;
   return [];
 } );
 
