@@ -24,11 +24,6 @@ services:
   task-openssl:
     <<: *task-certbot
     command: sh
-  task-configure:
-    <<: *task-certbot
-    command: sh
-    volumes:
-      - ..:/$PWD
   task-mysql-proxy:
     image: marcnuri/port-forward
     networks:
