@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 set -eo pipefail
 
@@ -14,34 +14,34 @@ if [ $# -eq 0 ]; then
 fi
 
 TASK=$1
+TASK_SERVICE=false
 
-if grep -qe "\S*task-${TASK}:$" compose.d/tasks.yml; then
+if grep -qe "^\S*task-${TASK}:$" compose.d/tasks.yml; then
   TASK_SERVICE="task-${TASK}"
-else
+elif grep -qe "^\s*task-${TASK%%-*}:$" compose.d/tasks.yml; then
   TASK_SERVICE="task-${TASK%%-*}"
 fi
 
 shift 1
 
-if [ "${TASK#*-}" == "sh" ]; then
-  if [ $# -eq 0 ]; then
-    TASK="sh"
-  else
-    TASK="$@"
-  fi
-else
-  TASK_FILE="${TASKS_DIR}/${TASK}"
-  TASK="${TASK_FILE} $@"
-fi
+TASK_FILE="${TASKS_DIR}/${TASK}"
 
-if [ -z "$TASK_FILE" ] || echo "$TASK_FILE" | grep -q "-"; then
-  TASK_COMMAND=""
-  if [ -f "$TASK_FILE" ]; then
-    TASK_COMMAND="sh -c ${TASK}"
+if  [ "$TASK_SERVICE" != "false" ]; then
+  if [ "${TASK#*-}" == "sh" ]; then
+    if [ $# -eq 0 ]; then
+      TASK="sh"
+    else
+      TASK="sh -c $@"
+    fi
+  elif [ -f "$TASK_FILE" ]; then
+    TASK="$TASK_FILE"
+  else
+    echo "Task not found: '${TASK_FILE}'"
+    exit 1
   fi
 
   COMPOSE_SERVICES_TYPE=tasks ./docker-compose \
-    run --rm --service-ports "$TASK_SERVICE" $TASK_COMMAND
+    run --rm --service-ports "$TASK_SERVICE" $TASK
 else
   if [ ! -f "$TASK_FILE" ]; then
     echo Task "$TASK" does not exist
