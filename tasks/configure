@@ -52,7 +52,7 @@ sed -e "s/^DOMAIN=${MATCH_ALL_PATTERN-$}/DOMAIN=${DOMAIN}/" dot-env > dot-env.ba
 sed -e "s/^ADMIN_EMAIL=${MATCH_ALL_PATTERN-$}/ADMIN_EMAIL=${ADMIN_EMAIL}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
 sed -e "s/^LETSENCRYPT=${MATCH_ALL_PATTERN-$}/LETSENCRYPT=${LETSENCRYPT}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
 sed -e "s/^DOCKER_PROFILE=${MATCH_ALL_PATTERN-$}/DOCKER_PROFILE=${DOCKER_PROFILE}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
-sed -e "s/^AWSLOGS_GROUP=${MATCH_ALL_PATTERN-$}/AWSLOGS_GROUP=${AWSLOGS_GROUP/\/\\/}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
+sed -e "s/^AWSLOGS_GROUP=${MATCH_ALL_PATTERN-$}/AWSLOGS_GROUP=${AWSLOGS_GROUP//\//\\/}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
 sed -e "s/^MAIL_FROM_EMAIL=${MATCH_ALL_PATTERN-$}/MAIL_FROM_EMAIL=${FROM_EMAIL}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
 
 # replaced only once on clean dot-env
