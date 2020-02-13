@@ -6,7 +6,5 @@ services:
     logging: { driver: "awslogs", options: { awslogs-create-group: "true", awslogs-group: "${AWSLOGS_GROUP}", awslogs-stream: "run-task" } }
   task-openssl:
     logging: { driver: "awslogs", options: { awslogs-create-group: "true", awslogs-group: "${AWSLOGS_GROUP}", awslogs-stream: "run-task" } }
-  task-configure:
-    logging: { driver: "awslogs", options: { awslogs-create-group: "true", awslogs-group: "${AWSLOGS_GROUP}", awslogs-stream: "run-task" } }
   task-wp:
     logging: { driver: "awslogs", options: { awslogs-create-group: "true", awslogs-group: "${AWSLOGS_GROUP}", awslogs-stream: "run-task" } }
