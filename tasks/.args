@@ -24,15 +24,6 @@ for i in "$@"; do
     --docker-profile=*)
       DOCKER_PROFILE="${i#*=}"
       ;;
-    --aws-use-ec2-iam-role=*)
-      AWS_USE_EC2_IAM_ROLE="${i#*=}"
-      ;;
-    --aws-access-key-id=*)
-      AWS_ACCESS_KEY_ID="${i#*=}"
-      ;;
-    --aws-secret-access-key=*)
-      AWS_SECRET_ACCESS_KEY="${i#*=}"
-      ;;
     --aws-logs-group=*)
       AWS_LOGS_GROUP="${i#*=}"
       ;;
@@ -74,9 +65,6 @@ export \
   ADMIN_EMAIL \
   ADMIN_PASSWORD \
   DOCKER_PROFILE \
-  AWS_USE_EC2_IAM_ROLE \
-  AWS_ACCESS_KEY_ID \
-  AWS_SECRET_ACCESS_KEY \
   AWS_LOGS_GROUP \
   FROM_EMAIL \
   SES_USER \

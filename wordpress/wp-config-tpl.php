@@ -8,15 +8,6 @@ echo '<?php', PHP_EOL;
 # Custom wp-config.php for wp-headless
 #
 
-<?php if (getenv('AWS_USE_EC2_IAM_ROLE') === 'true'): ?>
-define('AS3CF_AWS_USE_EC2_IAM_ROLE', true);
-<?php elseif (getenv('AWS_ACCESS_KEY_ID')): ?>
-define('AS3CF_SETTINGS', serialize(array(
-  'provider' => 'aws',
-  'access-key-id' => '<?php e('AWS_ACCESS_KEY_ID')?>',
-  'secret-access-key' => '<?php e('AWS_SECRET_ACCESS_KEY')?>',
-)));
-<?php endif; ?>
 define('FORCE_SSL_ADMIN', true);
 define('WP_DEFAULT_THEME', 'wpheadless');
 define('WP_ALLOW_MULTISITE', true);
