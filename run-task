@@ -41,7 +41,7 @@ if  [ "$TASK_SERVICE" != "false" ]; then
   fi
 
   COMPOSE_SERVICES_TYPE=tasks ./docker-compose \
-    run --rm --service-ports "$TASK_SERVICE" $TASK
+    run --rm --service-ports "$TASK_SERVICE" $TASK "$@"
 else
   if [ ! -f "$TASK_FILE" ]; then
     echo Task "$TASK" does not exist
