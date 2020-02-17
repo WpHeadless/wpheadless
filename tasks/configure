@@ -30,7 +30,7 @@ fi
   sed -e "s/^SES_USER=${MATCH_ALL_PATTERN-$}/SES_USER=${SES_USER}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
 
 [ -n "$SES_PASSWORD" ] && \
-  sed -e "s/^SES_PASSWORD=${MATCH_ALL_PATTERN-$}/SES_PASSWORD=${SES_PASSWORD}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
+  sed -e "s/^SES_PASSWORD=${MATCH_ALL_PATTERN-$}/SES_PASSWORD=${SES_PASSWORD//\//\\/}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
 
 [ -n "$SES_REGION" ] && \
   sed -e "s/^SES_REGION=${MATCH_ALL_PATTERN-$}/SES_REGION=${SES_REGION}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
