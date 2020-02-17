@@ -1,12 +1,12 @@
 version: "3"
 services:
   cron:
-    logging: { driver: "awslogs", options: { awslogs-create-group: "true", awslogs-group: "${AWSLOGS_GROUP}", awslogs-stream: "cron" } }
+    logging: { driver: "awslogs", options: { awslogs-create-group: "true", awslogs-group: "${AWS_LOGS_GROUP}", awslogs-stream: "cron" } }
   smtp:
-    logging: { driver: "awslogs", options: { awslogs-create-group: "true", awslogs-group: "${AWSLOGS_GROUP}", awslogs-stream: "smtp" } }
+    logging: { driver: "awslogs", options: { awslogs-create-group: "true", awslogs-group: "${AWS_LOGS_GROUP}", awslogs-stream: "smtp" } }
   nginx:
-    logging: { driver: "awslogs", options: { awslogs-create-group: "true", awslogs-group: "${AWSLOGS_GROUP}", awslogs-stream: "nginx" } }
+    logging: { driver: "awslogs", options: { awslogs-create-group: "true", awslogs-group: "${AWS_LOGS_GROUP}", awslogs-stream: "nginx" } }
   mysql:
-    logging: { driver: "awslogs", options: { awslogs-create-group: "true", awslogs-group: "${AWSLOGS_GROUP}", awslogs-stream: "mysql" } }
+    logging: { driver: "awslogs", options: { awslogs-create-group: "true", awslogs-group: "${AWS_LOGS_GROUP}", awslogs-stream: "mysql" } }
   php:
-    logging: { driver: "awslogs", options: { awslogs-create-group: "true", awslogs-group: "${AWSLOGS_GROUP}", awslogs-stream: "php" } }
+    logging: { driver: "awslogs", options: { awslogs-create-group: "true", awslogs-group: "${AWS_LOGS_GROUP}", awslogs-stream: "php" } }

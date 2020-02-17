@@ -1,60 +1,40 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-DOMAIN="${DOMAIN:-localhost}"
+set -eo pipefail
+source tasks/.args
 MATCH_ALL_PATTERN='.*'
-DOCKER_PROFILE=
-LETSENCRYPT=false
-AWSLOGS_GROUP="\/wpheadless\/${DOMAIN}"
-
-for i in "$@"; do
-  case $i in
-    --domain=*)
-      DOMAIN="${i#*=}"
-      ;;
-    --admin-email=*)
-      ADMIN_EMAIL="${i#*=}"
-      ;;
-    --letsencrypt=*)
-      LETSENCRYPT="${i#*=}"
-      ;;
-    --docker-profile=*)
-      DOCKER_PROFILE="${i#*=}"
-      ;;
-    --aws-logs-group=*)
-      val="${i#*=}"
-      if [ ! -z "$val" ]; then
-        AWSLOGS_GROUP="$val"
-      fi
-      ;;
-    --from-email=*)
-      FROM_EMAIL="${i#*=}"
-      ;;
-  esac
-done
-
-if [ -z "$ADMIN_EMAIL" ]; then
-  if [ "$DOMAIN" = "localhost" ]; then
-    ADMIN_EMAIL="webmaster@example.com"
-  else
-    ADMIN_EMAIL="webmaster@${DOMAIN}"
-  fi
-fi
-
-if [ -z "$FROM_EMAIL" ]; then
-  FROM_EMAIL="no-reply@${DOMAIN}"
-fi
 
 if [ ! -f dot-env ]; then
   cp dot-env.dist dot-env
 fi
 
-sed -e "s/^DOMAIN=${MATCH_ALL_PATTERN-$}/DOMAIN=${DOMAIN}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
-sed -e "s/^ADMIN_EMAIL=${MATCH_ALL_PATTERN-$}/ADMIN_EMAIL=${ADMIN_EMAIL}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
-sed -e "s/^LETSENCRYPT=${MATCH_ALL_PATTERN-$}/LETSENCRYPT=${LETSENCRYPT}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
-sed -e "s/^DOCKER_PROFILE=${MATCH_ALL_PATTERN-$}/DOCKER_PROFILE=${DOCKER_PROFILE}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
-sed -e "s/^AWSLOGS_GROUP=${MATCH_ALL_PATTERN-$}/AWSLOGS_GROUP=${AWSLOGS_GROUP//\//\\/}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
-sed -e "s/^MAIL_FROM_EMAIL=${MATCH_ALL_PATTERN-$}/MAIL_FROM_EMAIL=${FROM_EMAIL}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
+[ -n "$DOMAIN" ] && \
+  sed -e "s/^DOMAIN=${MATCH_ALL_PATTERN-$}/DOMAIN=${DOMAIN}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
 
-# replaced only once on clean dot-env
+[ -n "$ADMIN_EMAIL" ] && \
+  sed -e "s/^ADMIN_EMAIL=${MATCH_ALL_PATTERN-$}/ADMIN_EMAIL=${ADMIN_EMAIL}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
+
+[ -n "$LETSENCRYPT" ] && \
+  sed -e "s/^LETSENCRYPT=${MATCH_ALL_PATTERN-$}/LETSENCRYPT=${LETSENCRYPT}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
+
+[ -n "$DOCKER_PROFILE" ] && \
+  sed -e "s/^DOCKER_PROFILE=${MATCH_ALL_PATTERN-$}/DOCKER_PROFILE=${DOCKER_PROFILE}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
+
+[ -n "$AWS_LOGS_GROUP" ] && \
+  sed -e "s/^AWS_LOGS_GROUP=${MATCH_ALL_PATTERN-$}/AWS_LOGS_GROUP=${AWS_LOGS_GROUP//\//\\/}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
+
+[ -n "$FROM_EMAIL" ] && \
+  sed -e "s/^MAIL_FROM_EMAIL=${MATCH_ALL_PATTERN-$}/MAIL_FROM_EMAIL=${FROM_EMAIL}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
+
+[ -n "$SES_USER" ] && \
+  sed -e "s/^SES_USER=${MATCH_ALL_PATTERN-$}/SES_USER=${SES_USER}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
+
+[ -n "$SES_PASSWORD" ] && \
+  sed -e "s/^SES_PASSWORD=${MATCH_ALL_PATTERN-$}/SES_PASSWORD=${SES_PASSWORD}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
+
+[ -n "$SES_REGION" ] && \
+  sed -e "s/^SES_REGION=${MATCH_ALL_PATTERN-$}/SES_REGION=${SES_REGION}/" dot-env > dot-env.bak && mv dot-env.bak dot-env
+
+# populated with random values when empty automatically
 sed -e "s/^DB_PASSWORD=$/DB_PASSWORD=$(openssl rand -hex 12)/" dot-env > dot-env.bak && mv dot-env.bak dot-env
 sed -e "s/^MYSQL_ROOT_PASSWORD=$/MYSQL_ROOT_PASSWORD=$(openssl rand -hex 12)/" dot-env > dot-env.bak && mv dot-env.bak dot-env

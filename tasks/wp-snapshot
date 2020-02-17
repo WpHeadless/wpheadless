@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 set -eo pipefail
+source tasks/.args
 
-BACKUP_DIR="snapshots"
 BACKUP_FILE_NAME="${DOMAIN}-$(date +%Y%m%d-%H%M%S).tar.gz"
 BACKUP_FILE_PATH="${BACKUP_DIR}/${BACKUP_FILE_NAME}"
 TMP_DIR=$(mktemp -d)

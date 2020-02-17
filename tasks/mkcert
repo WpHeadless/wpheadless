@@ -1,16 +1,7 @@
 #!/usr/bin/env bash
 
 set -eo pipefail
-
-DOMAIN="localhost"
-
-for i in "$@"; do
-  case $i in
-    --domain=*)
-      DOMAIN="${i#*=}"
-      ;;
-  esac
-done
+source tasks/.args
 
 CERTDIR="var/letsencrypt/active/${DOMAIN}"
 

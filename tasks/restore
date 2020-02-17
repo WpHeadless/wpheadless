@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 set -eo pipefail
+source tasks/.args
 
-DOMAIN="localhost"
 BACKUP_DIR="snapshots"
 
 if [ -f .env ]; then

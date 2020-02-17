@@ -1,23 +1,7 @@
 #!/usr/bin/env bash
 
 set -eo pipefail
-
-for i in "$@"; do
-  case $i in
-    --admin-password=*)
-      ADMIN_PASSWORD="${i#*=}"
-      ;;
-    --aws-use-ec2-iam-role=*)
-      export AWS_USE_EC2_IAM_ROLE="${i#*=}"
-      ;;
-    --aws-access-key-id=*)
-      export AWS_ACCESS_KEY_ID="${i#*=}"
-      ;;
-    --aws-secret-access-key=*)
-      export AWS_SECRET_ACCESS_KEY="${i#*=}"
-      ;;
-  esac
-done
+source tasks/.args
 
 export AUTH_KEY="$(openssl rand -hex 32)"
 export SECURE_AUTH_KEY="$(openssl rand -hex 32)"

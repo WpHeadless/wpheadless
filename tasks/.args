@@ -1,0 +1,84 @@
+# .args
+#
+# Common argument processing code
+# Usage inside taks: source tasks/.args
+
+DOMAIN="localhost"
+LETSENCRYPT="false"
+BACKUP_DIR="snapshots"
+
+for i in "$@"; do
+  case $i in
+    --domain=*)
+      DOMAIN="${i#*=}"
+      ;;
+    --admin-email=*)
+      ADMIN_EMAIL="${i#*=}"
+      ;;
+    --admin-password=*)
+      ADMIN_PASSWORD="${i#*=}"
+      ;;
+    --letsencrypt=*)
+      LETSENCRYPT="${i#*=}"
+      ;;
+    --docker-profile=*)
+      DOCKER_PROFILE="${i#*=}"
+      ;;
+    --aws-use-ec2-iam-role=*)
+      AWS_USE_EC2_IAM_ROLE="${i#*=}"
+      ;;
+    --aws-access-key-id=*)
+      AWS_ACCESS_KEY_ID="${i#*=}"
+      ;;
+    --aws-secret-access-key=*)
+      AWS_SECRET_ACCESS_KEY="${i#*=}"
+      ;;
+    --aws-logs-group=*)
+      AWS_LOGS_GROUP="${i#*=}"
+      ;;
+    --from-email=*)
+      FROM_EMAIL="${i#*=}"
+      ;;
+    --ses-user=*)
+      SES_USER="${i#*=}"
+      ;;
+    --ses-password=*)
+      SES_PASSWORD="${i#*=}"
+      ;;
+    --ses-region=*)
+      SES_REGION="${i#*=}"
+      ;;
+  esac
+done
+
+if [ -z "$AWS_LOGS_GROUP" ]; then
+  AWS_LOGS_GROUP="/wpheadless/${DOMAIN}"
+fi
+
+if [ -z "$ADMIN_EMAIL" ]; then
+  if [ "$DOMAIN" = "localhost" ]; then
+    ADMIN_EMAIL="webmaster@example.com"
+  else
+    ADMIN_EMAIL="webmaster@${DOMAIN}"
+  fi
+fi
+
+if [ -z "$FROM_EMAIL" ]; then
+  FROM_EMAIL="no-reply@${DOMAIN}"
+fi
+
+export \
+  DOMAIN  \
+  LETSENCRYPT \
+  BACKUP_DIR \
+  ADMIN_EMAIL \
+  ADMIN_PASSWORD \
+  DOCKER_PROFILE \
+  AWS_USE_EC2_IAM_ROLE \
+  AWS_ACCESS_KEY_ID \
+  AWS_SECRET_ACCESS_KEY \
+  AWS_LOGS_GROUP \
+  FROM_EMAIL \
+  SES_USER \
+  SES_PASSWORD \
+  SES_REGION

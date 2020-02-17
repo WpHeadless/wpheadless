@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -eo pipefail
+source tasks/.args
 
 SITEURL="https://${DOMAIN}/"
 MYSQL_CMD="mysql -N -h ${DB_HOST} -u ${DB_USER} -p${DB_PASSWORD} ${DB_NAME}"
