@@ -31,6 +31,26 @@ http {
     listen [::]:80 default_server;
 
     root /var/www/vhosts/${DOLLAR}host;
+
+    location = /php-statusz {
+      include fastcgi_params;
+      fastcgi_param SCRIPT_FILENAME ${DOLLAR}document_root${DOLLAR}fastcgi_script_name;
+      fastcgi_param PATH_INFO ${DOLLAR}fastcgi_path_info;
+      fastcgi_pass php:9000;
+
+      allow 127.0.0.1;
+      deny all;
+    }
+
+    location = /php-healthz {
+      include fastcgi_params;
+      fastcgi_param SCRIPT_FILENAME ${DOLLAR}document_root${DOLLAR}fastcgi_script_name;
+      fastcgi_param PATH_INFO ${DOLLAR}fastcgi_path_info;
+      fastcgi_pass php:9000;
+
+      allow 127.0.0.1;
+      deny all;
+    }
   }
 
   server {
