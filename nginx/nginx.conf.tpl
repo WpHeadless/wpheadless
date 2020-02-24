@@ -134,8 +134,8 @@ http {
       include fastcgi_params;
       fastcgi_param SCRIPT_FILENAME ${DOLLAR}document_root${DOLLAR}fastcgi_script_name;
       fastcgi_param PATH_INFO ${DOLLAR}fastcgi_path_info;
-      fastcgi_send_timeout 120s;
-      fastcgi_read_timeout 120s;
+      fastcgi_send_timeout 600s;
+      fastcgi_read_timeout 600s;
     }
 
     location / {
