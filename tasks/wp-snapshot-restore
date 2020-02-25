@@ -5,12 +5,14 @@ source tasks/.args
 
 TMP_DIR=$(mktemp -d)
 
-BACKUP_FILE_PATH="${BACKUP_DIR}/${1}"
+BACKUP_FILE_PATH="$1"
 [ ! -f "$BACKUP_FILE_PATH" ] && echo "No snapshot file found: ${BACKUP_FILE_PATH}" && exit 1
 
 # restore wordpress and var files
-tar -C / -xzf "$BACKUP_FILE_PATH" var/www
-tar -C / -xzf "$BACKUP_FILE_PATH" var/wordpress
+set +e
+tar -C / -P -xzf "$BACKUP_FILE_PATH" var/www
+tar -C / -P -xzf "$BACKUP_FILE_PATH" var/wordpress
+set -e
 
 # extract db dump into temporary directory
 tar -C "$TMP_DIR" -xzf "$BACKUP_FILE_PATH" dump.sql
