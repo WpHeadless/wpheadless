@@ -3,8 +3,8 @@
 # Common argument processing code
 # Usage inside taks: source tasks/.args
 
-DOMAIN="localhost"
-LETSENCRYPT="false"
+DOMAIN="${DOMAIN:-localhost}"
+LETSENCRYPT="${LETSENCRYPT:-false}"
 BACKUP_DIR="snapshots"
 
 for i in "$@"; do
