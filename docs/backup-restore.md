@@ -1,6 +1,6 @@
 # Restore from backup
 
-Use `./run-task wp-snapshot-restore <backupfile>` to restore wpheadless from backup.
+Use `./run-task restore <backupfile>` to restore wpheadless from backup.
 
 ```bash
 % ./run-task restore snapshots/localhost.tar.gz
