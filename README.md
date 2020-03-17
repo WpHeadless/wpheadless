@@ -15,7 +15,7 @@ $ open https://localhost
 
 ## Features
 
-- Docker is the only dependency
+- Docker is the only dependency (not)
 - HTTPS only
 - SSL/TLS certificates: Letsencrypt, Self-signed, mkcert
 - Nightly backup
