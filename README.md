@@ -21,7 +21,7 @@ $ open https://localhost
 - Nightly backup
 - Wordpress Multisite secure setup
 - Static web-server vhost routing
-- Local SMTP server
+- SMTP server for sending emails
 - Fine tuned /wp-admin for headless use-case
 
 ## Install
