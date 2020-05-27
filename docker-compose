@@ -1,14 +1,13 @@
 #!/usr/bin/env sh
 
 set -eo pipefail
+cd "$(dirname "$0")"
 
 # init variables from .env
 source ./.env
 
 export COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME:-wpheadless}
 COMPOSE_SERVICES_TYPE=${COMPOSE_SERVICES_TYPE:-services}
-
-cd "$(dirname "$0")"
 
 # extract DOCKER_PROFILE from .env if not passed directly
 if [ -z "$DOCKER_PROFILE" -a -f .env ]; then
