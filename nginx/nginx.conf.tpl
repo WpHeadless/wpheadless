@@ -98,6 +98,7 @@ http {
 
     if (!-e ${DOLLAR}request_filename) {
       rewrite ^(/[^/]+)?(/wp-.*) ${DOLLAR}2 last;
+      rewrite ^(/[^/]+)?(/newbloguser/.+) ${DOLLAR}2 last;
       rewrite ^(/[^/]+)?(/.*\.php) ${DOLLAR}2 last;
     }
 
@@ -117,7 +118,7 @@ http {
     }
 
     # Allow only fixed set of files in Wordpress to be requested
-    location ~ ^/(?!(wp-admin|wp-includes|wp-content|wp-json|wp-activate\.php|wp-cron\.php|wp-cron-multisite\.php|wp-login\.php|index\.php)) {
+    location ~ ^/(?!(wp-admin|wp-includes|wp-content|wp-json|wp-activate\.php|wp-cron\.php|wp-cron-multisite\.php|wp-login\.php|index\.php|newbloguser)) {
       return 404;
     }
 
