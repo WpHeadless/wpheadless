@@ -68,4 +68,4 @@ services:
           disable-comments=1.10.2
           title-and-nofollow-for-links=1.10
           wp-security-audit-log=4.1.2
-          activity-log-mainwp=1.4.1
+          # activity-log-mainwp=1.4.1
